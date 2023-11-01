@@ -1,0 +1,25 @@
+# виртуальное окружение
+venv/
+env/
+
+media/
+
+# локальные настройки
+local_settings.py
+
+# файлы журналов и временные файлы
+*.log
+*.pot
+*.pyc
+__pycache__/
+*.swp
+
+# IDE
+.idea/
+
+# Pipenv
+Pipfile
+Pipfile.lock
+
+# Файлы окружения
+.env
