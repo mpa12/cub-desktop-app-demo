@@ -8,7 +8,19 @@
 
 ## Инструкция по развертыванию
 
-Запуск бота
+Установка зависимостей
+
+```shell
+pip install
 ```
+
+Запуск приложения
+
+```shell
+python manage.py runserver
+```
+
+Запуск бота
+```shell
 python manage.py bot
 ```
