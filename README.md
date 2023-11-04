@@ -11,16 +11,17 @@
 Установка зависимостей
 
 ```shell
-pip install
+pip install -r requirements.txt
 ```
 
 Запуск приложения
 
 ```shell
-python manage.py runserver
+python ./cub/manage.py runserver
 ```
 
 Запуск бота
+
 ```shell
-python manage.py bot
+python ./cub/manage.py bot
 ```
