@@ -11,11 +11,11 @@ class AuthStore {
 
   async login(login: string, password: string) {
     this.isAuthInProgress = true;
-    try {
-      const resp = await AuthService.login(login, password);
-      localStorage.setItem("token", resp.data.accessToken);
-      this.isAuth = true;
 
+    try {
+      const response = await AuthService.login(login, password);
+      localStorage.setItem("token", response.data.accessToken);
+      this.isAuth = true;
     } catch (err) {
       console.log("login error");
     } finally {
@@ -25,11 +25,11 @@ class AuthStore {
 
   async checkAuth() {
     this.isAuthInProgress = true;
-    try {
-      const resp = await AuthService.refreshToken();
-      localStorage.setItem("token", resp.data.accessToken);
-      this.isAuth = true;
 
+    try {
+      const response = await AuthService.refreshToken();
+      localStorage.setItem("token", response.data.accessToken);
+      this.isAuth = true;
     } catch (err) {
       console.log("login error");
     } finally {
@@ -39,6 +39,7 @@ class AuthStore {
 
   async logout() {
     this.isAuthInProgress = true;
+
     try {
       await AuthService.logout();
       this.isAuth = false;
