@@ -6,6 +6,7 @@ const PrivateRoute = () => {
   if (authStore.isAuthInProgress) {
     return <div>Проверка авторизации...</div>;
   }
+
   if (authStore.isAuth) {
     return <Outlet/>
   } else {
