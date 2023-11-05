@@ -20,12 +20,12 @@ pip install -r requirements.txt
 ```shell
 ( cd frontend/src/ && yarn install )
 ```
-Запуск миграций
+Запуск миграций:
 
 ```shell
 python ./cub/manage.py migrate
 ```
-Запуск приложения
+Запуск приложения:
 
 ```shell
 python ./cub/manage.py runserver
