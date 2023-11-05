@@ -11,11 +11,12 @@ class User(AbstractUser):
         'UserPassport',
         on_delete=models.CASCADE,
         verbose_name="Паспортные данные",
+        null=True, blank=True,
     )
-    snils = models.CharField(max_length=255, verbose_name="СНИЛС")
-    inn = models.CharField(max_length=255, verbose_name="ИНН")
-    gender = models.CharField(max_length=10, verbose_name="Пол")
-    birth_date = models.DateField(verbose_name="Дата рождения")
+    snils = models.CharField(max_length=255, verbose_name="СНИЛС", null=True, blank=True)
+    inn = models.CharField(max_length=255, verbose_name="ИНН", null=True, blank=True)
+    gender = models.CharField(max_length=10, verbose_name="Пол", null=True, blank=True)
+    birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
     role = models.CharField('Роль', max_length=50, choices=UserRole.choices)
 
     def is_manager(self):
