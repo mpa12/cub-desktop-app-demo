@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from calendars.models import Event
+
+
+@admin.register(Event)
+class UserPassportsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'description', 'start_datetime', 'project',)

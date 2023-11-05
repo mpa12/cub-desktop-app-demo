@@ -1,7 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser, Group
+from django.contrib.auth.models import AbstractUser
 
-from .user_enums import UserRole
+from .user_enums import UserRole, UserGender
 
 
 class User(AbstractUser):
@@ -15,7 +15,7 @@ class User(AbstractUser):
     )
     snils = models.CharField(max_length=255, verbose_name="СНИЛС", null=True, blank=True)
     inn = models.CharField(max_length=255, verbose_name="ИНН", null=True, blank=True)
-    gender = models.CharField(max_length=10, verbose_name="Пол", null=True, blank=True)
+    gender = models.CharField(max_length=10, verbose_name="Пол", choices=UserGender.choices, default=UserGender.DEFAULT)
     birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
     role = models.CharField('Роль', max_length=50, choices=UserRole.choices)
 
@@ -52,6 +52,10 @@ class UserPassport(models.Model):
     date_of_given = models.DateField("Дата выдачи")
     departament = models.CharField("Кем выдан", max_length=255)
     departament_code = models.CharField("Код подразделения", max_length=7)
+
+    class Meta:
+        verbose_name_plural = 'Паспорта'
+        verbose_name = 'Паспорт'
 
     def __str__(self):
         return str(User.passport_data)

@@ -31,5 +31,9 @@ class Task(models.Model):
         self.is_stopped = True
         self.save()
 
+    class Meta:
+        verbose_name_plural = 'Задачи'
+        verbose_name = 'Задача'
+
     def __str__(self):
         return self.title

@@ -25,5 +25,9 @@ class Project(models.Model):
     stop_date = models.DateTimeField(verbose_name="Дата завершения проекта", null=True, blank=True)
     tasks = models.ManyToManyField(Task, related_name="project_tasks")
 
+    class Meta:
+        verbose_name_plural = 'Проекты'
+        verbose_name = 'Проект'
+
     def __str__(self):
         return self.title

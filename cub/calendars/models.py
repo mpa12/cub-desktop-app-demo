@@ -11,5 +11,9 @@ class Event(models.Model):
     end_datetime = models.DateTimeField(verbose_name="Дата и время окончания события")
     project = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name="Проект", null=True, blank=True)
 
+    class Meta:
+        verbose_name_plural = 'Календари'
+        verbose_name = 'Календарь'
+
     def __str__(self):
         return self.title
