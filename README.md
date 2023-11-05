@@ -15,7 +15,7 @@
 pip install -r requirements.txt
 ```
 ```shell
-( cd frontend/src/ && npm install )
+( cd frontend/src/ && yarn install )
 ```
 
 Запуск приложения
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 python ./cub/manage.py runserver
 ```
 ```shell
-( cd frontend/src/ && npm start )
+( cd frontend/src/ && yarn start )
 ```
 
 Запуск бота
