@@ -12,43 +12,65 @@
 
 Создать `.env` из `.env.example` в директории `frontend`.
 
-Установка зависимостей:
+[//]: # (Установка зависимостей:)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (pip install -r requirements.txt)
+
+[//]: # (```)
+
+[//]: # (```shell)
+
+[//]: # (&#40; cd frontend/src/ && yarn install &#41;)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (Запуск миграций:)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (python ./cub/manage.py migrate)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (Запуск приложения:)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (python ./cub/manage.py runserver)
+
+[//]: # (```)
+
+[//]: # (```shell)
+
+[//]: # (&#40; cd frontend/src/ && yarn start &#41;)
+
+[//]: # (```)
+
+[//]: # ()
+[//]: # (Админка доступна по адресу http://localhost:8000/admin/)
+
+[//]: # ()
+[//]: # (Запуск бота:)
+
+[//]: # ()
+[//]: # (```shell)
+
+[//]: # (python ./cub/manage.py bot)
+
+[//]: # (```)
+
+Собрать контейнеры docker:
 
 ```shell
-pip install -r requirements.txt
+docker-compose up
 ```
-```shell
-( cd frontend/src/ && yarn install )
-```
-
-Запуск миграций:
-
-```shell
-python ./cub/manage.py migrate
-```
-
-Запуск приложения:
-
-```shell
-python ./cub/manage.py runserver
-```
-```shell
-( cd frontend/src/ && yarn start )
-```
-
-Админка доступна по адресу http://localhost:8000/admin/
-
-Запуск бота:
-
-```shell
-python ./cub/manage.py bot
-```
-
->#### Запуск через docker
->
->```shell
->docker-compose up
->```
 
 ## ERD модель базы данных
 
