@@ -1,0 +1,24 @@
+version: '3'
+services:
+  django:
+    image: python:3.10
+    container_name: django_container
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SECRET_KEY=mysecretkey
+    command: sh -c "pip install -r requirements.txt && python ./cub/manage.py runserver 0.0.0.0:8000"
+
+  react:
+    image: node:20.9.0
+    container_name: react_container
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    ports:
+      - "80:3000"
+      - "443:3000"
+    command: sh -c "yarn install && yarn start"
