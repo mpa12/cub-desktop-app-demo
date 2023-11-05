@@ -1,14 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import SignIn from "./components/SignIn";
+import Login from "./components/Login";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+
+const baseClassName = 'min-h-screen';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <SignIn/>
-      </header>
+    <div className={baseClassName}>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Login />} />
+          <Route path={'login'} element={<Login />} />
+          <Route path="two" element={<h1>asfasfasfas</h1>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
