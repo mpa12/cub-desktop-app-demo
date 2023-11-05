@@ -10,7 +10,9 @@
 
 ## Инструкция по развертыванию
 
-Установка зависимостей
+Создать .env из .env.example в директории `frontend`.
+
+Установка зависимостей:
 
 ```shell
 pip install -r requirements.txt
@@ -19,7 +21,7 @@ pip install -r requirements.txt
 ( cd frontend/src/ && yarn install )
 ```
 
-Запуск приложения
+Запуск приложения:
 
 ```shell
 python ./cub/manage.py runserver
@@ -28,7 +30,7 @@ python ./cub/manage.py runserver
 ( cd frontend/src/ && yarn start )
 ```
 
-Запуск бота
+Запуск бота:
 
 ```shell
 python ./cub/manage.py bot
