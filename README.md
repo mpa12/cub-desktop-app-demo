@@ -43,6 +43,13 @@ python ./cub/manage.py runserver
 ```shell
 python ./cub/manage.py bot
 ```
+
+>#### Запуск через docker
+>
+>```shell
+>docker-compose up
+>```
+
 ## ERD модель базы данных
 
 ![db.png](db.png)
