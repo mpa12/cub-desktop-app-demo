@@ -22,7 +22,7 @@ class UserAdmin(admin.ModelAdmin):
             'birth_date',
             'role'
         )}),
-        (_('Permissions'), {'fields': ('is_active', 'groups'), }),
+        (_('Permissions'), {'fields': ('is_active',), }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     readonly_fields = ('last_login', 'date_joined')
