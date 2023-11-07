@@ -5,22 +5,6 @@ from .user_enums import UserRole, UserGender
 from django.contrib.auth.models import UserManager
 
 
-class CustomUserManager(UserManager):
-    def create_superuser(self, username, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self._create_user(username, email, password, **extra_fields)
-
-    def create_superuser_with_extra_fields(self, username, email=None, password=None, birth_date=None, gender=None,
-                                           role=None):
-        extra_fields = {
-            'birth_date': birth_date,
-            'gender': gender,
-            'role': role,
-        }
-        return self.create_superuser(username, email, password, **extra_fields)
-
-
 class User(AbstractUser):
     """Модель для пользователей"""
     midl_name = models.CharField(max_length=255, verbose_name="Отчество")
@@ -35,8 +19,6 @@ class User(AbstractUser):
     gender = models.CharField(max_length=10, verbose_name="Пол", choices=UserGender.choices, default=UserGender.DEFAULT)
     birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
     role = models.CharField('Роль', max_length=50, choices=UserRole.choices)
-
-    objects = CustomUserManager()
 
     def is_manager(self):
         return self.role == UserRole.MANAGER
