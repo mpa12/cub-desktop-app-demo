@@ -1,12 +1,12 @@
 import { instance } from "../api.config";
 
 class AuthService {
-  login (login: string, password: string) {
-    return instance.post("/api/login", { login, password })
+  login (username: string, password: string) {
+    return instance.post("/users/api/v1/token/", { username, password })
   }
 
-  refreshToken() {
-    return instance.get("/api/refresh");
+  refreshToken(refresh: string) {
+    return instance.post("/users/api/v1/token/refresh/", { refresh });
   }
 
   logout() {

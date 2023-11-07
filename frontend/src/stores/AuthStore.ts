@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import {makeAutoObservable} from "mobx";
 import AuthService from "../services/AuthService";
 
 class AuthStore {
@@ -14,7 +14,8 @@ class AuthStore {
 
     try {
       const response = await AuthService.login(login, password);
-      localStorage.setItem("token", response.data.accessToken);
+      localStorage.setItem("accessToken", response.data.access);
+      localStorage.setItem("refreshToken", response.data.refresh);
       this.isAuth = true;
     } catch (err) {
       console.log("login error");
@@ -27,11 +28,14 @@ class AuthStore {
     this.isAuthInProgress = true;
 
     try {
-      const response = await AuthService.refreshToken();
-      localStorage.setItem("token", response.data.accessToken);
+      const refreshToken = localStorage.getItem('refreshToken') as string;
+      const response = await AuthService.refreshToken(refreshToken);
+      localStorage.setItem("accessToken", response.data.access);
       this.isAuth = true;
     } catch (err) {
       console.log("login error");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     } finally {
       this.isAuthInProgress = false;
     }
@@ -43,7 +47,8 @@ class AuthStore {
     try {
       await AuthService.logout();
       this.isAuth = false;
-      localStorage.removeItem("token");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     } catch (err) {
       console.log("logout error");
     } finally {
