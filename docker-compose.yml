@@ -1,24 +1,60 @@
 version: '3'
 services:
-  django:
-    image: python:3.10
-    container_name: django_container
-    volumes:
-      - .:/app
-    working_dir: /app
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    networks:
+      - app_net
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     ports:
       - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
     environment:
-      - DJANGO_SECRET_KEY=mysecretkey
-    command: sh -c "pip install -r requirements.txt && python ./cub/manage.py runserver 0.0.0.0:8000"
+      - TZ=Asia/Vladivostok
+      - DEBUG=True
+      - DJANGO_ALLOWED_HOSTS=0.0.0.0
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CELERY_BROKER=redis://redis:16379/0
+      - CELERY_BACKEND=redis://redis:16379/0
+    env_file:
+      - ./cub/.env
+    networks:
+      - app_net
 
-  react:
-    image: node:20.9.0
-    container_name: react_container
-    volumes:
-      - ./frontend:/app
-    working_dir: /app
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=cub
+      - POSTGRES_USER=cub
+      - POSTGRES_PASSWORD=cub
     ports:
-      - "80:3000"
-      - "443:3000"
-    command: sh -c "yarn install && yarn start"
+      - "15432:15432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+    networks:
+      - app_net
+
+  redis:
+    image: redis:latest
+    ports:
+      - "16379:16379"
+    networks:
+      - app_net
+
+networks:
+  app_net:
+
+volumes:
+  pg_data:
