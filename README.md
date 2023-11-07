@@ -79,7 +79,7 @@ docker-compose up
 ```shell
 docker ps
 docker exec -it <id контейнера с джангой> bash
-cd cub/ && python manage.py createsuperuser
+python manage.py createsuperuser
 ```
 ## ERD модель базы данных
 
