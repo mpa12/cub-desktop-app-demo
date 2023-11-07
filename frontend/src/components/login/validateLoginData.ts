@@ -10,6 +10,14 @@ interface ValidateLoginDataResponse {
   generalErrors: string[];
 }
 
+/**
+ * Валидация данных формы авторизации.
+ * Происходит до отправки запроса.
+ *
+ * @param data Данные авторизации.
+ * @param data.login Логин.
+ * @param data.password Пароль.
+ */
 const validateLoginData = (data: LoginData): ValidateLoginDataResponse => {
   const response: ValidateLoginDataResponse = {
     hasErrors: false,

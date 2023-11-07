@@ -75,7 +75,7 @@ const Login = () => {
         passwordErrors: [''],
       });
       setIsLoading(false);
-      navigate('/two');
+      navigate('/');
       return;
     }
 
