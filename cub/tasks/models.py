@@ -1,5 +1,6 @@
 from django.db import models
 
+from users.models import User
 from .tasks_enums import TaskStatuses
 
 
@@ -7,6 +8,12 @@ class Task(models.Model):
     """Модель для задач"""
     title = models.CharField(max_length=255, verbose_name="Заголовок задачи")
     description = models.TextField(verbose_name="Описание задачи")
+    executor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Исполнитель",
+        related_name="executor_projects",
+    )
     status = models.CharField(
         max_length=50,
         choices=TaskStatuses.choices,
