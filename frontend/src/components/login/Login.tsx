@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Input from "../ui/Input";
 import cn from "classnames";
 import logo from '../../assets/logo.png';
 import useLoginState from "./useLoginState";
 import validateLoginData from "./validateLoginData";
 import authStore from "../../stores/AuthStore";
+import { useNavigate } from "react-router-dom";
 
 const baseClassName = 'w-screen h-screen bg-purple flex flex-col items-center justify-center';
 const wrapperClassName = 'max-w-[700px] w-full px-[40px] py-[20px] bg-white rounded-[20px] mx-[20px]';
@@ -45,6 +46,8 @@ const Login = () => {
     setGeneralErrors,
   } = useLoginState();
 
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onLogin = async () => {
@@ -66,7 +69,14 @@ const Login = () => {
     await authStore.login(login, password);
 
     if (authStore.isAuth) {
-      console.log('Авторизация прошла успешно');
+      setErrors({
+        generalErrors: [''],
+        loginErrors: [''],
+        passwordErrors: [''],
+      });
+      setIsLoading(false);
+      navigate('/two');
+      return;
     }
 
     setErrors({
