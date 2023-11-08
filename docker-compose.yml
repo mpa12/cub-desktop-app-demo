@@ -8,8 +8,7 @@ services:
       - "3000:3000"
     env_file:
       - ./frontend/.env
-    networks:
-      - app_net
+
 
   backend:
     build:
@@ -21,40 +20,28 @@ services:
       - postgres
       - redis
     environment:
-      - TZ=Asia/Vladivostok
-      - DEBUG=True
-      - DJANGO_ALLOWED_HOSTS=0.0.0.0
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
       - CELERY_BROKER=redis://redis:16379/0
       - CELERY_BACKEND=redis://redis:16379/0
     env_file:
       - ./cub/.env
-    networks:
-      - app_net
+
 
   postgres:
-    image: postgres:latest
+    image: postgres:16
     environment:
       - POSTGRES_DB=cub
       - POSTGRES_USER=cub
       - POSTGRES_PASSWORD=cub
     ports:
-      - "15432:15432"
+      - "15432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data/
-    networks:
-      - app_net
+
 
   redis:
-    image: redis:latest
+    image: redis:7.2.3
     ports:
-      - "16379:16379"
-    networks:
-      - app_net
-
-networks:
-  app_net:
+      - "16379:6379"
 
 volumes:
   pg_data:
