@@ -13,13 +13,14 @@ class Task(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Исполнитель",
+        limit_choices_to={'role': UserRole.PROGRAMMER},
         related_name="executor_projects",
     )
     project_manager = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         verbose_name="Менеджер проекта",
-        limit_choices_to={'role': UserRole.PROGRAMMER},
+        limit_choices_to={'role': UserRole.MANAGER},
         related_name="managed_projects",
         null=True, blank=True,
     )
