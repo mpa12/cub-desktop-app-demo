@@ -18,6 +18,7 @@ class User(AbstractUser):
     inn = models.CharField(max_length=255, verbose_name="ИНН", null=True, blank=True)
     gender = models.CharField(max_length=10, verbose_name="Пол", choices=UserGender.choices, default=UserGender.DEFAULT)
     birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
+    photo = models.ImageField(upload_to='user_files/', verbose_name="Фотография профиля", null=True, blank=True)
     role = models.CharField('Роль', max_length=50, choices=UserRole.choices)
 
     def is_manager(self):
