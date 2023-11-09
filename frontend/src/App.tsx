@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from "./Routes/Routes";
+import Routes from "./routes/Routes";
 
 const baseClassName = 'min-h-screen';
 

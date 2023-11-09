@@ -7,19 +7,19 @@ import validateLoginData from "./validateLoginData";
 import authStore from "../../stores/AuthStore";
 import { useNavigate } from "react-router-dom";
 
-const baseClassName = 'w-screen h-screen bg-purple flex flex-col items-center justify-center';
+const baseClassName = 'w-screen h-screen bg-green flex flex-col items-center justify-center';
 const wrapperClassName = 'max-w-[700px] w-full px-[40px] py-[20px] bg-white rounded-[20px] mx-[20px]';
 const labelClassName = 'text-[25px] font-medium';
-const lineClassName = 'mt-[23px] mb-[32px] text-purple';
+const lineClassName = 'mt-[23px] mb-[32px] text-dark-gray';
 const inputClassName = 'w-full h-[40px] px-[13px] border-[1px]';
 const buttonsGroupClassName = 'flex items-end justify-center gap-[20px] h-[100px]';
 const buttonClassName = cn(
-  'px-[30px] h-[40px] bg-purple flex items-center justify-center rounded-[20px] text-white',
-  'hover:bg-purple-hover'
+  'px-[30px] h-[40px] bg-green flex items-center justify-center rounded-[20px] text-white',
+  'hover:bg-green-hover'
 );
 const topSectionClassName = 'h-[200px] flex items-center justify-center';
 const imgClassName = 'w-[200px]';
-const imgBgColor = '#8c599a';
+const imgBgColor = '#2cbb5d';
 const errorsWrapperClassName = 'mb-[20px]';
 const errorClassName = 'text-red text-[13px] leading-[11px]';
 const generalErrorsWrapperClassName = 'flex flex-col items-center';
@@ -91,7 +91,7 @@ const Login = () => {
   return (
     <div className={baseClassName}>
       <section className={topSectionClassName}>
-        <img src={logo} alt={'Логотип Эником Невада групп'} className={imgClassName} style={{
+        <img src={logo} alt={'Логотип Невада групп'} className={imgClassName} style={{
           filter: `drop-shadow(0 0 10px ${imgBgColor})`
         }} />
       </section>
