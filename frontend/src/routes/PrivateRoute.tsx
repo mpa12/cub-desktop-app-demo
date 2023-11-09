@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import authStore from "../stores/AuthStore";
 import { observer } from "mobx-react-lite";
+import Header from "../components/header/Header";
 
 /**
  * Проверка пользователя на вхождение в аккаунт.
@@ -17,7 +18,11 @@ const PrivateRoute = () => {
   }
 
   if (authStore.isAuth || localStorage.getItem('refreshToken')) {
-    return <Outlet/>
+    return (
+      <Header>
+        <Outlet />
+      </Header>
+    )
   } else {
     return <Navigate to='/login' />;
   }

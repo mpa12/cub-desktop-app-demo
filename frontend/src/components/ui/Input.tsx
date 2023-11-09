@@ -26,7 +26,6 @@ const Input = ({
     <input
       type={'text'}
       className={cn(baseClassName, className)}
-      placeholder={'Пароль'}
       {...props}
     />
   );
