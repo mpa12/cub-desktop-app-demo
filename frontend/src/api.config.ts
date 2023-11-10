@@ -10,7 +10,7 @@ export const instance = axios.create({
 // Который к каждому запросу добавляет accessToken из localStorage
 instance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
+    config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
     return config
   }
 );
@@ -42,15 +42,16 @@ instance.interceptors.response.use(
     ) {
       try {
         // Запрос на обновление токенов
-        const resp = await instance.get("/api/refresh");
+        const refresh = localStorage.getItem('refreshToken') as string;
+        const resp = await instance.post('/users/api/v1/token/refresh/', { refresh });
 
         // Сохраняем новый accessToken в localStorage
-        localStorage.setItem("token", resp.data.accessToken);
+        localStorage.setItem('accessToken', resp.data.token);
 
         // Переотправляем запрос с обновленным accessToken
         return instance.request(originalRequest);
       } catch (error) {
-        console.log("AUTH ERROR");
+        console.log('AUTH ERROR');
       }
     }
 
