@@ -39,12 +39,14 @@ class Task(models.Model):
     comment = models.TextField(verbose_name="Результат выполнения", null=True, blank=True)
 
     def pause_task(self):
-        self.is_paused = True
-        self.save()
+        if not self.is_stopped:
+            self.is_paused = True
+            self.save()
 
     def continue_task(self):
-        self.is_paused = False
-        self.save()
+        if not self.is_stopped:
+            self.is_paused = False
+            self.save()
 
     def stop_task(self):
         self.is_stopped = True

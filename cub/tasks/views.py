@@ -78,3 +78,50 @@ class UserDetailTasksView(APIView):
         task = self.get_queryset(request.user, task_id)
         serializer = TaskSerializer(task, many=True)
         return Response(serializer.data)
+
+
+class StopTasksView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self, user, task_id):
+        return Task.objects.filter(executor_id=user, id=task_id)
+
+    def post(self, request, task_id):
+        task = self.get_queryset(request.user, task_id).first()
+        if task:
+            task.stop_task()
+            return Response({'message': 'Задача успешно завершена'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Задача не найдена'}, status=status.HTTP_404_NOT_FOUND)
+
+class PauseTasksView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self, user, task_id):
+        return Task.objects.filter(executor_id=user, id=task_id)
+
+    def post(self, request, task_id):
+        task = self.get_queryset(request.user, task_id).first()
+        if task and task.is_paused and not task.is_stopped:
+            task.pause_task()
+            return Response({'message': 'Задача успешно остановлена'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Ошибка'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class ContinueTasksView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self, user, task_id):
+        return Task.objects.filter(executor_id=user, id=task_id)
+
+    def post(self, request, task_id):
+        task = self.get_queryset(request.user, task_id).first()
+        if task and task.is_paused and not task.is_stopped:
+            task.continue_task()
+            return Response({'message': 'Задача продолжается'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Ошибка'}, status=status.HTTP_404_NOT_FOUND)
