@@ -3,6 +3,9 @@ import logo from "../../assets/logo.png";
 import Input from "../ui/Input";
 import Icon from "../ui/Icon";
 import cn from "classnames";
+import HeaderLink from "../header/HeaderLink";
+import { Link } from "react-router-dom";
+import menuItems from "../../constants/menuItems";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -31,7 +34,9 @@ const Header = ({
     <div className={baseClassName}>
       <header className={headerClassName}>
         <div className={logoBlockClassName}>
-          <img src={logo} alt={'Логотип Эником Невада групп'} className={logoClassName} />
+          <Link to={''}>
+            <img src={logo} alt={'Логотип Эником Невада групп'} className={logoClassName} />
+          </Link>
         </div>
         <div className={inputBlockClassName}>
           <Icon iconName={'search'} className={inputIconClassName} />
@@ -43,9 +48,7 @@ const Header = ({
       </header>
       <div className={'w-full flex grow'}>
         <div className={menuClassName}>
-          <span>Item#1</span>
-          <span>Item#2</span>
-          <span>Item#3</span>
+          {menuItems.map(HeaderLink)}
         </div>
         <div className={childrenWrapperClassName}>
           { children }
