@@ -9,7 +9,7 @@ const menuItems: HeaderLinkProps[] = [
   {
     title: 'Проекты',
     path: '/projects',
-    iconName: 'search',
+    iconName: 'folder',
   },
   {
     title: 'Сотрудники',
