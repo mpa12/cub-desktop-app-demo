@@ -2,11 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, generics
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Task
-from .serializer import TaskFullSerializer, TaskDetailSerializer, TaskSerializer
+from .serializer import TaskSerializer
 
 
 class TaskCreateView(APIView):
@@ -64,7 +63,7 @@ class UserTasksView(APIView):
 
     def get(self, request):
         tasks = self.get_queryset(request.user)
-        serializer = TaskFullSerializer(tasks, many=True)
+        serializer = TaskSerializer(tasks, many=True)
         return Response(serializer.data)
 
 
@@ -77,5 +76,5 @@ class UserDetailTasksView(APIView):
 
     def get(self, request, task_id):
         task = self.get_queryset(request.user, task_id)
-        serializer = TaskDetailSerializer(task, many=True)
+        serializer = TaskSerializer(task, many=True)
         return Response(serializer.data)
