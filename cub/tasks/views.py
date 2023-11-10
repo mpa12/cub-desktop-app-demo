@@ -2,7 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, generics
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Task
 from .serializer import TaskFullSerializer, TaskDetailSerializer, TaskSerializer
@@ -55,24 +56,26 @@ class TaskUpdateView(generics.UpdateAPIView):
 
 
 class UserTasksView(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self, user_id):
-        return Task.objects.filter(executor_id=user_id)
+    def get_queryset(self, user):
+        return Task.objects.filter(executor=user)
 
-    def get(self, request, user_id):
-        tasks = self.get_queryset(user_id)
+    def get(self, request):
+        tasks = self.get_queryset(request.user)
         serializer = TaskFullSerializer(tasks, many=True)
         return Response(serializer.data)
 
 
 class UserDetailTasksView(APIView):
+    authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self, user_id, task_id):
-        return Task.objects.filter(executor_id=user_id, id=task_id)
+    def get_queryset(self, user, task_id):
+        return Task.objects.filter(executor_id=user, id=task_id)
 
-    def get(self, request, user_id, task_id):
-        task = self.get_queryset(user_id, task_id)
+    def get(self, request, task_id):
+        task = self.get_queryset(request.user, task_id)
         serializer = TaskDetailSerializer(task, many=True)
         return Response(serializer.data)

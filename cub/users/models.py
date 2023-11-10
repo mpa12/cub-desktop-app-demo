@@ -35,13 +35,13 @@ class User(AbstractUser):
         verbose_name = 'Пользователь'
         ordering = ['last_name', 'first_name']
 
-    def save(self, *args, **kwargs):
-        if self.is_superuser or self.is_admin():
-            self.is_staff = True
-            self.is_superuser = True
-            self.role = UserRole.ADMIN
-
-        super(User, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     if self.is_superuser or self.is_admin():
+    #         self.is_staff = True
+    #         self.is_superuser = True
+    #         self.role = UserRole.ADMIN
+    #
+    #     super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.get_full_name()
