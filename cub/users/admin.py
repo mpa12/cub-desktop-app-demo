@@ -28,6 +28,10 @@ class UserAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('last_login', 'date_joined')
 
+    def save_model(self, request, obj, form, change):
+        if 'password' in form.changed_data:
+            obj.set_password(obj.password)
+        super().save_model(request, obj, form, change)
 
 @admin.register(UserPassport)
 class UserPassportsAdmin(admin.ModelAdmin):
