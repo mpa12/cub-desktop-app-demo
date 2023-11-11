@@ -9,7 +9,7 @@ const Routes = () => (
     <ReactRoutes>
       <Route path='login' element={<Login />} />
       <Route path='*' element={<PrivateRoute />}>
-        <Route index element={<h1>Индексаная страница</h1>} />
+        <Route index element={<h1>Индексная страница</h1>} />
         <Route path='*' element={<h1>Упс...<br/>Страница не найдена</h1>} />
       </Route>
     </ReactRoutes>

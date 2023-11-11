@@ -3,6 +3,7 @@ import logo from "../../assets/logo.png";
 import Input from "../ui/Input";
 import Icon from "../ui/Icon";
 import cn from "classnames";
+import Profile from "../profile/Profile";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -38,7 +39,7 @@ const Header = ({
           <Input className={inputClassName} />
         </div>
         <div>
-          Профиль
+          <Profile/>
         </div>
       </header>
       <div className={'w-full flex grow'}>
