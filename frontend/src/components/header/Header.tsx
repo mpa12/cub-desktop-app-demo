@@ -6,6 +6,7 @@ import cn from "classnames";
 import HeaderLink from "../header/HeaderLink";
 import { Link } from "react-router-dom";
 import menuItems from "../../constants/menuItems";
+import Profile from "../profile/Profile";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -43,7 +44,7 @@ const Header = ({
           <Input className={inputClassName} />
         </div>
         <div>
-          Профиль
+          <Profile/>
         </div>
       </header>
       <div className={'w-full flex grow'}>
