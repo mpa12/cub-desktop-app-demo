@@ -16,7 +16,14 @@ module.exports = {
       },
       'light-gray': '#f0f2f6',
       light: '#f6f7fa',
-      gray: '#808080'
+      gray: {
+        DEFAULT: '#808080',
+        hover: '#e7e7e7'
+      },
+      blue: {
+        DEFAULT: '#1363f8',
+        hover: '#3f88f5',
+      }
     },
     extend: {},
   },
