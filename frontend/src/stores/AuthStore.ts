@@ -33,7 +33,6 @@ class AuthStore {
       localStorage.setItem("accessToken", response.data.access);
       this.isAuth = true;
     } catch (err) {
-      console.log("login error");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     } finally {
@@ -45,7 +44,6 @@ class AuthStore {
     this.isAuthInProgress = true;
 
     try {
-      await AuthService.logout();
       this.isAuth = false;
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");

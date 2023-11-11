@@ -43,7 +43,9 @@ instance.interceptors.response.use(
       try {
         // Запрос на обновление токенов
         const refresh = localStorage.getItem('refreshToken') as string;
-        const resp = await instance.post('/users/api/v1/token/refresh/', { refresh });
+        const resp = await instance.post('/users/api/v1/token/refresh/', { refresh })
+          .then(resp => resp)
+          .catch(error => error);
 
         // Сохраняем новый accessToken в localStorage
         localStorage.setItem('accessToken', resp.data.token);
@@ -51,7 +53,9 @@ instance.interceptors.response.use(
         // Переотправляем запрос с обновленным accessToken
         return instance.request(originalRequest);
       } catch (error) {
-        console.log('AUTH ERROR');
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        return;
       }
     }
 

@@ -8,10 +8,6 @@ class AuthService {
   refreshToken(refresh: string) {
     return instance.post('/users/api/v1/token/refresh/', { refresh });
   }
-
-  logout() {
-    return instance.post('/api/logout')
-  }
 }
 
 export default new AuthService();
