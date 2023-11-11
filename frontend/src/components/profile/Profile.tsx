@@ -3,23 +3,31 @@ import profileImg from '../../assets/default_profile.png';
 import cn from "classnames";
 import Icon from "../../components/ui/Icon";
 import IProfileData from "../../types/IProfileData";
+import AuthStore from "../../stores/AuthStore";
 
-const imageClassName = cn("w-[50px] rounded-full");
-const profileWrapperClassName = cn("relative select-none");
-const profileNameClassName = cn("font-semibold");
-const profileCardClassName = cn("flex gap-[25px] items-center relative pl-4 p-2",
-  "rounded-lg transition duration-100 ease-linear hover:bg-light-gray cursor-pointer");
-const positionClassName = cn("text-gray");
-const dropdownArrowClassName = cn("w-[25px] h-auto ml-3");
-const modalWrapper = cn(
-  "absolute shadow rounded-lg bottom-[-175px] left-[-55px] bg-white",
-  "w-[300px] p-[20px] gap-[30px] flex flex-col"
+const imageClassName = 'w-[50px] rounded-full';
+const profileWrapperClassName = 'relative select-none';
+const profileNameClassName = 'font-semibold';
+const profileCardClassName = cn(
+  'flex gap-[25px] items-center relative pl-4 p-2',
+  'rounded-lg transition duration-100 ease-linear hover:bg-light-gray cursor-pointer'
 );
-const modalUserData = cn("gap-[10px] flex flex-col");
-const logoutButton = cn(" flex justify-end hover:shadow rounded py-1 px-2");
-const logoutForm = cn("flex w-full justify-end");
-const logoutWrapper = cn("");
+const positionClassName = 'text-gray';
+const dropdownArrowClassName = 'w-[25px] h-auto ml-3';
+const modalWrapper = cn(
+  'absolute shadow rounded-lg bottom-[-175px] left-[-55px] bg-white',
+  'w-[300px] p-[20px] gap-[30px] flex flex-col'
+);
+const modalUserData = 'gap-[10px] flex flex-col';
+const logoutButton = 'flex justify-end hover:bg-light-gray rounded py-1 px-2';
+const logoutForm = 'flex w-full justify-end';
+const logoutWrapper = 'border-t-[1px] border-t-light-gray pt-[10px]';
 
+/**
+ * Профиль.
+ *
+ * @constructor
+ */
 const Profile = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [isOpened, setIsOpened] = useState(false);
@@ -75,11 +83,11 @@ const Profile = () => {
             <p>Дата рождения: {profileData.birth_date}</p>
           </div>
           <div className={logoutWrapper}>
-            <form action="/logout" method="post" className={logoutForm}>
-              <button type={"submit"} className={logoutButton}>
+            <div className={logoutForm}>
+              <button className={logoutButton} onClick={AuthStore.logout}>
                 Выйти
               </button>
-            </form>
+            </div>
           </div>
         </div>
       )}
