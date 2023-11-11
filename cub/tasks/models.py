@@ -48,6 +48,7 @@ class Task(models.Model):
     def pause_task(self):
         if not self.is_stopped:
             self.is_paused = True
+            self.status = TaskStatuses.PAUSED
             current_time = timezone.now().time()
             elapsed_time = datetime.combine(datetime.today(), current_time) - datetime.combine(datetime.today(),
                                                                                            self.start_timestamp)
@@ -61,6 +62,7 @@ class Task(models.Model):
     def start_or_continue_task(self):
         if not self.is_stopped:
             self.is_paused = False
+            self.status = TaskStatuses.IN_WORK
             self.start_timestamp = timezone.now().time()
             self.save()
 
@@ -68,9 +70,11 @@ class Task(models.Model):
         if self.start_timestamp is not None:
             self.pause_task()
             self.is_stopped = True
+            self.status = TaskStatuses.STOPPED
             self.save()
         else:
             self.is_stopped = True
+            self.status = TaskStatuses.STOPPED
             self.save()
 
     class Meta:
