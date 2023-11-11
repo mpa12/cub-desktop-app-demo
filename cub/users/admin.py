@@ -15,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
             'last_name',
             'midl_name',
             'email',
+            'photo',
             'passport_data',
             'snils',
             'inn',
