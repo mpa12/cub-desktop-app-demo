@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from datetime import datetime
 
 from users.models import User
 from users.user_enums import UserRole
@@ -35,22 +37,41 @@ class Task(models.Model):
     project = models.ForeignKey('projects.Project', on_delete=models.CASCADE, verbose_name="Проект")
     is_paused = models.BooleanField(default=False, verbose_name="На паузе")
     is_stopped = models.BooleanField(default=False, verbose_name="Завершена")
-    time = models.TimeField("Время выполнения задачи", null=True, blank=True)
+    start_timestamp = models.TimeField(
+        verbose_name="Время начала выполнения",
+        null=True,
+        blank=True
+    )
+    time = models.DurationField("Время выполнения задачи", null=True, blank=True)
     comment = models.TextField(verbose_name="Результат выполнения", null=True, blank=True)
 
     def pause_task(self):
         if not self.is_stopped:
             self.is_paused = True
+            current_time = timezone.now().time()
+            elapsed_time = datetime.combine(datetime.today(), current_time) - datetime.combine(datetime.today(),
+                                                                                           self.start_timestamp)
+            if self.time is None:
+                self.time = elapsed_time
+            else:
+                self.time += elapsed_time
+            self.start_timestamp = None
             self.save()
 
-    def continue_task(self):
+    def start_or_continue_task(self):
         if not self.is_stopped:
             self.is_paused = False
+            self.start_timestamp = timezone.now().time()
             self.save()
 
     def stop_task(self):
-        self.is_stopped = True
-        self.save()
+        if self.start_timestamp is not None:
+            self.pause_task()
+            self.is_stopped = True
+            self.save()
+        else:
+            self.is_stopped = True
+            self.save()
 
     class Meta:
         verbose_name_plural = 'Задачи'

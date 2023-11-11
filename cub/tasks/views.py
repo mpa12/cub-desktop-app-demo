@@ -89,11 +89,12 @@ class StopTasksView(APIView):
 
     def post(self, request, task_id):
         task = self.get_queryset(request.user, task_id).first()
-        if task:
+        if task and not task.is_stopped:
             task.stop_task()
             return Response({'message': 'Задача успешно завершена'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Задача не найдена'}, status=status.HTTP_404_NOT_FOUND)
+
 
 class PauseTasksView(APIView):
     authentication_classes = [JWTAuthentication]
@@ -104,14 +105,14 @@ class PauseTasksView(APIView):
 
     def post(self, request, task_id):
         task = self.get_queryset(request.user, task_id).first()
-        if task and task.is_paused and not task.is_stopped:
+        if task and not task.is_stopped:
             task.pause_task()
             return Response({'message': 'Задача успешно остановлена'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Ошибка'}, status=status.HTTP_404_NOT_FOUND)
 
 
-class ContinueTasksView(APIView):
+class StartOrContinueTasksView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
@@ -120,8 +121,8 @@ class ContinueTasksView(APIView):
 
     def post(self, request, task_id):
         task = self.get_queryset(request.user, task_id).first()
-        if task and task.is_paused and not task.is_stopped:
-            task.continue_task()
-            return Response({'message': 'Задача продолжается'}, status=status.HTTP_200_OK)
+        if task and not task.is_stopped:
+            task.start_or_continue_task()
+            return Response({'message': 'Учет времени включен'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Ошибка'}, status=status.HTTP_404_NOT_FOUND)

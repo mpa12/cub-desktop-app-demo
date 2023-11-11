@@ -10,5 +10,5 @@ urlpatterns = [
     path('api/v1/tasks/<int:task_id>/update/', views.TaskUpdateView.as_view(), name='task-update'),
     path('api/v1/tasks/<int:task_id>/stop/', views.StopTasksView.as_view(), name='task-stop'),
     path('api/v1/tasks/<int:task_id>/pause/', views.PauseTasksView.as_view(), name='task-pause'),
-    path('api/v1/tasks/<int:task_id>/continue/', views.ContinueTasksView.as_view(), name='task-continue'),
+    path('api/v1/tasks/<int:task_id>/start_continue/', views.StartOrContinueTasksView.as_view(), name='task-start-or-continue'),
 ]
