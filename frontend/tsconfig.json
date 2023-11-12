@@ -26,6 +26,8 @@
       "@cub-types/*": ["types/*"],
       "@services/*": ["services/*"],
       "@dto/*": ["dto/*"],
+      "@assets/*": ["assets/*"],
+      "@stores/*": ["stores/*"],
     },
     "checkJs": false
   },

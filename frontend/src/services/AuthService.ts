@@ -8,6 +8,10 @@ class AuthService {
   refreshToken(refresh: string) {
     return instance.post('/users/api/v1/token/refresh/', { refresh });
   }
+
+  profileData() {
+    return instance.get('/users/api/v1/user/profile/');
+  }
 }
 
 export default new AuthService();
