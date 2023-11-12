@@ -35,6 +35,7 @@ class AuthStore {
     } catch (err) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      this.isAuth = false;
     } finally {
       this.isAuthInProgress = false;
     }

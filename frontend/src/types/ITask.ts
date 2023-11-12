@@ -12,7 +12,7 @@ interface ITask {
     last_name: string,
     photo?: string
   },
-  status: string,
+  status: 'stopped' | 'paused' | 'new' | 'in_work',
   task_files: string[],
   due_date: null,
   project_info: {
@@ -33,6 +33,7 @@ interface ITask {
   is_stopped: boolean,
   time: string,
   comment?: string
+  start_timestamp?: string
 }
 
 export default ITask;

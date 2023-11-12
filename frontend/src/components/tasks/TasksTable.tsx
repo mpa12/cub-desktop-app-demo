@@ -3,6 +3,7 @@ import ITask from "../../types/ITask";
 import Table, { IField } from "../ui/Table";
 import {Link} from "react-router-dom";
 import convertTimeFormat from "../../utils/convertTimeFormat";
+import TaskDTO from "../../dto/TaskDTO";
 
 interface TasksTableProps {
   data: ITask[];
@@ -34,7 +35,10 @@ const TasksTable = ({
     },
     {
       label: 'Время выполнения',
-      getValue: (data: ITask) => data.time && data.time.split('.')[0] || '00:00:00'
+      getValue: (data: ITask) => {
+        const taskDto = new TaskDTO(data);
+        return taskDto.getLeadTime();
+      }
     },
   ];
 
