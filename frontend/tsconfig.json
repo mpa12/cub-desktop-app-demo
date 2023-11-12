@@ -19,9 +19,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
+    "baseUrl": "src",
     "paths": {
-      "@components/*": ["src/components/*"]
+      "@components/*": ["components/*"],
+      "@ui/*": ["components/ui/*"],
+      "@cub-types/*": ["types/*"],
+      "@services/*": ["services/*"],
+      "@dto/*": ["dto/*"],
     },
     "checkJs": false
   },
