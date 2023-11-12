@@ -14,8 +14,8 @@ interface HeaderProps {
 
 const baseClassName = 'min-h-screen w-full bg-white flex flex-col';
 const headerClassName = 'h-[80px] w-full flex justify-between gap-[120px] items-center px-[20px]';
-const menuClassName = 'w-[100px] h-full pt-[60px] flex flex-col items-center gap-[20px]';
-const childrenWrapperClassName = 'grow bg-light-gray p-[60px] rounded-tl-[60px]';
+const menuClassName = 'w-[100px] h-full pt-[60px] flex flex-col items-center gap-[20px] min-w-[100px]';
+const childrenWrapperClassName = 'grow bg-light-gray p-[60px] rounded-tl-[60px] h-[calc(100vh-80px)] overflow-y-auto';
 const logoBlockClassName = 'h-[50px]';
 const logoClassName = 'h-full';
 const inputBlockClassName = 'h-[35px] relative grow';

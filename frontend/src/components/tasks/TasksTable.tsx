@@ -27,11 +27,28 @@ const TasksTable = ({
     },
     {
       label: 'Крайний срок',
-      getValue: (data: ITask) => convertTimeFormat(data.due_date)
+      getValue: (data: ITask) => {
+        const taskDto = new TaskDTO(data);
+        return taskDto.getDeadline();
+      }
     },
     {
       label: 'Проект',
       getValue: (data: ITask) => data.project_info.title
+    },
+    {
+      label: 'Статус',
+      getValue: (data: ITask) => {
+        const taskDto = new TaskDTO(data);
+
+        const text = taskDto.getStatusText();
+        const color = taskDto.getStatusColor();
+
+        return <span
+          style={{background: color}}
+          className={'px-[5px] py-[2px] rounded-[11px] text-white'}
+        >{text}</span>;
+      }
     },
     {
       label: 'Время выполнения',
