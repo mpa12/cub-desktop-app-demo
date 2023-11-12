@@ -44,6 +44,7 @@ class Task(models.Model):
     )
     time = models.DurationField("Время выполнения задачи", null=True, blank=True)
     comment = models.TextField(verbose_name="Результат выполнения", null=True, blank=True)
+    start_time = models.DateTimeField(verbose_name="Для фронта", null=True, blank=True)
 
     def pause_task(self):
         if not self.is_stopped:
@@ -64,6 +65,7 @@ class Task(models.Model):
             self.is_paused = False
             self.status = TaskStatuses.IN_WORK
             self.start_timestamp = timezone.now().time()
+            self.start_time = timezone.now()
             self.save()
 
     def stop_task(self):

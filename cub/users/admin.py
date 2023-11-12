@@ -33,6 +33,7 @@ class UserAdmin(admin.ModelAdmin):
             obj.set_password(obj.password)
         super().save_model(request, obj, form, change)
 
+
 @admin.register(UserPassport)
 class UserPassportsAdmin(admin.ModelAdmin):
     list_display = ('serial', 'number', 'date_of_given', 'departament', 'departament_code',)
