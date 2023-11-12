@@ -43,12 +43,26 @@ instance.interceptors.response.use(
       try {
         // Запрос на обновление токенов
         const refresh = localStorage.getItem('refreshToken') as string;
-        const resp = await instance.post('/users/api/v1/token/refresh/', { refresh })
+
+        if (!refresh) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          return;
+        }
+
+        const resp = await axios.post('/users/api/v1/token/refresh/', { refresh })
           .then(resp => resp)
           .catch(error => error);
 
+
+        if (resp?.data?.access) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          return;
+        }
+
         // Сохраняем новый accessToken в localStorage
-        localStorage.setItem('accessToken', resp.data.token);
+        localStorage.setItem('accessToken', resp.data.access);
 
         // Переотправляем запрос с обновленным accessToken
         return instance.request(originalRequest);

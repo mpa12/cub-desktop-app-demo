@@ -33,6 +33,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'is_stopped',
             'time',
             'comment',
+            'start_timestamp',
         )
 
     def create(self, validated_data):

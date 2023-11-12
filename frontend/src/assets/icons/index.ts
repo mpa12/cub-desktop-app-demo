@@ -5,6 +5,8 @@ import { ReactComponent as tasks } from './tasks.svg';
 import { ReactComponent as people } from './people.svg';
 import { ReactComponent as calendar } from './calendar.svg';
 import { ReactComponent as folder } from './folder.svg';
+import { ReactComponent as arrowLeft } from './arrow-left.svg';
+import { ReactComponent as clock } from './clock.svg';
 
 export const ICONS = {
   search,
@@ -13,6 +15,8 @@ export const ICONS = {
   calendar,
   folder,
   dropdownArrow,
+  arrowLeft,
+  clock,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {
