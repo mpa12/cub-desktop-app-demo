@@ -96,12 +96,28 @@ class TaskDTO {
     return convertTimeFormat(this.data.due_date);
   }
 
-  getProjectManagerInfo(): string {
+  getProjectManagerName(): string {
     return `${this.data.project_manager_info.first_name} ${this.data.project_manager_info.last_name}`
   }
 
-  getExecutorInfo(): string {
+  getProjectManagerPhotoSrc(): string {
+    if (!this.data.project_manager_info.photo) return;
+
+    const url = this.data.project_manager_info.photo.substring(1);
+
+    return `${process.env.REACT_APP_API_BASE_URL}${url}`;
+  }
+
+  getExecutorName(): string {
     return `${this.data.executor_info.first_name} ${this.data.executor_info.last_name}`
+  }
+
+  getExecutorPhotoSrc(): string {
+    if (!this.data.executor_info.photo) return;
+
+    const url = this.data.executor_info.photo.substring(1);
+
+    return `${process.env.REACT_APP_API_BASE_URL}${url}`
   }
 }
 

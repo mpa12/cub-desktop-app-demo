@@ -116,8 +116,8 @@ const TaskView = ({
                   <span>Постановщик</span>
                 </div>
                 <User
-                  imageUrl={taskDto.data.project_manager_info.photo}
-                  username={taskDto.getProjectManagerInfo()}
+                  imageUrl={taskDto.getProjectManagerPhotoSrc()}
+                  username={taskDto.getProjectManagerName()}
                 />
               </div>
               <div key={'Ответственный'}>
@@ -125,8 +125,8 @@ const TaskView = ({
                   <span>Ответственный</span>
                 </div>
                 <User
-                  imageUrl={taskDto.data.project_manager_info.photo}
-                  username={taskDto.getExecutorInfo()}
+                  imageUrl={taskDto.getExecutorPhotoSrc()}
+                  username={taskDto.getExecutorName()}
                 />
               </div>
             </div>
