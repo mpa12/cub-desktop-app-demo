@@ -1,9 +1,8 @@
 import React from "react";
-import ITask from "../../types/ITask";
-import Table, { IField } from "../ui/Table";
+import ITask from "@cub-types/ITask";
+import Table, { IField } from "@ui/Table";
 import {Link} from "react-router-dom";
-import convertTimeFormat from "../../utils/convertTimeFormat";
-import TaskDTO from "../../dto/TaskDTO";
+import TaskDTO from "@dto/TaskDTO";
 
 interface TasksTableProps {
   data: ITask[];
