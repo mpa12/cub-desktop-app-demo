@@ -36,3 +36,6 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(UserPassport)
 class UserPassportsAdmin(admin.ModelAdmin):
     list_display = ('serial', 'number', 'date_of_given', 'departament', 'departament_code',)
+
+
+admin.site.unregister(Group)
