@@ -2,7 +2,6 @@ FROM node:20
 
 WORKDIR /app
 
-COPY --from=build /app/build ./build
 COPY package*.json ./
 RUN npm install --production
 
