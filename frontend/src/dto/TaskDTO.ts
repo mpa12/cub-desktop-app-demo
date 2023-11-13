@@ -20,11 +20,11 @@ class TaskDTO {
     const ENUMS = {
       'stopped': '#c45b5b',
       'paused': '#e7ab3f',
-      'new': '#d5d55b',
-      'in_work': '#56b956',
+      'new': '#8cd55b',
+      'in_work': '#58b9ce',
     };
 
-    return ENUMS[this.data.status] || '#c0bcbc';
+    return ENUMS[this.data.status] || '#333333';
   }
 
   /**
@@ -75,10 +75,10 @@ class TaskDTO {
   }
 
   getStartDelta(): number {
-    if (!this.data?.start_timestamp) return 0;
+    if (!this.data?.start_time) return 0;
 
     // Парсим строку с целевым временем
-    const targetDate  = new Date('2023-11-12T06:46:01.069Z');
+    const targetDate  = new Date(this.data.start_time);
 
     // Получаем текущее время в миллисекундах
     const currentTime: Date = new Date();
