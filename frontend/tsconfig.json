@@ -28,6 +28,7 @@
       "@dto/*": ["dto/*"],
       "@assets/*": ["assets/*"],
       "@stores/*": ["stores/*"],
+      "@utils/*": ["utils/*"],
     },
     "checkJs": false
   },

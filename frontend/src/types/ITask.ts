@@ -34,6 +34,7 @@ interface ITask {
   time: string,
   comment?: string
   start_timestamp?: string
+  start_time?: string
 }
 
 export default ITask;
