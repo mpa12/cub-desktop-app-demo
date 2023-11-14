@@ -23,8 +23,6 @@ services:
       - redis
     env_file:
       - ./cub/.env
-    command:
-      - celery -A cub worker -l info
     volumes:
       - ./cub:/app
 
