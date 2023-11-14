@@ -200,7 +200,7 @@ REDIS_PORT = os.getenv('REDIS_PORT')
 
 CELERY_BROKER_URL = 'redis://{}:{}'.format(os.getenv('REDIS_HOST'), os.getenv('REDIS_PORT'))
 CELERY_RESULT_BACKEND = 'redis://{}:{}'.format(os.getenv('REDIS_HOST'), os.getenv('REDIS_PORT'))
-CELERY_IMPORTS = ('aut.tasks', 'products.tasks.tasks', 'news.tasks', 'orders.tasks')
+CELERY_IMPORTS = ('users.tasks', )
 
 # Тг бот
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
