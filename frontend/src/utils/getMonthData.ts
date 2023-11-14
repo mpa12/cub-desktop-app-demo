@@ -1,42 +1,48 @@
 import ICalendarDay from "@cub-types/ICalendarDay";
 
 function getMonthData(month: number, year: number): ICalendarDay[] {
-  const result = [];
-  const daysInMonth = new Date(year, month, 0).getDate();
-  const firstDayOfWeek = new Date(year, month - 1, 1).getDay(); // День недели первого числа месяца
+  const calendarData = [];
+  const firstDay = new Date(year, month - 1, 1);
+  const lastDay = new Date(year, month, 0);
+  const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // Начинаем с понедельника
+  const daysInMonth = lastDay.getDate();
 
-  // Заполнение предыдущего месяца
-  let prevMonth = month - 1;
-  let prevYear = year;
-  if (prevMonth === 0) {
-    prevMonth = 12;
-    prevYear--;
-  }
-  const daysInPrevMonth = new Date(prevYear, prevMonth, 0).getDate();
-  const startDay = daysInPrevMonth - firstDayOfWeek + 2; // +2, чтобы первый день был понедельник
-
-  for (let day = startDay; day <= daysInPrevMonth; day++) {
-    result.push({ day, weekDay: (result.length) % 7, isCurrentMonth: false });
-  }
-
-  // Заполнение текущего месяца
-  for (let day = 1; day <= daysInMonth; day++) {
-    result.push({ day, weekDay: (result.length) % 7, isCurrentMonth: true });
+  // Добавляем дни предыдущего месяца, если начало месяца не с понедельника
+  const prevMonthLastDay = new Date(year, month - 1, 0).getDate();
+  for (let i = startDay; i > 0; i--) {
+    const prevMonthDate = new Date(year, month - 2, prevMonthLastDay - i + 1);
+    calendarData.push({
+      day: prevMonthDate.getDate(),
+      weekDay: prevMonthDate.getDay(),
+      isCurrentMonth: false,
+      isoDate: prevMonthDate.toISOString().split('T')[0],
+    });
   }
 
-  // Заполнение следующего месяца
-  let nextMonth = month + 1;
-  let nextYear = year;
-  if (nextMonth === 13) {
-    nextYear++;
+  // Добавляем дни текущего месяца
+  for (let i = 1; i <= daysInMonth; i++) {
+    const currentDate = new Date(year, month - 1, i);
+    calendarData.push({
+      day: i,
+      weekDay: currentDate.getDay(),
+      isCurrentMonth: true,
+      isoDate: currentDate.toISOString().split('T')[0],
+    });
   }
-  const daysToAdd = 6 - result[result.length - 1].weekDay; // Дни, которые нужно добавить из следующего месяца
 
-  for (let day = 1; day <= daysToAdd; day++) {
-    result.push({ day, weekDay: (result.length) % 7, isCurrentMonth: false });
+  // Добавляем дни следующего месяца, если конец месяца не на воскресенье
+  const endDay = lastDay.getDay() === 0 ? 0 : 7 - lastDay.getDay();
+  for (let i = 1; i <= endDay; i++) {
+    const nextMonthDate = new Date(year, month, i);
+    calendarData.push({
+      day: nextMonthDate.getDate(),
+      weekDay: nextMonthDate.getDay(),
+      isCurrentMonth: false,
+      isoDate: nextMonthDate.toISOString().split('T')[0],
+    });
   }
 
-  return result;
+  return calendarData;
 }
 
 export default getMonthData;

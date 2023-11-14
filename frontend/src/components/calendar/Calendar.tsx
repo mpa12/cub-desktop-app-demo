@@ -1,21 +1,14 @@
 import React, {useState} from "react";
 import getMonthData from "@utils/getMonthData";
 import chunkArray from "@utils/chunkArray";
-import ICalendarDay from "@cub-types/ICalendarDay";
 import getMonthName from "@utils/getMonthName";
 import cn from "classnames";
 import Icon from "@ui/Icon";
 import getWeekNumberText from "@utils/getWeekNumberText";
+import ICalendarData from "@cub-types/ICalendarData";
+import CalendarRow from "@components/calendar/CalendarRow";
+import CreateEventModal from "@components/calendar/CreateEventModal";
 
-interface CalendarRowProps {
-  weekData: ICalendarDay[];
-  weekDataIndex: number;
-  isLastWeek: boolean;
-}
-
-const calendarDayClassName = cn(
-  'w-[calc(100%/7)] border-[1px] border-t-0 border-gray-hover p-[10px] min-h-[100px] font-semibold',
-);
 const calendarHeader = cn(
   'p-[10px] rounded-t-[10px] border-[1px] border-gray-hover flex items-center justify-between'
 );
@@ -34,6 +27,74 @@ const Calendar = () => {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
   });
+  const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
+
+  const events: ICalendarData[] = [
+    {
+      title: 'Meeting 1',
+      description: 'Discuss project details',
+      start_datetime: '2023-11-15T10:00:00.000Z',
+      end_datetime: '2023-11-15T12:00:00.000Z',
+      text_color: '#c52a2a',
+      bg_color: '#e1a2a2',
+    },
+    {
+      title: 'Meeting 2',
+      description: 'Discuss project details',
+      start_datetime: '2023-11-15T10:00:00.000Z',
+      end_datetime: '2023-11-15T12:00:00.000Z',
+      text_color: '#5631e1',
+      bg_color: '#9d90c4',
+    },
+    {
+      title: 'Meeting 3',
+      description: 'Discuss project details',
+      start_datetime: '2023-11-18T10:00:00.000Z',
+      end_datetime: '2023-11-15T12:00:00.000Z',
+      text_color: '#3eaf00',
+      bg_color: '#b7ceaa',
+    },
+    {
+      title: 'Meeting 4',
+      description: 'Discuss project details',
+      start_datetime: '2023-11-15T10:00:00.000Z',
+      end_datetime: '2023-11-15T12:00:00.000Z',
+      text_color: '#66be34',
+      bg_color: '#b7ceaa',
+    },
+    {
+      title: 'Meeting 5',
+      description: 'Discuss project details',
+      start_datetime: '2023-11-19T10:00:00.000Z',
+      end_datetime: '2023-11-15T12:00:00.000Z',
+      text_color: '#66be34',
+      bg_color: '#b7ceaa',
+    },
+    {
+      title: 'Meeting 6',
+      description: 'Discuss project details',
+      start_datetime: '2023-11-15T10:00:00.000Z',
+      end_datetime: '2023-11-15T12:00:00.000Z',
+      text_color: '#66be34',
+      bg_color: '#b7ceaa',
+    },
+    {
+      title: 'Lunch with Team Lunch with Team Lunch with Team',
+      description: 'Informal team gathering',
+      start_datetime: '2023-11-16T12:30:00.000Z',
+      end_datetime: '2023-11-16T13:30:00.000Z',
+      text_color: '#632bb7',
+      bg_color: '#8572a2',
+    },
+    {
+      title: 'Workshop',
+      description: 'Training session on new tools',
+      start_datetime: '2023-11-17T09:00:00.000Z',
+      end_datetime: '2023-11-17T16:00:00.000Z',
+      text_color: '#6c5c0d',
+      bg_color: '#beb37a',
+    },
+  ]
 
   const monthData = getMonthData(calendarData.month, calendarData.year);
   const chunkedMonthData = chunkArray(monthData, 7);
@@ -71,6 +132,7 @@ const Calendar = () => {
 
   return (
     <>
+      <CreateEventModal isOpen={createModalIsOpen} setIsOpen={setCreateModalIsOpen} />
       <div className={calendarHeader}>
         <div>
           <h3 className={'font-bold'}>Календарь событий</h3>
@@ -88,7 +150,7 @@ const Calendar = () => {
       <div className={'flex'}>
         {weekTitles.map(weekTitle => {
           return (
-            <div className={weekTitleWrapper}>
+            <div className={weekTitleWrapper} key={`weekTitle-${weekTitle}`}>
               <span>{weekTitle}</span>
             </div>
           )
@@ -99,39 +161,12 @@ const Calendar = () => {
           weekData={weekData}
           weekDataIndex={weekDataIndex}
           isLastWeek={weekDataIndex === (chunkedMonthData.length - 1)}
+          events={events}
+          openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
         />
       })}
     </>
   );
 };
-
-const CalendarRow = ({
-  weekData,
-  weekDataIndex,
-  isLastWeek,
-}: CalendarRowProps) => {
-  return (
-    <div className={'flex'} key={`week-${weekDataIndex}`}>
-      {weekData.map((day, dayIndex) => {
-        return (
-          <div
-            className={cn(calendarDayClassName, {
-              ['border-r-0']: dayIndex !== 6,
-              ['rounded-bl-[10px]']: isLastWeek && dayIndex === 0,
-              ['rounded-br-[10px]']: isLastWeek && dayIndex === 6,
-            })}
-            key={`week-${weekDataIndex}-${dayIndex}`}
-          >
-            <span
-              className={cn('select-none', {
-                ['text-gray']: !day.isCurrentMonth,
-              })}
-            >{day.day.toString()}</span>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
 
 export default Calendar;

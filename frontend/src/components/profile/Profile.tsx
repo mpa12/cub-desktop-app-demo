@@ -16,7 +16,7 @@ const profileCardClassName = cn(
 const positionClassName = 'text-gray';
 const dropdownArrowClassName = 'w-[25px] h-auto ml-3';
 const modalWrapper = cn(
-  'absolute shadow rounded-lg bottom-[-210px] left-[30px] bg-white',
+  'absolute shadow rounded-lg bottom-[-210px] right-0 bg-white',
   'w-[300px] p-[20px] gap-[30px] flex flex-col'
 );
 const modalUserData = 'gap-[10px] flex flex-col';

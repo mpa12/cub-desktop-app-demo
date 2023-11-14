@@ -9,6 +9,7 @@ import { ReactComponent as arrowLeft } from './arrow-left.svg';
 import { ReactComponent as clock } from './clock.svg';
 import { ReactComponent as chevronLeft } from './chevron-left.svg';
 import { ReactComponent as chevronRight } from './chevron-right.svg';
+import { ReactComponent as plusCircle } from './plus-circle.svg';
 
 export const ICONS = {
   search,
@@ -21,6 +22,7 @@ export const ICONS = {
   clock,
   chevronLeft,
   chevronRight,
+  plusCircle,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {

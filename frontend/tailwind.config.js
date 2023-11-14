@@ -14,6 +14,10 @@ module.exports = {
         DEFAULT: '#1c9a47',
         hover: '#2cbb5d',
       },
+      'light-green': {
+        DEFAULT: '#91e3ad',
+        hover: '#b5dcc2',
+      },
       'light-gray': {
         DEFAULT: '#f0f2f6',
         hover: '#eaebee'
