@@ -12,6 +12,7 @@ interface CalendarDateProps {
   weekDataIndex: number;
   isLastWeek: boolean;
   openCreateEventModal: () => void;
+  setSelectedDate: (newDate: Date) => void;
 }
 
 const calendarDayClassName = cn(
@@ -32,6 +33,7 @@ const CalendarDate = ({
   weekDataIndex,
   isLastWeek,
   openCreateEventModal,
+  setSelectedDate,
 }: CalendarDateProps) => {
   const currentEvents = events
     .filter(event => {
@@ -39,6 +41,11 @@ const CalendarDate = ({
       const isoDate = date.toISOString().split('T')[0];
       return isoDate === day.isoDate;
     });
+
+  const onAdd = () => {
+    setSelectedDate(new Date(day.isoDate));
+    openCreateEventModal();
+  }
 
   return (
     <div
@@ -51,16 +58,16 @@ const CalendarDate = ({
       })}
       key={`week-${weekDataIndex}-${dayIndex}`}
     >
-            <span
-              className={cn(calendarDayNumberClassName, {
-                ['text-gray']: !day.isCurrentMonth,
-              })}
-            >{day.day.toString()}</span>
+      <span
+        className={cn(calendarDayNumberClassName, {
+          ['text-gray']: !day.isCurrentMonth,
+        })}
+      >{day.day.toString()}</span>
       <div className={plusButtonClassName}>
         <Icon
           iconName={'plusCircle'}
           title={'Добавить событие'}
-          onClick={openCreateEventModal}
+          onClick={onAdd}
         />
       </div>
       {
