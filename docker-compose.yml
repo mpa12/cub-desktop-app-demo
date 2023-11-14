@@ -24,7 +24,6 @@ services:
     env_file:
       - ./cub/.env
     command:
-      - python manage.py migrate
       - celery -A cub worker -l info
     volumes:
       - ./cub:/app
