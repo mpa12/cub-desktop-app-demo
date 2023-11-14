@@ -1,6 +1,6 @@
 from django.db import models
 
-from projects.models import Project
+from users.models import User
 
 
 class Event(models.Model):
@@ -8,8 +8,9 @@ class Event(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок события")
     description = models.TextField(verbose_name="Описание события")
     start_datetime = models.DateTimeField(verbose_name="Дата и время начала события")
-    end_datetime = models.DateTimeField(verbose_name="Дата и время окончания события")
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name="Проект", null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь", null=True, blank=True)
+    text_color = models.CharField(max_length=7, verbose_name="Цвет текста", default="#000000")
+    bg_color = models.CharField(max_length=7, verbose_name="Цвет фона", default="#fff")
 
     class Meta:
         verbose_name_plural = 'Календари'
