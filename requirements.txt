@@ -9,5 +9,6 @@ psycopg2-binary==2.9.9
 pyTelegramBotAPI==4.14.0
 redis==5.0.1
 sqlparse==0.4.4
+transliterate==1.10.2
 typing_extensions==4.8.0
 django_cors_headers==4.3.0

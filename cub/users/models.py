@@ -2,11 +2,12 @@ import random
 import string
 
 from django.contrib.auth.hashers import make_password
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+from transliterate import translit
 
-from .user_enums import UserRole, UserGender
 from .tasks import send_passport_task
+from .user_enums import UserRole, UserGender
 
 
 class User(AbstractUser):
@@ -46,10 +47,13 @@ class User(AbstractUser):
                 self.is_superuser = True
                 self.role = UserRole.ADMIN
 
-            password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+            username = translit(f"{self.last_name}{self.first_name}", 'ru', reversed=True).lower()
+            self.username = username
+
+            password = ''.join(random.choices(string.ascii_letters + string.digits, k=15))
             self.password = make_password(password)
 
-            send_passport_task.delay(self.get_full_name(), self.username, password, self.email)
+            send_passport_task.delay(self.get_full_name(), username, password, self.email)
 
         super(User, self).save(*args, **kwargs)
 
