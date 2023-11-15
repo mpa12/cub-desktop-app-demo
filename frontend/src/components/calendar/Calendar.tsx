@@ -32,9 +32,20 @@ const Calendar = () => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [events, setEvents] = useState<ICalendarData[]>([]);
-  const [modalData, setModalData] = useState({
-    date: new Date()
+  const [modalData, setModalData] = useState<{
+    date: Date;
+    title?: string;
+    description?: string;
+    bgColor: string;
+    textColor: string;
+  }>({
+    date: new Date(),
+    title: '',
+    description: '',
+    bgColor: '#86e7af',
+    textColor: '#0d592c',
   });
+
   const setSelectedDate = date => {
     setModalData({
       ...modalData,

@@ -10,7 +10,7 @@ export const instance = axios.create({
 // Который к каждому запросу добавляет accessToken из localStorage
 instance.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`
+    config.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
     return config
   }
 );
@@ -47,6 +47,7 @@ instance.interceptors.response.use(
         if (!refresh) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
+          window.location.replace('/login');
           return;
         }
 
@@ -58,6 +59,7 @@ instance.interceptors.response.use(
         if (resp?.data?.access) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
+          window.location.replace('/login');
           return;
         }
 
@@ -69,6 +71,7 @@ instance.interceptors.response.use(
       } catch (error) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        window.location.replace('/login');
         return;
       }
     }
