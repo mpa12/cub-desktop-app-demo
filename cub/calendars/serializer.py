@@ -18,3 +18,7 @@ class EventSerializer(serializers.ModelSerializer):
             'text_color',
             'bg_color',
         )
+
+    def create(self, validated_data):
+        event = Event.objects.create(**validated_data)
+        return event
