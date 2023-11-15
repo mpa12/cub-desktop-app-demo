@@ -97,11 +97,11 @@ class TaskDTO {
   }
 
   getProjectManagerName(): string {
-    return `${this.data.project_manager_info.first_name} ${this.data.project_manager_info.last_name}`
+    return `${this.data.project_manager_info?.first_name} ${this.data.project_manager_info?.last_name}`
   }
 
   getProjectManagerPhotoSrc(): string {
-    if (!this.data.project_manager_info.photo) return;
+    if (!this.data.project_manager_info?.photo) return;
 
     const url = this.data.project_manager_info.photo.substring(1);
 
@@ -109,11 +109,11 @@ class TaskDTO {
   }
 
   getExecutorName(): string {
-    return `${this.data.executor_info.first_name} ${this.data.executor_info.last_name}`
+    return `${this.data.executor_info?.first_name} ${this.data.executor_info?.last_name}`
   }
 
   getExecutorPhotoSrc(): string {
-    if (!this.data.executor_info.photo) return;
+    if (!this.data.executor_info?.photo) return;
 
     const url = this.data.executor_info.photo.substring(1);
 
