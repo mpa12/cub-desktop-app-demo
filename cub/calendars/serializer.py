@@ -20,5 +20,7 @@ class EventSerializer(serializers.ModelSerializer):
         )
 
     def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['user'] = user
         event = Event.objects.create(**validated_data)
         return event

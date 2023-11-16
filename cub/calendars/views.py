@@ -36,11 +36,10 @@ class UserDetailEventView(APIView):
 class EventCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        return Event.objects.none()
-
     def post(self, request):
-        serializer = EventSerializer(data=request.data)
+        user = request.user
+        request.data['user'] = user.id
+        serializer = EventSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
