@@ -1,9 +1,10 @@
 import IProfileData from "@cub-types/IProfileData";
 
 class ProfileModel {
-  ADMIN = ''
-  PROGRAMMER = 'programmer'
-  MANAGER = 'manager'
+  SUPERUSER = '';
+  ADMIN = 'admin';
+  PROGRAMMER = 'programmer';
+  MANAGER = 'manager';
 
   constructor(public data: IProfileData) {
   }
@@ -17,7 +18,7 @@ class ProfileModel {
   }
 
   isAdmin() {
-    return this.data?.role === this.ADMIN;
+    return [this.ADMIN, this.SUPERUSER].includes(this.data?.role);
   }
 }
 
