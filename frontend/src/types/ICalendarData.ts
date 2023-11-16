@@ -1,5 +1,5 @@
 interface ICalendarData {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   start_datetime: string;

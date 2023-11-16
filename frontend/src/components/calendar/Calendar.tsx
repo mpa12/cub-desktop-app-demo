@@ -32,9 +32,20 @@ const Calendar = () => {
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [events, setEvents] = useState<ICalendarData[]>([]);
-  const [modalData, setModalData] = useState({
-    date: new Date()
+  const [modalData, setModalData] = useState<{
+    date: Date;
+    title?: string;
+    description?: string;
+    bgColor: string;
+    textColor: string;
+  }>({
+    date: new Date(),
+    title: '',
+    description: '',
+    bgColor: '#86e7af',
+    textColor: '#0d592c',
   });
+
   const setSelectedDate = date => {
     setModalData({
       ...modalData,
@@ -42,19 +53,21 @@ const Calendar = () => {
     })
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await CalendarService.index();
-        setEvents(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const updateEventList = async () => {
+    setLoading(true);
 
-    fetchData().then(() => {});
+    try {
+      const response = await CalendarService.index();
+      setEvents(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    updateEventList().then(() => {});
   }, []);
 
   const monthData = getMonthData(calendarData.month, calendarData.year);
@@ -106,6 +119,7 @@ const Calendar = () => {
         setIsOpen={setCreateModalIsOpen}
         data={modalData}
         setData={setModalData}
+        updateEventList={updateEventList}
       />
       <div className={calendarHeader}>
         <div>
@@ -138,6 +152,7 @@ const Calendar = () => {
           events={events}
           openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
           setSelectedDate={setSelectedDate}
+          updateEventList={updateEventList}
         />
       })}
     </>
