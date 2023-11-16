@@ -9,7 +9,7 @@ interface BackButtonProps {
 
 const backWrapperClassName = 'w-full';
 const backButtonClassName = cn(
-  'border-[1px] border-gray px-[15px] py-[7px] rounded-[7px] hover:bg-gray-hover flex w-fit',
+  'bg-white px-[15px] py-[7px] rounded-[7px] hover:bg-gray-hover flex w-fit',
   'items-center justify-center gap-[10px] group'
 );
 const arrowClassName = 'relative group-hover:left-[-5px]'
