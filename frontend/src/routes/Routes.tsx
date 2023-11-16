@@ -9,6 +9,7 @@ import Employees from "../components/employees/Employees";
 import Calendar from "../components/calendar/Calendar";
 import Task from "../components/tasks/Task";
 import Project from "@components/projects/Project";
+import PageNotFound from "@components/page-not-found/PageNotFound";
 
 const Routes = () => (
   <BrowserRouter>
@@ -18,6 +19,7 @@ const Routes = () => (
         <Route index element={<Navigate to='/tasks'/>}/>
         <Route path='tasks' element={<Outlet/>}>
           <Route index element={<Tasks/>}/>
+          <Route path='create' element={<Tasks/>}/>
           <Route path=':id' element={<Task/>}/>
         </Route>
         <Route path='projects' element={<Outlet/>}>
@@ -26,7 +28,7 @@ const Routes = () => (
         </Route>
         <Route path='employees' element={<Employees/>}/>
         <Route path='calendar' element={<Calendar/>}/>
-        <Route path='*' element={<h1>Упс...<br/>Страница не найдена</h1>}/>
+        <Route path='*' element={<PageNotFound />}/>
       </Route>
     </ReactRoutes>
   </BrowserRouter>

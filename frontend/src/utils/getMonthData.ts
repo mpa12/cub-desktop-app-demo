@@ -2,7 +2,7 @@ import ICalendarDay from "@cub-types/ICalendarDay";
 
 function getMonthData(month: number, year: number): ICalendarDay[] {
   const calendarData = [];
-  const firstDay = new Date(year, month - 1, 1, 12);
+  const firstDay = new Date(year, month - 1, 1);
   const lastDay = new Date(year, month, 0);
   const startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1; // Начинаем с понедельника
   const daysInMonth = lastDay.getDate();
@@ -10,7 +10,7 @@ function getMonthData(month: number, year: number): ICalendarDay[] {
   // Добавляем дни предыдущего месяца, если начало месяца не с понедельника
   const prevMonthLastDay = new Date(year, month - 1, 0, 12).getDate();
   for (let i = startDay; i > 0; i--) {
-    const prevMonthDate = new Date(year, month - 2, prevMonthLastDay - i + 1);
+    const prevMonthDate = new Date(year, month - 2, prevMonthLastDay - i + 1, 12);
     calendarData.push({
       day: prevMonthDate.getDate(),
       weekDay: prevMonthDate.getDay(),

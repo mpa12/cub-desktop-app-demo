@@ -53,19 +53,21 @@ const Calendar = () => {
     })
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await CalendarService.index();
-        setEvents(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const updateEventList = async () => {
+    setLoading(true);
 
-    fetchData().then(() => {});
+    try {
+      const response = await CalendarService.index();
+      setEvents(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    updateEventList().then(() => {});
   }, []);
 
   const monthData = getMonthData(calendarData.month, calendarData.year);
@@ -117,6 +119,7 @@ const Calendar = () => {
         setIsOpen={setCreateModalIsOpen}
         data={modalData}
         setData={setModalData}
+        updateEventList={updateEventList}
       />
       <div className={calendarHeader}>
         <div>
@@ -149,6 +152,7 @@ const Calendar = () => {
           events={events}
           openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
           setSelectedDate={setSelectedDate}
+          updateEventList={updateEventList}
         />
       })}
     </>

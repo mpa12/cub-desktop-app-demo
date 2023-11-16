@@ -7,6 +7,7 @@ import CalendarService from "@services/CalendarService";
 interface CalendarEventProps {
   event: ICalendarData;
   modalPosition?: 'left' | 'right';
+  updateEventList?: () => Promise<void>;
 }
 
 const calendarEventWrapperClassName = 'group border-l-[2px] px-[4px] relative';
@@ -22,9 +23,11 @@ const deleteButtonClassName = 'ml-auto hover:text-gray cursor-pointer';
 const CalendarEvent = ({
   event,
   modalPosition = 'right',
+  updateEventList
 }: CalendarEventProps) => {
   const removeHandler = async () => {
     await CalendarService.delete(event.id);
+    updateEventList().then();
   }
 
   return (

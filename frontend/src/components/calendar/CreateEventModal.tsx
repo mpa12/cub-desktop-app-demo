@@ -16,11 +16,12 @@ interface ModalData {
   textColor: string;
 }
 
-interface CreateEventModal {
+interface CreateEventModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   data: ModalData;
   setData: (data: ModalData) => void;
+  updateEventList: () => Promise<void>;
 }
 
 const wrapperClassName = 'w-[400px] p-[10px] flex flex-col gap-[5px]';
@@ -36,7 +37,8 @@ const CreateEventModal = ({
   setIsOpen,
   data,
   setData,
-}: CreateEventModal) => {
+  updateEventList
+}: CreateEventModalProps) => {
   const [bgPickerOpen, setBgPickerOpen] = useState(false);
   const [textPickerOpen, setTextPickerOpen] = useState(false);
 
@@ -89,6 +91,8 @@ const CreateEventModal = ({
       bg_color: data.bgColor,
       text_color: data.textColor,
     });
+
+    updateEventList().then();
 
     setIsOpen(false);
     setData({

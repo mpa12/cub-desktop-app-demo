@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
-import IProject from "../../types/IProject";
-import ProjectDTO from "../../dto/ProjectDTO";
-import Icon from "../ui/Icon";
+import React, { useState } from "react";
+import IProject from "@cub-types/IProject";
+import ProjectModel from "@dto/ProjectModel";
+import Icon from "@ui/Icon";
 import cn from "classnames";
-import User from "../user/User";
-import defaultProfile from "@assets/default_profile.png";
 
 interface ProjectViewProps {
   data: IProject;
@@ -37,23 +35,9 @@ const projectDetailSidebarTr = cn(
 const userRoleClassName = 'w-full border-b-[1px] border-b-gray-hover [&>span]:text-[12px] my-[10px]';
 
 const ProjectView = ({
-                       data
-                     }: ProjectViewProps) => {
-  const projectDto = new ProjectDTO(data);
-
-  const [timeDelta, setTimeDelta] = useState(0);
-
-  // useEffect(() => {
-  //   let interval = null;
-  //   if (projectDto.canPause()) {
-  //     interval = setInterval(() => {
-  //       setTimeDelta(projectDto.getStartDelta());
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(interval);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [projectDto, timeDelta]);
+  data
+}: ProjectViewProps) => {
+  const projectDto = new ProjectModel(data);
 
   return (
     <div className={wrapperClassName}>
@@ -109,9 +93,9 @@ const ProjectView = ({
                 </div>
                 <div className={wrapperClassName}>
                   <div>
-                    <p>{data.customer_info.header_name}</p>
-                    <p>{data.customer_info.email}</p>
-                    <p>{data.customer_info.phone_number}</p>
+                    <p>{data.customer_info?.header_name}</p>
+                    <p>{data.customer_info?.email}</p>
+                    <p>{data.customer_info?.phone_number}</p>
                   </div>
                 </div>
                 {/*<User*/}
