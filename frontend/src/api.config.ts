@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios, {HttpStatusCode} from "axios";
+import AuthStore from "@stores/AuthStore";
 
 export const instance = axios.create({
   withCredentials: true,
@@ -35,7 +36,7 @@ instance.interceptors.response.use(
 
     if (
       // Проверим, что ошибка именно из-за невалидного accessToken
-      error.response.status === 401 &&
+      error.response.status === HttpStatusCode.Unauthorized &&
       // Проверим, что запрос не повторный
       error.config &&
       !error.config._isRetry
@@ -45,10 +46,7 @@ instance.interceptors.response.use(
         const refresh = localStorage.getItem('refreshToken') as string;
 
         if (!refresh) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          window.location.replace('/login');
-          return;
+          return AuthStore.logout();
         }
 
         const resp = await axios.post('/users/api/v1/token/refresh/', { refresh })
@@ -57,10 +55,7 @@ instance.interceptors.response.use(
 
 
         if (resp?.data?.access) {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          window.location.replace('/login');
-          return;
+          return AuthStore.logout();
         }
 
         // Сохраняем новый accessToken в localStorage
@@ -69,10 +64,7 @@ instance.interceptors.response.use(
         // Переотправляем запрос с обновленным accessToken
         return instance.request(originalRequest);
       } catch (error) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        window.location.replace('/login');
-        return;
+        return AuthStore.logout();
       }
     }
 

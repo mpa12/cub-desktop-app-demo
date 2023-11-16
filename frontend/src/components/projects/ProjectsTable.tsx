@@ -37,7 +37,7 @@ const ProjectsTable = ({data}: ProjectsTableProps) => {
     // {
     //   label: 'Крайний срок',
     //   getValue: (data: IProject) => {
-    //     const projectDto = new ProjectDTO(data);
+    //     const projectDto = new ProjectModel(data);
     //     return projectDto.getDeadline();
     //   }
     // },
@@ -48,7 +48,7 @@ const ProjectsTable = ({data}: ProjectsTableProps) => {
     // {
     //   label: 'Статус',
     //   getValue: (data: IProject) => {
-    //     const projectDto = new ProjectDTO(data);
+    //     const projectDto = new ProjectModel(data);
     //
     //     const text = projectDto.getStatusText();
     //     const color = projectDto.getStatusColor();
@@ -62,7 +62,7 @@ const ProjectsTable = ({data}: ProjectsTableProps) => {
     // {
     //   label: 'Время выполнения',
     //   getValue: (data: IProject) => {
-    //     const projectDto = new ProjectDTO(data);
+    //     const projectDto = new ProjectModel(data);
     //     return projectDto.getLeadTime();
     //   }
     // },

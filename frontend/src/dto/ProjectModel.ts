@@ -1,7 +1,7 @@
 import IProject from "../types/IProject";
 import convertTimeFormat from "../utils/convertTimeFormat";
 
-class ProjectDTO {
+class ProjectModel {
   constructor(public data: IProject) {
   }
 
@@ -121,4 +121,4 @@ class ProjectDTO {
   // }
 }
 
-export default ProjectDTO;
+export default ProjectModel;
