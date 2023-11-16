@@ -1,7 +1,4 @@
 import React from "react";
-import cn from "classnames";
-import Icon from "@ui/Icon";
-import CalendarEvent from "@components/calendar/CalendarEvent";
 import ICalendarData from "@cub-types/ICalendarData";
 import ICalendarDay from "@cub-types/ICalendarDay";
 import CalendarDate from "@components/calendar/CalendarDate";
@@ -13,6 +10,7 @@ interface CalendarRowProps {
   events: ICalendarData[];
   openCreateEventModal: () => void;
   setSelectedDate: (newDate: Date) => void;
+  updateEventList: () => Promise<void>;
 }
 
 const CalendarRow = ({
@@ -22,6 +20,7 @@ const CalendarRow = ({
   events,
   openCreateEventModal,
   setSelectedDate,
+  updateEventList,
 }: CalendarRowProps) => {
   return (
     <div className={'flex'} key={`week-${weekDataIndex}`}>
@@ -34,6 +33,7 @@ const CalendarRow = ({
           events={events}
           openCreateEventModal={openCreateEventModal}
           setSelectedDate={setSelectedDate}
+          updateEventList={updateEventList}
         />;
       })}
     </div>

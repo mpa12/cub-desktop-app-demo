@@ -54,6 +54,8 @@ const Calendar = () => {
   };
 
   const updateEventList = async () => {
+    setLoading(true);
+
     try {
       const response = await CalendarService.index();
       setEvents(response.data);
@@ -150,6 +152,7 @@ const Calendar = () => {
           events={events}
           openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
           setSelectedDate={setSelectedDate}
+          updateEventList={updateEventList}
         />
       })}
     </>

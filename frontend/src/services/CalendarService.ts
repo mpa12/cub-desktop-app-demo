@@ -30,7 +30,8 @@ class CalendarService {
   }
 
   delete(eventId: number) {
-    return instance.post('/calendars/api/v1/events/delete/', { events_ids: eventId.toString() });
+    instance.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
+    return instance.post('/calendars/api/v1/events/delete/', { events_ids: [eventId.toString()] });
   }
 }
 
