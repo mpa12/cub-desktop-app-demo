@@ -41,12 +41,13 @@ class User(AbstractUser):
         ordering = ['last_name', 'first_name']
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            if self.is_superuser or self.is_admin():
-                self.is_staff = True
-                self.is_superuser = True
-                self.role = UserRole.ADMIN
 
+        if self.is_superuser or self.is_admin():
+            self.is_staff = True
+            self.is_superuser = True
+            self.role = UserRole.ADMIN
+
+        if not self.pk and not self.is_superuser:
             username = translit(f"{self.last_name}{self.first_name}", 'ru', reversed=True).lower()
             self.username = username
 
