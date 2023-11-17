@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from bot.models import BotFAQ
+
+
+@admin.register(BotFAQ)
+class BotFAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'answer', 'file',)
