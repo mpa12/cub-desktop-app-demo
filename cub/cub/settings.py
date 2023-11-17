@@ -15,7 +15,7 @@ SECRET_KEY = get_random_secret_key()
 
 DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 
