@@ -23,6 +23,7 @@ CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
