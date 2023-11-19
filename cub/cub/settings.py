@@ -220,3 +220,9 @@ EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+JAZZMIN_SETTINGS  = {
+    "site_title": "Невада групп",
+    "site_header": "Невада групп",
+    "site_brand": "Невада групп",
+}
