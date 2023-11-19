@@ -11,6 +11,7 @@ import { ReactComponent as chevronLeft } from './chevron-left.svg';
 import { ReactComponent as chevronRight } from './chevron-right.svg';
 import { ReactComponent as plusCircle } from './plus-circle.svg';
 import { ReactComponent as trash } from './trash.svg';
+import { ReactComponent as folderImg } from './folder-img.svg';
 
 export const ICONS = {
   search,
@@ -25,6 +26,7 @@ export const ICONS = {
   chevronRight,
   plusCircle,
   trash,
+  folderImg,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {
