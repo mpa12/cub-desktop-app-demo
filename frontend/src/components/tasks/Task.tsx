@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ITask from "../../types/ITask";
+import ITask from "@cub-types/task/ITask";
 import TasksService from "../../services/TaskService";
 import LoaderSpinner from "../ui/LoaderSpinner";
 import BackButton from "../ui/BackButton";

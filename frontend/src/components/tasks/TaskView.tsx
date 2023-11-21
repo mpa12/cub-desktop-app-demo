@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import ITask from "../../types/ITask";
+import ITask from "@cub-types/task/ITask";
 import TaskDTO from "../../dto/TaskDTO";
 import Icon from "../ui/Icon";
 import cn from "classnames";

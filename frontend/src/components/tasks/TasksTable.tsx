@@ -1,5 +1,5 @@
 import React from "react";
-import ITask from "@cub-types/ITask";
+import ITask from "@cub-types/task/ITask";
 import Table, { IField } from "@ui/Table";
 import {Link} from "react-router-dom";
 import TaskDTO from "@dto/TaskDTO";
