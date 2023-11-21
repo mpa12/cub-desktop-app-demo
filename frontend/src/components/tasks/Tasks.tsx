@@ -4,7 +4,7 @@ import TasksNotFound from "@components/tasks/TasksNotFound";
 import TasksTable from "@components/tasks/TasksTable";
 import LoaderSpinner from "@ui/LoaderSpinner";
 import cn from "classnames";
-import ITask from "@cub-types/ITask";
+import ITask from "@cub-types/task/ITask";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const dataWrapperClassName = cn(

@@ -1,4 +1,4 @@
-import ITask from "../types/ITask";
+import ITask from "@cub-types/task/ITask";
 import convertTimeFormat from "../utils/convertTimeFormat";
 
 class TaskDTO {

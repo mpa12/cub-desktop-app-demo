@@ -20,6 +20,10 @@ class TaskService {
   complete(taskId: string | number) {
     return instance.post(`/tasks/api/v1/tasks/${taskId}/stop/`);
   }
+
+  create() {
+    return instance.post(`/tasks/api/v1/tasks/create/`);
+  }
 }
 
 export default new TaskService();
