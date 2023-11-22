@@ -12,7 +12,7 @@ import Select from 'react-select'
 import TaskValidator from "../../validators/TaskValidator";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
-const inputTitleClassName = '!border-0 outline-0 w-full px-[20px] py-[10px] !rounded-[10px] !mb-[7px]';
+const inputTitleClassName = '!border-0 outline-0 w-full px-[20px] py-[10px] !rounded-[10px]';
 const linkedFilesClassName = 'w-full gap-[5px] flex-wrap';
 const buttonsWrapperClassName = ' w-full mt-[7px] flex gap-[5px]';
 const inputBlockClassName = 'flex gap-[5px] items-center mt-[7px]';
@@ -100,9 +100,14 @@ const CreateTask = () => {
             setTaskTitle(evt.target.value);
           }}
         />
-        {!!formErrors.title.length && (
-          <div>Хуй</div>
-        )}
+        <div className={'flex flex-col mb-[7px]'}>
+          {formErrors.title.map(errorTitle => {
+            return <ErrorText
+              title={errorTitle}
+              key={`title-${errorTitle}`}
+            />
+          })}
+        </div>
         <TinyEditor
           value={taskData.description}
           setValue={setTaskDescription}
@@ -111,11 +116,19 @@ const CreateTask = () => {
             images_upload_handler: handleImageUpload,
           }}
         />
+        <div className={'flex flex-col mb-[7px]'}>
+          {formErrors.description.map(errorTitle => {
+            return <ErrorText
+              title={errorTitle}
+              key={`description-${errorTitle}`}
+            />
+          })}
+        </div>
         <div className={linkedFilesClassName}>
           
         </div>
         <div className={inputBlockClassName}>
-          <label className={inputBlockLabelClassName}>Проет</label>
+          <label className={inputBlockLabelClassName}>Проект</label>
           <Select
             value={
               taskData.project_id
@@ -129,6 +142,14 @@ const CreateTask = () => {
               setProjectId(option.value)
             }}
           />
+        </div>
+        <div className={'flex flex-col mb-[7px]'}>
+          {formErrors.project_id.map(errorTitle => {
+            return <ErrorText
+              title={errorTitle}
+              key={`project_id-${errorTitle}`}
+            />
+          })}
         </div>
         <div className={inputBlockClassName}>
           <label className={inputBlockLabelClassName}>Ответственный</label>
@@ -146,6 +167,14 @@ const CreateTask = () => {
             }}
           />
         </div>
+        <div className={'flex flex-col mb-[7px]'}>
+          {formErrors.executor_id.map(errorTitle => {
+            return <ErrorText
+              title={errorTitle}
+              key={`executor_id-${errorTitle}`}
+            />
+          })}
+        </div>
         <div className={inputBlockClassName}>
           <label className={inputBlockLabelClassName}>Крайний срок</label>
           <Input
@@ -157,6 +186,14 @@ const CreateTask = () => {
             }}
           />
         </div>
+        <div className={'flex flex-col mb-[7px]'}>
+          {formErrors.deadline.map(errorTitle => {
+            return <ErrorText
+              title={errorTitle}
+              key={`deadline-${errorTitle}`}
+            />
+          })}
+        </div>
         <div className={buttonsWrapperClassName}>
           <Button onClick={createHandler} title={'Создать задачу'} type={'green'} />
           <Link to={'/tasks'}>
@@ -165,6 +202,12 @@ const CreateTask = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const ErrorText = ({ title }: { title: string }) => {
+  return (
+    <span className={'text-red text-[12px]'}>{title}</span>
   );
 };
 
