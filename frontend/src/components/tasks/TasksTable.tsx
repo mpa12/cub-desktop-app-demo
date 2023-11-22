@@ -2,7 +2,7 @@ import React from "react";
 import ITask from "@cub-types/task/ITask";
 import Table, { IField } from "@ui/Table";
 import {Link} from "react-router-dom";
-import TaskDTO from "@dto/TaskDTO";
+import TaskModel from "@models/TaskModel";
 
 interface TasksTableProps {
   data: ITask[];
@@ -27,7 +27,7 @@ const TasksTable = ({
     {
       label: 'Крайний срок',
       getValue: (data: ITask) => {
-        const taskDto = new TaskDTO(data);
+        const taskDto = new TaskModel(data);
         return taskDto.getDeadline();
       }
     },
@@ -38,7 +38,7 @@ const TasksTable = ({
     {
       label: 'Статус',
       getValue: (data: ITask) => {
-        const taskDto = new TaskDTO(data);
+        const taskDto = new TaskModel(data);
 
         const text = taskDto.getStatusText();
         const color = taskDto.getStatusColor();
@@ -52,7 +52,7 @@ const TasksTable = ({
     {
       label: 'Время выполнения',
       getValue: (data: ITask) => {
-        const taskDto = new TaskDTO(data);
+        const taskDto = new TaskModel(data);
         return taskDto.getLeadTime();
       }
     },

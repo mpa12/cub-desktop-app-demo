@@ -39,7 +39,8 @@ instance.interceptors.response.use(
       error.response.status === HttpStatusCode.Unauthorized &&
       // Проверим, что запрос не повторный
       error.config &&
-      !error.config._isRetry
+      !error.config._isRetry &&
+      originalRequest.url !== '/users/api/v1/token/'
     ) {
       try {
         // Запрос на обновление токенов

@@ -6,7 +6,8 @@ import Icon from "@ui/Icon";
 import AuthService from "@services/AuthService";
 import AuthStore from "@stores/AuthStore";
 import Button from "@ui/Button";
-import ProfileModel from "@dto/ProfileModel";
+import ProfileModel from "../../models/ProfileModel";
+import {Link} from "react-router-dom";
 
 const imageClassName = 'w-[50px] rounded-full';
 const profileWrapperClassName = 'relative';
@@ -77,9 +78,9 @@ const Profile = () => {
     setIsOpened(!isOpened);
   };
 
-  const redirectToAdmin = () => {
-    window.location.replace(`${process.env.REACT_APP_API_BASE_URL}/admin`)
-  };
+  // const redirectToAdmin = () => {
+  //   window.location.replace(`${process.env.REACT_APP_API_BASE_URL}/admin`)
+  // };
   const redirectToCreateTask = () => {
     window.location.replace(`/tasks/create`);
   };
@@ -103,17 +104,21 @@ const Profile = () => {
             {!!profileData?.birth_date && <p>Дата рождения: {profileData.birth_date}</p>}
           </div>
           <div className={profileButtonsWrapperClassName}>
-            <Button
-              onClick={redirectToCreateTask}
-              title={'Создать задачу'}
-              type={'green'}
-            />
-            {profileModel.isAdmin() && (
+            <Link to={`/tasks/create`}>
               <Button
-                onClick={redirectToAdmin}
-                title={'Админ панель'}
+                onClick={redirectToCreateTask}
+                title={'Создать задачу'}
                 type={'green'}
               />
+            </Link>
+            {profileModel.isAdmin() && (
+              <Link to={`${process.env.REACT_APP_API_BASE_URL}/admin`}>
+                <Button
+                  onClick={() => {}}
+                  title={'Админ панель'}
+                  type={'green'}
+                />
+              </Link>
             )}
           </div>
           <div className={logoutWrapper}>

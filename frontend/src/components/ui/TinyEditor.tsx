@@ -27,7 +27,7 @@ const TinyEditor = ({
 
   return (
     <div className={cn(editorWrapperClassName, {
-      ['[&>*]:hidden']: isLoading,
+      [`[&>*]:hidden h-[${MIN_EDITOR_HEIGHT}px]`]: isLoading,
     })}>
       <Editor
         apiKey='c2vyb2k8ujgdotsdufwnem7p7wa0xjxooz4diivsfma6n86q'
