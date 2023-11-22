@@ -3,6 +3,8 @@ import IProject from "@cub-types/IProject";
 import ProjectModel from "@models/ProjectModel";
 import Icon from "@ui/Icon";
 import cn from "classnames";
+import Folder from "@components/projects/Folder";
+import File from "@components/projects/File";
 
 interface ProjectViewProps {
   data: IProject;
@@ -14,7 +16,7 @@ const contentClassName = 'flex items-stretch gap-[14px]';
 const leftContentWrapperClassName = 'bg-light rounded-[10px] grow flex flex-col';
 const rightContentWrapperClassName = 'bg-light rounded-[10px] w-[300px]';
 const projectDetailHeader = 'py-[20px] px-[10px] border-b-gray-hover border-b-[1px]';
-const projectDetailContent = 'py-[20px] px-[10px] grow';
+const projectDetailContent = 'py-[20px] px-[20px] grow flex flex-wrap gap-[20px]';
 const projectDetailButtons = 'py-[20px] px-[10px] border-t-gray-hover border-t-[1px] flex flex-wrap gap-[10px]';
 // Кнопка без цвета
 const projectViewButtonClassName = 'px-[15px] py-[7px] rounded-[7px]';
@@ -35,8 +37,8 @@ const projectDetailSidebarTr = cn(
 const userRoleClassName = 'w-full border-b-[1px] border-b-gray-hover [&>span]:text-[12px] my-[10px]';
 
 const ProjectView = ({
-  data
-}: ProjectViewProps) => {
+                       data
+                     }: ProjectViewProps) => {
   const projectDto = new ProjectModel(data);
 
   return (
@@ -48,14 +50,14 @@ const ProjectView = ({
             {/*<span className={'text-[13px] text-gray'}>Задача № {projectDto.data.id} - {projectDto.getStatusText()}</span>*/}
           </div>
           <div className={projectDetailContent}>
-            {projectDto.data.files.map(file => {
+            {projectDto.data.folders.map(folder => {
               return (
-                <div>{file.name}</div>
+                <Folder name={folder.name}/>
               )
             })}
-            {projectDto.data.folders.map(file => {
+            {projectDto.data.files.map(file => {
               return (
-                <div>{file.name}</div>
+                <File name={file.name}/>
               )
             })}
           </div>
