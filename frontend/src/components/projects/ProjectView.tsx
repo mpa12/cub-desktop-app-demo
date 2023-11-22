@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import IProject from "@cub-types/IProject";
-import ProjectModel from "@dto/ProjectModel";
+import ProjectModel from "@models/ProjectModel";
 import Icon from "@ui/Icon";
 import cn from "classnames";
 
@@ -47,9 +47,18 @@ const ProjectView = ({
           <div className={projectDetailHeader}>
             {/*<span className={'text-[13px] text-gray'}>Задача № {projectDto.data.id} - {projectDto.getStatusText()}</span>*/}
           </div>
-          {/*<div className={projectDetailContent}>*/}
-          {/*  {projectDto.data.description}*/}
-          {/*</div>*/}
+          <div className={projectDetailContent}>
+            {projectDto.data.files.map(file => {
+              return (
+                <div>{file.name}</div>
+              )
+            })}
+            {projectDto.data.folders.map(file => {
+              return (
+                <div>{file.name}</div>
+              )
+            })}
+          </div>
           <div className={projectDetailButtons}>
             <span className={'text-[12px] flex gap-[5px] items-center'}>
               <Icon iconName={'clock'} className={'text-[10px] h-[13px]'}/>

@@ -1,7 +1,7 @@
 import ITask from "@cub-types/task/ITask";
 import convertTimeFormat from "../utils/convertTimeFormat";
 
-class TaskDTO {
+class TaskModel {
   constructor(public data: ITask) {
   }
 
@@ -121,4 +121,4 @@ class TaskDTO {
   }
 }
 
-export default TaskDTO;
+export default TaskModel;

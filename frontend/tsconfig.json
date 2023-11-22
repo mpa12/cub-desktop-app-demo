@@ -25,7 +25,7 @@
       "@ui/*": ["components/ui/*"],
       "@cub-types/*": ["types/*"],
       "@services/*": ["services/*"],
-      "@dto/*": ["dto/*"],
+      "@models/*": ["models/*"],
       "@assets/*": ["assets/*"],
       "@stores/*": ["stores/*"],
       "@utils/*": ["utils/*"],

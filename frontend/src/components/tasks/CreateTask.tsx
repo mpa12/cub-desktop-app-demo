@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Input from "@ui/Input";
 import FileService from "@services/FileService";
 import UploadHandler from "@cub-types/tinymce/UploadHandler";
@@ -7,9 +7,13 @@ import { Link } from "react-router-dom";
 import TinyEditor from "@ui/TinyEditor";
 import useCreateTaskData from "@components/tasks/states/useCreateTaskData";
 import cn from "classnames";
+import useProjects from "@stores/useProjects";
+import Select from 'react-select'
+import TaskValidator from "../../validators/TaskValidator";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const inputTitleClassName = '!border-0 outline-0 w-full px-[20px] py-[10px] !rounded-[10px] !mb-[7px]';
+const linkedFilesClassName = 'w-full gap-[5px] flex-wrap';
 const buttonsWrapperClassName = ' w-full mt-[7px] flex gap-[5px]';
 const inputBlockClassName = 'flex gap-[5px] items-center mt-[7px]';
 const inputBlockLabelClassName = 'w-[250px]';
@@ -20,7 +24,23 @@ const CreateTask = () => {
     setTaskTitle,
     setTaskDescription,
     setTaskDeadline,
+    setExecutorId,
+    setProjectId,
   } = useCreateTaskData();
+
+  const [formErrors, setFormErrors] = useState({
+    title: [],
+    description: [],
+    executor_id: [],
+    project_id: [],
+    deadline: [],
+  });
+
+  const {
+    projectsState
+  } = useProjects();
+
+  // TODO: Сделать получение сотрудников с пипихи
 
   const handleImageUpload: UploadHandler = async (blobInfo, progress) => {
     const formData = new FormData();
@@ -42,18 +62,47 @@ const CreateTask = () => {
     }
   };
 
+  const options: { label: string; value: string }[] = [
+    { value: '1', label: 'Максим Пиголицын' },
+    { value: '2', label: 'Михаил Карпухин' },
+    { value: '3', label: 'Музыко Никита' }
+  ];
+
+  const projectsOptions: { label: string; value: string }[] = projectsState.data
+    .map(project => ({
+      value: project.id.toString(),
+      label: project.title
+    }));
+
+  const findSelectedOption = (selectedValue, option) => {
+    return option.value === selectedValue;
+  };
+
+  const createHandler = () => {
+    const validator = TaskValidator.validate(taskData);
+
+    setFormErrors(validator.errors);
+
+    if (!validator.isValid) return;
+  };
+
   return (
     <div>
       <h3 className={titleClassName}>Новая задача</h3>
       <div>
         <Input
           placeholder={'Введите название задачи'}
-          className={inputTitleClassName}
+          className={cn(inputTitleClassName, {
+            ['border-red !border-[1px]']: formErrors.title.length
+          })}
           value={taskData.title}
           onChange={evt => {
             setTaskTitle(evt.target.value);
           }}
         />
+        {!!formErrors.title.length && (
+          <div>Хуй</div>
+        )}
         <TinyEditor
           value={taskData.description}
           setValue={setTaskDescription}
@@ -62,25 +111,40 @@ const CreateTask = () => {
             images_upload_handler: handleImageUpload,
           }}
         />
+        <div className={linkedFilesClassName}>
+          
+        </div>
         <div className={inputBlockClassName}>
           <label className={inputBlockLabelClassName}>Проет</label>
-          <select className={cn(inputTitleClassName, '!w-fit')} value={taskData.project_id}>
-            <option></option>
-            <option>Интерсвязь</option>
-            <option>Дед Мороз</option>
-            <option>РАО</option>
-            <option>Dicom Viewer</option>
-            <option>Lactalis</option>
-          </select>
+          <Select
+            value={
+              taskData.project_id
+                ? projectsOptions.find(findSelectedOption.bind(null, taskData.project_id)) as { label: string; value: string }
+                : null
+            }
+            className={'w-[300px]'}
+            options={projectsOptions}
+            placeholder={'Выберите проект'}
+            onChange={(option) => {
+              setProjectId(option.value)
+            }}
+          />
         </div>
         <div className={inputBlockClassName}>
           <label className={inputBlockLabelClassName}>Ответственный</label>
-          <select className={cn(inputTitleClassName, '!w-fit')} value={taskData.executor_id}>
-            <option></option>
-            <option>Максим Пиголицын</option>
-            <option>Михаил Карпухин</option>
-            <option>Музыко Никита</option>
-          </select>
+          <Select
+            value={
+              taskData.executor_id
+                ? options.find(findSelectedOption.bind(null, taskData.executor_id)) as { label: string; value: string }
+                : null
+            }
+            className={'w-[300px]'}
+            options={options}
+            placeholder={'Выберите ответственного'}
+            onChange={(option) => {
+              setExecutorId(option.value)
+            }}
+          />
         </div>
         <div className={inputBlockClassName}>
           <label className={inputBlockLabelClassName}>Крайний срок</label>
@@ -94,7 +158,7 @@ const CreateTask = () => {
           />
         </div>
         <div className={buttonsWrapperClassName}>
-          <Button onClick={console.log} title={'Создать задачу'} type={'green'} />
+          <Button onClick={createHandler} title={'Создать задачу'} type={'green'} />
           <Link to={'/tasks'}>
             <Button onClick={() => {}} title={'Отмена'} type={'light-gray'} />
           </Link>

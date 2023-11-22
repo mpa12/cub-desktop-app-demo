@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import ITask from "@cub-types/task/ITask";
-import TaskDTO from "../../dto/TaskDTO";
+import TaskModel from "@models/TaskModel";
 import Icon from "../ui/Icon";
 import cn from "classnames";
 import User from "../user/User";
@@ -44,7 +44,7 @@ const TaskView = ({
   pauseHandler,
   completeHandler,
 }: TaskViewProps) => {
-  const taskDto = new TaskDTO(data);
+  const taskDto = new TaskModel(data);
 
   const [timeDelta, setTimeDelta] = useState(0);
 

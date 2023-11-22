@@ -31,12 +31,28 @@ const useCreateTaskData = () => {
     });
   };
 
+  const setExecutorId = (executor_id) => {
+    setTaskData({
+      ...taskData,
+      executor_id
+    });
+  };
+
+  const setProjectId = (project_id) => {
+    setTaskData({
+      ...taskData,
+      project_id
+    });
+  };
+
   return {
     taskData,
     setTaskData,
     setTaskTitle,
     setTaskDescription,
     setTaskDeadline,
+    setExecutorId,
+    setProjectId,
   };
 };
 
