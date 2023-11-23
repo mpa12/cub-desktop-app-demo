@@ -20,6 +20,10 @@ class ProfileModel {
   isAdmin() {
     return [this.ADMIN, this.SUPERUSER].includes(this.data?.role);
   }
+
+  getName() {
+    return `${this.data.first_name} ${this.data.midl_name}`;
+  }
 }
 
 export default ProfileModel;

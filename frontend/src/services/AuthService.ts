@@ -12,6 +12,10 @@ class AuthService {
   profileData() {
     return instance.get('/users/api/v1/user/profile/');
   }
+
+  getAllUsers() {
+    return instance.get('/users/api/v1/users/all/');
+  }
 }
 
 export default new AuthService();

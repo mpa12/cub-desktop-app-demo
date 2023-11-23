@@ -13,6 +13,7 @@ import { ReactComponent as plusCircle } from './plus-circle.svg';
 import { ReactComponent as trash } from './trash.svg';
 import { ReactComponent as folderImg } from './folder-img.svg';
 import { ReactComponent as file } from './file.svg';
+import { ReactComponent as download } from './download.svg';
 
 export const ICONS = {
   search,
@@ -29,6 +30,7 @@ export const ICONS = {
   trash,
   folderImg,
   file,
+  download,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {
