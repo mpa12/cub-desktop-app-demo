@@ -5,6 +5,8 @@ import TasksTable from "@components/tasks/TasksTable";
 import LoaderSpinner from "@ui/LoaderSpinner";
 import cn from "classnames";
 import ITask from "@cub-types/task/ITask";
+import {Link} from "react-router-dom";
+import Button from "@ui/Button";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const dataWrapperClassName = cn(
@@ -33,6 +35,14 @@ const Tasks = () => {
   return (
     <>
       <h1 className={titleClassName}>Список задач</h1>
+      <Link to={`/tasks/create`}>
+        <Button
+          title={'Создать задачу'}
+          type={'green'}
+          onClick={() => {}}
+          className={'mb-[15px]'}
+        />
+      </Link>
       <div className={dataWrapperClassName}>
         {isLoading && <LoaderSpinner loading={isLoading} />}
         {(!isLoading && !tasks.length) && <TasksNotFound />}

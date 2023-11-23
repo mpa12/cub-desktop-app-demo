@@ -78,13 +78,6 @@ const Profile = () => {
     setIsOpened(!isOpened);
   };
 
-  // const redirectToAdmin = () => {
-  //   window.location.replace(`${process.env.REACT_APP_API_BASE_URL}/admin`)
-  // };
-  const redirectToCreateTask = () => {
-    window.location.replace(`/tasks/create`);
-  };
-
   const profileModel = new ProfileModel(profileData);
 
   return (
@@ -106,9 +99,9 @@ const Profile = () => {
           <div className={profileButtonsWrapperClassName}>
             <Link to={`/tasks/create`}>
               <Button
-                onClick={redirectToCreateTask}
                 title={'Создать задачу'}
                 type={'green'}
+                onClick={() => {}}
               />
             </Link>
             {profileModel.isAdmin() && (

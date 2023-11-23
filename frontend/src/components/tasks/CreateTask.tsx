@@ -10,10 +10,17 @@ import cn from "classnames";
 import useProjects from "@stores/useProjects";
 import Select from 'react-select'
 import TaskValidator from "../../validators/TaskValidator";
+import useAllUsers from "@stores/useAllUsers";
+import ProfileModel from "@models/ProfileModel";
+import Icon from "@ui/Icon";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const inputTitleClassName = '!border-0 outline-0 w-full px-[20px] py-[10px] !rounded-[10px]';
 const linkedFilesClassName = 'w-full gap-[5px] flex-wrap';
+const fileInputClassName = cn(
+  'hover:bg-light-gray-hover cursor-pointer w-[80px] h-[80px] border-[1px] border-gray',
+  'rounded-[10px] border-dashed flex items-center justify-center'
+);
 const buttonsWrapperClassName = ' w-full mt-[7px] flex gap-[5px]';
 const inputBlockClassName = 'flex gap-[5px] items-center mt-[7px]';
 const inputBlockLabelClassName = 'w-[250px]';
@@ -39,8 +46,10 @@ const CreateTask = () => {
   const {
     projectsState
   } = useProjects();
-
-  // TODO: Сделать получение сотрудников с пипихи
+  // TODO: Раскомментировать когда Миша сделает эндпоинт на получение всех пользователей
+  // const {
+  //   allUsersState
+  // } = useAllUsers();
 
   const handleImageUpload: UploadHandler = async (blobInfo, progress) => {
     const formData = new FormData();
@@ -74,6 +83,18 @@ const CreateTask = () => {
       label: project.title
     }));
 
+  // TODO: Раскомментировать когда Миша сделает эндпоинт на получение всех пользователей
+  // const allUsersOptions: { label: string; value: string }[] = allUsersState.data
+  //   .map(user => {
+  //     const userModel = new ProfileModel(user);
+  //
+  //     return {
+  //       value: user.id.toString(),
+  //       label: userModel.getName(),
+  //     };
+  //   });
+  const allUsersOptions = options;
+
   const findSelectedOption = (selectedValue, option) => {
     return option.value === selectedValue;
   };
@@ -84,6 +105,8 @@ const CreateTask = () => {
     setFormErrors(validator.errors);
 
     if (!validator.isValid) return;
+
+
   };
 
   return (
@@ -97,6 +120,7 @@ const CreateTask = () => {
           })}
           value={taskData.title}
           onChange={evt => {
+            setFormErrors({ ...formErrors, title: [] });
             setTaskTitle(evt.target.value);
           }}
         />
@@ -108,15 +132,20 @@ const CreateTask = () => {
             />
           })}
         </div>
-        <TinyEditor
-          value={taskData.description}
-          setValue={setTaskDescription}
-          init={{
-            placeholder: 'Описание задачи',
-            images_upload_handler: handleImageUpload,
-          }}
-        />
-        <div className={'flex flex-col mb-[7px]'}>
+        <div className={!!formErrors.description.length && '[&>div>div]:border-red [&>div>div]:!border-[1px]'}>
+          <TinyEditor
+            value={taskData.description}
+            setValue={(description) => {
+              setFormErrors({ ...formErrors, description: [] });
+              setTaskDescription(description);
+            }}
+            init={{
+              placeholder: 'Описание задачи',
+              images_upload_handler: handleImageUpload,
+            }}
+          />
+        </div>
+        <div className={'flex flex-col mb-[7px] mt-[4px]'}>
           {formErrors.description.map(errorTitle => {
             return <ErrorText
               title={errorTitle}
@@ -125,7 +154,9 @@ const CreateTask = () => {
           })}
         </div>
         <div className={linkedFilesClassName}>
-          
+          <div className={fileInputClassName}>
+            <Icon iconName={'download'} className={'h-[20px] text-gray'} />
+          </div>
         </div>
         <div className={inputBlockClassName}>
           <label className={inputBlockLabelClassName}>Проект</label>
@@ -135,11 +166,17 @@ const CreateTask = () => {
                 ? projectsOptions.find(findSelectedOption.bind(null, taskData.project_id)) as { label: string; value: string }
                 : null
             }
-            className={'w-[300px]'}
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                borderColor: formErrors.project_id.length ? '#bb1a1a' : 'transparent',
+              }),
+            }}
             options={projectsOptions}
             placeholder={'Выберите проект'}
             onChange={(option) => {
-              setProjectId(option.value)
+              setFormErrors({ ...formErrors, project_id: [] });
+              setProjectId(option.value);
             }}
           />
         </div>
@@ -156,14 +193,20 @@ const CreateTask = () => {
           <Select
             value={
               taskData.executor_id
-                ? options.find(findSelectedOption.bind(null, taskData.executor_id)) as { label: string; value: string }
+                ? allUsersOptions.find(findSelectedOption.bind(null, taskData.executor_id)) as { label: string; value: string }
                 : null
             }
-            className={'w-[300px]'}
-            options={options}
+            styles={{
+              control: (baseStyles) => ({
+                ...baseStyles,
+                borderColor: formErrors.executor_id.length ? '#bb1a1a' : 'transparent',
+              }),
+            }}
+            options={allUsersOptions}
             placeholder={'Выберите ответственного'}
             onChange={(option) => {
-              setExecutorId(option.value)
+              setFormErrors({ ...formErrors, executor_id: [] });
+              setExecutorId(option.value);
             }}
           />
         </div>
@@ -179,9 +222,12 @@ const CreateTask = () => {
           <label className={inputBlockLabelClassName}>Крайний срок</label>
           <Input
             type={'date'}
-            className={cn(inputTitleClassName, '!w-fit')}
+            className={cn(inputTitleClassName, '!w-fit', {
+              ['border-red !border-[1px]']: formErrors.deadline.length
+            })}
             value={taskData.deadline}
             onChange={evt => {
+              setFormErrors({ ...formErrors, deadline: [] });
               setTaskDeadline(evt.target.value)
             }}
           />
