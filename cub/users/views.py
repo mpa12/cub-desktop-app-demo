@@ -15,3 +15,15 @@ class UserView(APIView):
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data)
+
+
+class AllUserView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return User.objects.all()
+
+    def get(self, request):
+        users = self.get_queryset()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
