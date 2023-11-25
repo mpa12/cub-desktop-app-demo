@@ -37,11 +37,16 @@ const messageError = 'Произошла ошибка';
  */
 const Profile = () => {
   const modalRef = useRef<HTMLDivElement | null>(null);
+  const headerButtonRef = useRef<HTMLDivElement | null>(null);
   const [isOpened, setIsOpened] = useState(false);
   const [profileData, setProfileData] = useState<IProfileData>();
 
   const handleClickOutside = (event: MouseEvent | Event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+    if (
+      modalRef.current
+      && !modalRef.current.contains(event.target as Node)
+      && !headerButtonRef.current.contains(event.target as Node)
+    ) {
       setIsOpened(false);
     }
   };
@@ -82,7 +87,7 @@ const Profile = () => {
 
   return (
     <div className={profileWrapperClassName}>
-      <div className={profileCardClassName} onClick={onDropdownClick}>
+      <div className={profileCardClassName} onClick={onDropdownClick} ref={headerButtonRef}>
         <img className={imageClassName} src={profileImg} alt="profile_img"/>
         <div>
           <p className={profileNameClassName}>{profileData?.username || messageError}</p>
