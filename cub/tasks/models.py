@@ -44,7 +44,8 @@ class Task(models.Model):
         blank=True
     )
     time = models.DurationField("Время выполнения задачи", null=True, blank=True)
-    comment = models.ForeignKey('tasks.TaskComment', on_delete=models.CASCADE, verbose_name="Комментарий", null=True, blank=True)
+    comments = models.ManyToManyField('tasks.TaskComment', blank=True, verbose_name='Комментарии',
+                                      related_name='task_comments')
 
     start_time = models.DateTimeField(verbose_name="Для фронта", null=True, blank=True)
 
@@ -91,6 +92,7 @@ class Task(models.Model):
 
 class TaskComment(models.Model):
     """Модель для комментариев"""
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, verbose_name="Задача", null=True, blank=True)
     date = models.DateTimeField(verbose_name="Дата", null=True, blank=True)
     comment = models.TextField(verbose_name='Комментарий')
 

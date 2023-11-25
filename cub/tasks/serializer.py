@@ -8,7 +8,7 @@ from .models import Task, TaskFile, TaskComment
 class TaskCommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskComment
-        fields = ('comment',)
+        fields = ('comment', 'task')
 
 
 class TaskFileSerializer(serializers.ModelSerializer):

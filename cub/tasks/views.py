@@ -29,7 +29,8 @@ class TaskCommentCreateView(APIView):
         task = Task.objects.get(id=task_id)
         serializer = TaskCommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(task=task)
+            comment = serializer.save(task=task)
+            task.comments.add(comment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
