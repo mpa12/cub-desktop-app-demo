@@ -13,12 +13,18 @@ interface HeaderProps {
 }
 
 const baseClassName = 'min-h-screen w-full bg-white flex flex-col';
-const headerClassName = 'h-[80px] w-full flex justify-between gap-[120px] items-center px-[20px]';
-const menuClassName = 'w-[100px] h-full pt-[60px] flex flex-col items-center gap-[20px] min-w-[100px]';
-const childrenWrapperClassName = 'grow bg-light-gray p-[60px] rounded-tl-[60px] h-[calc(100vh-80px)] overflow-y-auto';
-const logoBlockClassName = 'h-[50px]';
+const headerClassName = 'h-[80px] w-full flex justify-between gap-[10px] lg:gap-[120px] items-center px-[20px]';
+const menuClassName = cn(
+  'w-full lg:w-[100px] p-[20px] lg:p-0 lg:pt-[60px] flex items-center gap-[20px] min-w-[100px]',
+  'lg:flex-col flex-row justify-around fixed lg:static bg-white lg:h-full h-[80px] z-[999999]'
+);
+const childrenWrapperClassName = cn(
+  'grow bg-light-gray p-[60px] rounded-tl-0 h-[calc(100vh-80px)] overflow-y-auto',
+  'lg:rounded-tl-[60px]'
+);
+const logoBlockClassName = 'h-[50px] shrink-0';
 const logoClassName = 'h-full';
-const inputBlockClassName = 'h-[35px] relative grow';
+const inputBlockClassName = 'h-[35px] relative grow lg:block hidden';
 const inputClassName = cn(
   'pl-[35px] pr-[5px] border h-full w-[300px]',
   'bg-light !border-0 focus:!border-gray focus:!border-[1px]'
@@ -47,7 +53,7 @@ const Header = ({
           <Profile/>
         </div>
       </header>
-      <div className={'w-full flex grow'}>
+      <div className={'w-full flex grow lg:flex-row flex-col-reverse'}>
         <div className={menuClassName}>
           {menuItems.map(HeaderLink)}
         </div>
