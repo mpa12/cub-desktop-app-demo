@@ -23,7 +23,7 @@ class Task(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Менеджер проекта",
-        limit_choices_to={'role': UserRole.MANAGER},
+        limit_choices_to=Q(role=UserRole.ADMIN) | Q(role=UserRole.MANAGER),
         related_name="managed_projects",
         null=True, blank=True,
     )
