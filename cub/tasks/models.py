@@ -44,9 +44,6 @@ class Task(models.Model):
         blank=True
     )
     time = models.DurationField("Время выполнения задачи", null=True, blank=True)
-    comments = models.ManyToManyField('tasks.TaskComment', blank=True, verbose_name='Комментарии',
-                                      related_name='task_comments')
-
     start_time = models.DateTimeField(verbose_name="Для фронта", null=True, blank=True)
 
     def pause_task(self):

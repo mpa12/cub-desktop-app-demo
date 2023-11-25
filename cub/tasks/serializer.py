@@ -22,7 +22,6 @@ class TaskSerializer(serializers.ModelSerializer):
     executor_info = UserSerializer(source='executor', read_only=True)
     project_manager_info = UserSerializer(source='project_manager', read_only=True)
     project_info = ProjectSerializer(source='project', read_only=True)
-    comments = TaskCommentSerializer(source='comment', many=True)
 
     class Meta:
         model = Task
@@ -39,14 +38,6 @@ class TaskSerializer(serializers.ModelSerializer):
             'is_paused',
             'is_stopped',
             'time',
-            'comments',
             'start_timestamp',
             'start_time',
         )
-
-    def create(self, validated_data):
-        task_files_data = validated_data.pop('task_files', [])
-        task = Task.objects.create(**validated_data)
-        for task_file_data in task_files_data:
-            TaskFile.objects.create(task=task, **task_file_data)
-        return task

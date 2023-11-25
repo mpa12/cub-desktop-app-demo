@@ -4,22 +4,28 @@ from rest_framework import permissions, generics
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .models import Task
+from .models import Task, TaskComment
 from .serializer import TaskSerializer, TaskCommentSerializer
 
 
 class TaskCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self):
-        return Task.objects.none()
-
-    def post(self, request):
-        serializer = TaskSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def get_queryset(self):
+    #     return Task.objects.none()
+    #
+    # def post(self, request):
+    #     project_manager = self.request.user
+    #     data = request.data.copy()
+    #     executor_id = data.pop('executor_id', None)
+    #     data['project_manager'] = project_manager.id
+    #     data['executor'] = executor_id  # Добавьте эту строку
+    #     print(f"Data before serialization: {data}")
+    #     serializer = TaskSerializer(data=data)
+    #     if serializer.is_valid():
+    #         task = serializer.save()
+    #         return Response(TaskSerializer(task).data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TaskCommentCreateView(APIView):
@@ -87,10 +93,19 @@ class UserDetailTasksView(APIView):
     def get_queryset(self, user, task_id):
         return Task.objects.filter(executor_id=user, id=task_id)
 
+    def get_comments(self, task):
+        # Получаем комментарии для задачи, если атрибут существует
+        comments = TaskComment.objects.filter(task=task) if TaskComment.objects.filter(task=task) else None
+        return TaskCommentSerializer(comments, many=True).data if comments else []
+
     def get(self, request, task_id):
-        task = self.get_queryset(request.user, task_id)
-        serializer = TaskSerializer(task, many=True)
-        return Response(serializer.data)
+        task = self.get_queryset(request.user, task_id).first()
+        if task:
+            task_data = TaskSerializer(task).data
+            task_data['comments'] = self.get_comments(task)
+            return Response(task_data)
+        else:
+            return Response({"detail": "Task not found"}, status=404)
 
 
 class StopTasksView(APIView):
