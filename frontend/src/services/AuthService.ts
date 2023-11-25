@@ -14,7 +14,7 @@ class AuthService {
   }
 
   getAllUsers() {
-    return instance.get('/users/api/v1/users/all/');
+    return instance.get('/users/api/v1/users/all');
   }
 }
 
