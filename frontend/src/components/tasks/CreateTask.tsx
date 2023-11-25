@@ -13,6 +13,7 @@ import TaskValidator from "../../validators/TaskValidator";
 import useAllUsers from "@stores/useAllUsers";
 import ProfileModel from "@models/ProfileModel";
 import Icon from "@ui/Icon";
+import BackButton from "@ui/BackButton";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const inputTitleClassName = '!border-0 outline-0 w-full px-[20px] py-[10px] !rounded-[10px]';
@@ -46,10 +47,9 @@ const CreateTask = () => {
   const {
     projectsState
   } = useProjects();
-  // TODO: Раскомментировать когда Миша сделает эндпоинт на получение всех пользователей
-  // const {
-  //   allUsersState
-  // } = useAllUsers();
+  const {
+    allUsersState
+  } = useAllUsers();
 
   const handleImageUpload: UploadHandler = async (blobInfo, progress) => {
     const formData = new FormData();
@@ -71,29 +71,21 @@ const CreateTask = () => {
     }
   };
 
-  const options: { label: string; value: string }[] = [
-    { value: '1', label: 'Максим Пиголицын' },
-    { value: '2', label: 'Михаил Карпухин' },
-    { value: '3', label: 'Музыко Никита' }
-  ];
-
   const projectsOptions: { label: string; value: string }[] = projectsState.data
     .map(project => ({
       value: project.id.toString(),
       label: project.title
     }));
 
-  // TODO: Раскомментировать когда Миша сделает эндпоинт на получение всех пользователей
-  // const allUsersOptions: { label: string; value: string }[] = allUsersState.data
-  //   .map(user => {
-  //     const userModel = new ProfileModel(user);
-  //
-  //     return {
-  //       value: user.id.toString(),
-  //       label: userModel.getName(),
-  //     };
-  //   });
-  const allUsersOptions = options;
+  const allUsersOptions: { label: string; value: string }[] = allUsersState.data
+    .map(user => {
+      const userModel = new ProfileModel(user);
+
+      return {
+        value: user.id.toString(),
+        label: userModel.getName(),
+      };
+    });
 
   const findSelectedOption = (selectedValue, option) => {
     return option.value === selectedValue;
@@ -106,11 +98,14 @@ const CreateTask = () => {
 
     if (!validator.isValid) return;
 
-
+    // TODO: Отправка запроса на создание задачи
   };
 
   return (
     <div>
+      <div className={'mb-[15px]'}>
+        <BackButton to={'/'} />
+      </div>
       <h3 className={titleClassName}>Новая задача</h3>
       <div>
         <Input
