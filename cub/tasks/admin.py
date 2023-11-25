@@ -11,4 +11,4 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(TaskComment)
 class TaskCommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'comment', )
+    list_display = ('id', 'comment', 'date', )

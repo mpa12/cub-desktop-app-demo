@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/v1/tasks/<int:task_id>/stop/', views.StopTasksView.as_view(), name='task-stop'),
     path('api/v1/tasks/<int:task_id>/pause/', views.PauseTasksView.as_view(), name='task-pause'),
     path('api/v1/tasks/<int:task_id>/start_continue/', views.StartOrContinueTasksView.as_view(), name='task-start-or-continue'),
+    path('api/v1/tasks/<int:task_id>/comment/create/', views.TaskCommentCreateView.as_view(), name='task-comment-create'),
 ]

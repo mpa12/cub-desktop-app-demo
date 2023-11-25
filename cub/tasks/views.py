@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Task
-from .serializer import TaskSerializer
+from .serializer import TaskSerializer, TaskCommentSerializer
 
 
 class TaskCreateView(APIView):
@@ -18,6 +18,18 @@ class TaskCreateView(APIView):
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TaskCommentCreateView(APIView):
+    def get_queryset(self):
+        return Task.objects.none()
+    def post(self, request, task_id):
+        task = Task.objects.get(id=task_id)
+        serializer = TaskCommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(task=task)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

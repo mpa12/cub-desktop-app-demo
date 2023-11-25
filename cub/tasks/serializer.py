@@ -5,10 +5,10 @@ from projects.serializer import ProjectSerializer
 from .models import Task, TaskFile, TaskComment
 
 
-# class TaskCommentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = TaskComment
-#         fields = ('comments',)
+class TaskCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaskComment
+        fields = ('comment',)
 
 
 class TaskFileSerializer(serializers.ModelSerializer):
@@ -22,7 +22,7 @@ class TaskSerializer(serializers.ModelSerializer):
     executor_info = UserSerializer(source='executor', read_only=True)
     project_manager_info = UserSerializer(source='project_manager', read_only=True)
     project_info = ProjectSerializer(source='project', read_only=True)
-    # comments = TaskCommentSerializer(source='comment', many=True)
+    comments = TaskCommentSerializer(source='comment', many=True)
 
     class Meta:
         model = Task
@@ -39,7 +39,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'is_paused',
             'is_stopped',
             'time',
-            # 'comments',
+            'comments',
             'start_timestamp',
             'start_time',
         )

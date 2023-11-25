@@ -91,11 +91,22 @@ class Task(models.Model):
 
 class TaskComment(models.Model):
     """Модель для комментариев"""
+    date = models.DateTimeField(verbose_name="Дата", null=True, blank=True)
     comment = models.TextField(verbose_name='Комментарий')
 
     class Meta:
         verbose_name_plural = 'Комментарии'
         verbose_name = 'Комментарий'
+        ordering = ['date']
+
+
+    def save(self, *args, **kwargs):
+        self.date = datetime.now()
+        super(TaskComment, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.comment
+
 
 class TaskFile(models.Model):
     """Модель для файлов к задаче"""
