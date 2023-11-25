@@ -27,8 +27,7 @@ const Projects = () => {
       }
     };
 
-    fetchData().then(() => {
-    });
+    fetchData().then(() => {});
   }, []);
 
   return (

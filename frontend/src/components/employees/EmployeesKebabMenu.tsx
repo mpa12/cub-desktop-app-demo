@@ -9,7 +9,7 @@ interface EmployeesKebabMenuProps {
 
 const menuClassName = cn(
   'absolute flex flex-col bg-white border-gray-hover border-[1px] top-[20px] right-[5px]',
-  'rounded-[5px] py-[5px] w-[200px]'
+  'rounded-[5px] py-[5px] w-[200px] z-50'
 );
 const menuItemClassName = cn(
   'w-full py-[5px] px-[10px] hover:bg-light-gray active:bg-light-gray-hover select-none cursor-pointer'
