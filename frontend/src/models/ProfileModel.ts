@@ -11,7 +11,7 @@ class ProfileModel {
 
   getRoleName() {
     return {
-      [this.MANAGER]: 'Руководитель проекта',
+      [this.MANAGER]: 'Руководитель проектов',
       [this.PROGRAMMER]: 'Программист',
       [this.ADMIN]: 'Администратор',
     }[this.data?.role];
@@ -22,7 +22,15 @@ class ProfileModel {
   }
 
   getName() {
-    return `${this.data.first_name} ${this.data.midl_name}`;
+    return `${this.data.first_name} ${this.data.last_name}`;
+  }
+
+  getSex() {
+    return {
+      male: 'Мужской',
+      female: 'Женский',
+      default: 'Не выбран',
+    }[this.data.gender];
   }
 }
 
