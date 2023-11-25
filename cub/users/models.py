@@ -59,7 +59,7 @@ class User(AbstractUser):
         super(User, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.get_full_name()
+        return f'{self.get_full_name()}({self.role})'
 
 
 class UserPassport(models.Model):

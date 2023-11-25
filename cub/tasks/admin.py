@@ -9,6 +9,6 @@ class TaskAdmin(admin.ModelAdmin):
     exclude = ('start_time', )
 
 
-# @admin.register(TaskComment)
-# class TaskCommentAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'comments', 'task',)
+@admin.register(TaskComment)
+class TaskCommentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'comment', )

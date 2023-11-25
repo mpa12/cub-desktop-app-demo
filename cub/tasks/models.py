@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.utils import timezone
 from datetime import datetime
 
@@ -15,7 +16,7 @@ class Task(models.Model):
         User,
         on_delete=models.CASCADE,
         verbose_name="Исполнитель",
-        limit_choices_to={'role': UserRole.PROGRAMMER},
+        limit_choices_to=Q(role=UserRole.PROGRAMMER) | Q(role=UserRole.MANAGER),
         related_name="executor_projects",
     )
     project_manager = models.ForeignKey(
@@ -43,7 +44,8 @@ class Task(models.Model):
         blank=True
     )
     time = models.DurationField("Время выполнения задачи", null=True, blank=True)
-    comment = models.TextField(verbose_name="Результат выполнения", null=True, blank=True)
+    comment = models.ForeignKey('tasks.TaskComment', on_delete=models.CASCADE, verbose_name="Комментарий", null=True, blank=True)
+
     start_time = models.DateTimeField(verbose_name="Для фронта", null=True, blank=True)
 
     def pause_task(self):
@@ -86,6 +88,14 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+
+class TaskComment(models.Model):
+    """Модель для комментариев"""
+    comment = models.TextField(verbose_name='Комментарий')
+
+    class Meta:
+        verbose_name_plural = 'Комментарии'
+        verbose_name = 'Комментарий'
 
 class TaskFile(models.Model):
     """Модель для файлов к задаче"""
