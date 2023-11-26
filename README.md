@@ -26,7 +26,7 @@
 в корне проекта
 
 ```shell
-docker-compose up
+docker-compose up --build
 ```
 ## Создать superuser в контейнере
 ```shell
