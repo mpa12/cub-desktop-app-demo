@@ -17,7 +17,7 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['http://80.90.187.226:3000', 'http://localhost:3000']
+CSRF_TRUSTED_ORIGINS = ['http://213.171.10.35:3000', 'http://localhost:3000', 'https://213.171.10.35:3000']
 
 
 # Application definition
@@ -75,17 +75,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cub.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 # для посгреса
 DATABASES = {
