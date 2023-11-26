@@ -19,7 +19,7 @@ const Task = () => {
   const fetchData = async () => {
     try {
       const response = await TasksService.view(taskId);
-      setTask(response.data[0]);
+      setTask(response.data);
     } catch (error) {
       console.error(error);
     } finally {

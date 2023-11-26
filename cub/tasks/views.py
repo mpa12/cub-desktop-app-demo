@@ -5,27 +5,33 @@ from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Task, TaskComment
-from .serializer import TaskSerializer, TaskCommentSerializer
+from .serializer import TaskSerializer, TaskCommentSerializer, TaskCreateSerializer
+from users.models import User
 
 
 class TaskCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    # def get_queryset(self):
-    #     return Task.objects.none()
-    #
-    # def post(self, request):
-    #     project_manager = self.request.user
-    #     data = request.data.copy()
-    #     executor_id = data.pop('executor_id', None)
-    #     data['project_manager'] = project_manager.id
-    #     data['executor'] = executor_id  # Добавьте эту строку
-    #     print(f"Data before serialization: {data}")
-    #     serializer = TaskSerializer(data=data)
-    #     if serializer.is_valid():
-    #         task = serializer.save()
-    #         return Response(TaskSerializer(task).data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request):
+        # Получаем данные из запроса
+        data = request.data
+
+        # Устанавливаем текущего пользователя как менеджера проекта, если не передан project_manager_id
+        data.setdefault('project_manager', self.request.user.id)
+
+        # Сериализуем данные
+        serializer = TaskCreateSerializer(data=data)
+
+        # Проверяем валидность данных
+        if serializer.is_valid():
+            # Сохраняем задачу
+            serializer.save()
+
+            # Возвращаем успешный ответ
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        # Возвращаем ошибку, если данные не валидны
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TaskCommentCreateView(APIView):

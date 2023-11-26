@@ -41,3 +41,26 @@ class TaskSerializer(serializers.ModelSerializer):
             'start_timestamp',
             'start_time',
         )
+
+class TaskCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = (
+            'id',
+            'title',
+            'description',
+            'executor',
+            'project_manager',
+            'status',
+            'files',
+            'due_date',
+            'project',
+            'is_paused',
+            'is_stopped',
+            'start_timestamp',
+            'time',
+            'start_time',
+        )
+
+    def create(self, validated_data):
+        return Task.objects.create(**validated_data)
