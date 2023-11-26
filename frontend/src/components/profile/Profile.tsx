@@ -9,7 +9,7 @@ import Button from "@ui/Button";
 import ProfileModel from "../../models/ProfileModel";
 import {Link} from "react-router-dom";
 
-const imageClassName = 'w-[50px] rounded-full';
+const imageClassName = 'w-[50px] h-[50px] object-cover object-center rounded-full';
 const profileWrapperClassName = 'relative';
 const profileNameClassName = 'font-semibold';
 const profileCardClassName = cn(
@@ -88,9 +88,9 @@ const Profile = () => {
   return (
     <div className={profileWrapperClassName}>
       <div className={profileCardClassName} onClick={onDropdownClick} ref={headerButtonRef}>
-        <img className={imageClassName} src={profileImg} alt="profile_img"/>
+        <img className={imageClassName} src={profileModel.getPhotoSrc() || profileImg} alt="profile_img"/>
         <div>
-          <p className={profileNameClassName}>{profileData?.username || messageError}</p>
+          <p className={profileNameClassName}>{profileModel.getName() || profileData?.username || messageError}</p>
           <p className={positionClassName}>{profileModel.getRoleName() || messageError}</p>
         </div>
         <Icon iconName={'dropdownArrow'} className={dropdownArrowClassName}/>
@@ -102,19 +102,21 @@ const Profile = () => {
             {!!profileData?.birth_date && <p>Дата рождения: {profileData.birth_date}</p>}
           </div>
           <div className={profileButtonsWrapperClassName}>
-            <Link to={`/tasks/create`}>
-              <Button
-                title={'Создать задачу'}
-                type={'green'}
-                onClick={() => {}}
-              />
-            </Link>
+            {profileModel.canCreateTask() && (
+              <Link to={`/tasks/create`}>
+                <Button
+                  title={'Создать задачу'}
+                  colorType={'green'}
+                  onClick={() => {}}
+                />
+              </Link>
+            )}
             {profileModel.isAdmin() && (
               <Link to={`${process.env.REACT_APP_API_BASE_URL}/admin`}>
                 <Button
                   onClick={() => {}}
                   title={'Админ панель'}
-                  type={'green'}
+                  colorType={'green'}
                 />
               </Link>
             )}

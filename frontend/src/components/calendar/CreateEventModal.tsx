@@ -182,8 +182,8 @@ const CreateEventModal = ({
             }} />
           </div>
           <div className={modalFooterClassName}>
-            <Button title={'Добавить'} type={'green'} onClick={addCallback} />
-            <Button title={'Отмена'} type={'light-gray'} onClick={setIsOpen.bind(null, false)} />
+            <Button title={'Добавить'} colorType={'green'} onClick={addCallback} />
+            <Button title={'Отмена'} colorType={'light-gray'} onClick={setIsOpen.bind(null, false)} />
           </div>
         </div>
         {isLoading && (

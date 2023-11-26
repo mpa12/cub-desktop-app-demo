@@ -7,6 +7,9 @@ import cn from "classnames";
 import ITask from "@cub-types/task/ITask";
 import {Link} from "react-router-dom";
 import Button from "@ui/Button";
+import AuthService from "@services/AuthService";
+import IProfileData from "@cub-types/IProfileData";
+import ProfileModel from "@models/ProfileModel";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const dataWrapperClassName = cn(
@@ -15,13 +18,16 @@ const dataWrapperClassName = cn(
 
 const Tasks = () => {
   const [tasks, setTasks] = useState<ITask[]>([]);
+  const [profile, setProfile] = useState<IProfileData>();
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await TasksService.index();
+        const profileData = await AuthService.profileData();
         setTasks(response.data);
+        setProfile(profileData.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -32,17 +38,21 @@ const Tasks = () => {
     fetchData().then(() => {});
   }, []);
 
+  const profileModel = new ProfileModel(profile);
+
   return (
     <>
       <h1 className={titleClassName}>Список задач</h1>
-      <Link to={`/tasks/create`}>
-        <Button
-          title={'Создать задачу'}
-          type={'green'}
-          onClick={() => {}}
-          className={'mb-[15px]'}
-        />
-      </Link>
+      {profileModel.canCreateTask() && (
+        <Link to={`/tasks/create`}>
+          <Button
+            title={'Создать задачу'}
+            colorType={'green'}
+            onClick={() => {}}
+            className={'mb-[15px]'}
+          />
+        </Link>
+      )}
       <div className={dataWrapperClassName}>
         {isLoading && <LoaderSpinner loading={isLoading} />}
         {(!isLoading && !tasks.length) && <TasksNotFound />}

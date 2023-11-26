@@ -1,4 +1,5 @@
 import { instance } from "../api.config";
+import getCookie from "@utils/getCookie";
 
 class TaskService {
   index() {
@@ -21,8 +22,15 @@ class TaskService {
     return instance.post(`/tasks/api/v1/tasks/${taskId}/stop/`);
   }
 
-  create() {
-    return instance.post(`/tasks/api/v1/tasks/create/`);
+  create(data: {
+    title: string;
+    description: string;
+    executor: number;
+    project: number;
+    project_manager: number;
+  }) {
+    instance.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
+    return instance.post(`/tasks/api/v1/tasks/create/`, data);
   }
 }
 

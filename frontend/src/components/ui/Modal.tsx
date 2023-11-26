@@ -19,7 +19,7 @@ const Modal = ({ isOpen, children, closeModal }: ModalProps) => {
 
   return (
     <div
-      className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-brightness-50"
+      className="z-[9999999] flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none backdrop-brightness-50"
       onClick={handleClickOutside}
     >
       <div className="relative w-auto my-6 mx-auto max-w-3xl">
