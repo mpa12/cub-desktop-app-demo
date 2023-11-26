@@ -69,12 +69,12 @@ const TaskView = ({
             <span className={'text-[13px] text-gray'}>Задача № {taskDto.data.id} - {taskDto.getStatusText()}</span>
           </div>
           <div className={taskDetailContent}>
-            {taskDto.data.description}
+            <div dangerouslySetInnerHTML={{ __html: taskDto.data.description }}/>
           </div>
           <div className={taskDetailButtons}>
             <span className={'text-[12px] flex gap-[5px] items-center'}>
               <Icon iconName={'clock'} className={'text-[10px] h-[13px]'} />
-              {taskDto.getLeadTimeWithDelta(timeDelta)}
+              {taskDto.getLeadTimeWithDelta(taskDto.canPause() ? timeDelta: 0)}
             </span>
             {taskDto.canStart() && (
               <button
@@ -106,7 +106,7 @@ const TaskView = ({
               <tbody className={'w-full'}>
               <tr className={taskDetailSidebarTr}>
                 <th>Затрачено:</th>
-                <td>{taskDto.getLeadTimeWithDelta(timeDelta)}</td>
+                <td>{taskDto.getLeadTimeWithDelta(taskDto.canPause() ? timeDelta: 0)}</td>
               </tr>
               </tbody>
             </table>

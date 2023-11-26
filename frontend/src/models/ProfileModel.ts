@@ -22,7 +22,7 @@ class ProfileModel {
   }
 
   getName() {
-    return `${this.data.first_name} ${this.data.last_name}`;
+    return `${this.data?.first_name} ${this.data?.last_name}`;
   }
 
   getSex() {
@@ -31,6 +31,18 @@ class ProfileModel {
       female: 'Женский',
       default: 'Не выбран',
     }[this.data.gender];
+  }
+
+  canCreateTask() {
+    return [this.ADMIN, this.SUPERUSER, this.MANAGER].includes(this.data?.role);
+  }
+
+  getPhotoSrc(): string {
+    if (!this.data?.photo) return;
+
+    const url = this.data.photo.substring(1);
+
+    return `${process.env.REACT_APP_API_BASE_URL}${url}`;
   }
 }
 

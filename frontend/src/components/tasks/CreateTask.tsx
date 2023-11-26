@@ -14,6 +14,9 @@ import useAllUsers from "@stores/useAllUsers";
 import ProfileModel from "@models/ProfileModel";
 import Icon from "@ui/Icon";
 import BackButton from "@ui/BackButton";
+import TaskService from "@services/TaskService";
+import AuthService from "@services/AuthService";
+import toast from "react-hot-toast";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const inputTitleClassName = '!border-0 outline-0 w-full px-[20px] py-[10px] !rounded-[10px]';
@@ -29,12 +32,15 @@ const inputBlockLabelClassName = 'w-[250px]';
 const CreateTask = () => {
   const {
     taskData,
+    setTaskData,
     setTaskTitle,
     setTaskDescription,
     setTaskDeadline,
     setExecutorId,
     setProjectId,
   } = useCreateTaskData();
+
+  const [isSending, setIsSending] = useState(false);
 
   const [formErrors, setFormErrors] = useState({
     title: [],
@@ -91,14 +97,49 @@ const CreateTask = () => {
     return option.value === selectedValue;
   };
 
-  const createHandler = () => {
+  const createHandler = async () => {
     const validator = TaskValidator.validate(taskData);
 
     setFormErrors(validator.errors);
 
     if (!validator.isValid) return;
 
-    // TODO: Отправка запроса на создание задачи
+    setIsSending(true);
+
+    const profileData = await AuthService.profileData();
+    const project_manager = profileData.data.id;
+
+    const createTaskData: {
+      title: string;
+      description: string;
+      executor: number;
+      project: number;
+      project_manager: number;
+    } = {
+      title: taskData.title,
+      description: taskData.description,
+      executor: parseInt(taskData.executor_id),
+      project: parseInt(taskData.project_id),
+      project_manager
+    };
+
+    TaskService.create(createTaskData).then(() => {
+      setTaskData({
+        title: '',
+        description: '',
+        executor_id: undefined,
+        project_id: undefined,
+        deadline: undefined,
+      });
+    });
+
+    setIsSending(false);
+
+    toast('Задача создана', {
+      position: 'bottom-right',
+      duration: 2000,
+      className: 'mr-[20px] !bg-green !text-white'
+    });
   };
 
   return (
@@ -236,9 +277,14 @@ const CreateTask = () => {
           })}
         </div>
         <div className={buttonsWrapperClassName}>
-          <Button onClick={createHandler} title={'Создать задачу'} type={'green'} />
+          <Button
+            onClick={createHandler}
+            title={isSending ? 'Загрузка...' : 'Создать задачу'}
+            colorType={'green'}
+            disabled={isSending}
+          />
           <Link to={'/tasks'}>
-            <Button onClick={() => {}} title={'Отмена'} type={'light-gray'} />
+            <Button onClick={() => {}} title={'Отмена'} colorType={'light-gray'} />
           </Link>
         </div>
       </div>

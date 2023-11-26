@@ -1,8 +1,8 @@
 import React from "react";
 import cn from "classnames";
 
-interface ButtonProps {
-  type?: 'green' | 'light-gray';
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  colorType?: 'green' | 'light-gray';
   onClick: () => void;
   title: string;
   className?: string;
@@ -21,16 +21,23 @@ const taskViewButtonGrayClassName = cn(
   'bg-light-gray hover:bg-light-gray-hover text-dark-gray border-gray border-[1px]'
 );
 
-const Button = ({ type = 'light-gray', onClick, title, className = '' }: ButtonProps) => {
+const Button = ({
+  colorType = 'light-gray',
+  onClick,
+  title,
+  className = '',
+  ...props
+}: ButtonProps) => {
   const buttonClassName = {
     green: taskViewButtonGreenClassName,
     'light-gray': taskViewButtonGrayClassName,
-  }[type];
+  }[colorType];
 
   return (
     <button
       className={cn(buttonClassName, className)}
       onClick={onClick}
+      {...props}
     >{title}</button>
   );
 };

@@ -1,8 +1,8 @@
 interface ITaskCreate {
   title?: string;
   description?: string;
-  executor_id?: number;
-  project_id?: number;
+  executor_id?: string;
+  project_id?: string;
   deadline?: string;
 }
 
