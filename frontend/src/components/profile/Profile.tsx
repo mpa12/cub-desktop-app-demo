@@ -98,7 +98,7 @@ const Profile = () => {
       {isOpened && (
         <div ref={modalRef} className={modalWrapper}>
           <div className={modalUserData}>
-            {!!profileData?.gender && <p>Пол: {profileData?.gender}</p>}
+            {!!profileData?.gender && <p>Пол: {profileModel?.getSex()}</p>}
             {!!profileData?.birth_date && <p>Дата рождения: {profileData.birth_date}</p>}
           </div>
           <div className={profileButtonsWrapperClassName}>

@@ -8,7 +8,7 @@ import ProjectsTable from "@components/projects/ProjectsTable";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 const dataWrapperClassName = cn(
-  'w-full min-h-[300px] rounded-[10px] bg-light flex items-center justify-center'
+  'w-full min-h-[300px] rounded-[10px] bg-light flex items-center justify-center overflow-x-auto'
 );
 
 const Projects = () => {
@@ -27,8 +27,7 @@ const Projects = () => {
       }
     };
 
-    fetchData().then(() => {
-    });
+    fetchData().then(() => {});
   }, []);
 
   return (
