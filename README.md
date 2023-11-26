@@ -7,66 +7,19 @@
 - Bootstrap 5.3.2
 - Node 20.9.0
 - Yarn 1.22.19
+- Docker
+- Docker-compose
+- Nginx
+- Gunicorn
+- PostgreSQL
+- Celery
+- Redis
 
 ## Инструкция по развертыванию
 
 Создать `.env` из `.env.example` в директории `cub`.
 
 Создать `.env` из `.env.example` в директории `frontend`.
-
-[//]: # (Установка зависимостей:)
-
-[//]: # ()
-[//]: # (```shell)
-
-[//]: # (pip install -r requirements.txt)
-
-[//]: # (```)
-
-[//]: # (```shell)
-
-[//]: # (&#40; cd frontend/src/ && yarn install &#41;)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Запуск миграций:)
-
-[//]: # ()
-[//]: # (```shell)
-
-[//]: # (python ./cub/manage.py migrate)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Запуск приложения:)
-
-[//]: # ()
-[//]: # (```shell)
-
-[//]: # (python ./cub/manage.py runserver)
-
-[//]: # (```)
-
-[//]: # (```shell)
-
-[//]: # (&#40; cd frontend/src/ && yarn start &#41;)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Админка доступна по адресу http://localhost:8000/admin/)
-
-[//]: # ()
-[//]: # (Запуск бота:)
-
-[//]: # ()
-[//]: # (```shell)
-
-[//]: # (python ./cub/manage.py bot)
-
-[//]: # (```)
 
 Запуск проекта через docker:
 
@@ -81,6 +34,3 @@ docker ps
 docker exec -it <id контейнера с джангой> bash
 python manage.py createsuperuser
 ```
-## ERD модель базы данных
-
-![db.png](db.png)
