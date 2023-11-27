@@ -21,6 +21,14 @@ class ProfileModel {
     return [this.ADMIN, this.SUPERUSER].includes(this.data?.role);
   }
 
+  isProgrammer() {
+    return this.data?.role === this.PROGRAMMER;
+  }
+
+  isManager() {
+    return this.data?.role === this.MANAGER;
+  }
+
   getName() {
     return `${this.data?.first_name} ${this.data?.last_name}`;
   }

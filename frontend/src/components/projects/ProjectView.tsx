@@ -12,9 +12,9 @@ interface ProjectViewProps {
 
 const wrapperClassName = 'w-full h-full self-stretch';
 const titleClassName = 'font-bold text-[25px] mb-[10px]';
-const contentClassName = 'flex items-stretch gap-[14px]';
+const contentClassName = 'flex items-stretch gap-[14px] lg:flex-row flex-col-reverse';
 const leftContentWrapperClassName = 'bg-light rounded-[10px] grow flex flex-col';
-const rightContentWrapperClassName = 'bg-light rounded-[10px] w-[300px]';
+const rightContentWrapperClassName ='bg-light rounded-[10px] lg:w-[300px] w-full';
 const projectDetailHeader = 'py-[20px] px-[10px] border-b-gray-hover border-b-[1px]';
 const projectDetailContent = 'py-[20px] px-[20px] grow flex flex-wrap gap-[20px]';
 const projectDetailButtons = 'py-[20px] px-[10px] border-t-gray-hover border-t-[1px] flex flex-wrap gap-[10px]';

@@ -24,10 +24,22 @@ const Tasks = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await TasksService.index();
         const profileData = await AuthService.profileData();
-        setTasks(response.data);
         setProfile(profileData.data);
+
+        const userModel = new ProfileModel(profileData.data);
+
+        // TODO: Сделать разделение на запросы
+        if (userModel.isAdmin()) {
+          const response = await TasksService.index();
+          setTasks(response.data);
+        } else if (userModel.isManager()) {
+          const response = await TasksService.index();
+          setTasks(response.data);
+        } else {
+          const response = await TasksService.index();
+          setTasks(response.data);
+        }
       } catch (error) {
         console.error(error);
       } finally {

@@ -36,6 +36,20 @@ const TasksTable = ({
       getValue: (data: ITask) => data.project_info.title
     },
     {
+      label: 'Постановщик',
+      getValue: (data: ITask) => {
+        const taskDto = new TaskModel(data);
+        return taskDto.getProjectManagerName();
+      }
+    },
+    {
+      label: 'Исполнитель',
+      getValue: (data: ITask) => {
+        const taskDto = new TaskModel(data);
+        return taskDto.getExecutorName();
+      }
+    },
+    {
       label: 'Статус',
       getValue: (data: ITask) => {
         const taskDto = new TaskModel(data);

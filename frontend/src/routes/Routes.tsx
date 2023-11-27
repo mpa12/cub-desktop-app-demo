@@ -11,6 +11,7 @@ import Task from "@components/tasks/Task";
 import Project from "@components/projects/Project";
 import PageNotFound from "@components/page-not-found/PageNotFound";
 import CreateTask from "@components/tasks/CreateTask";
+import UpdateTask from "@components/tasks/UpdateTask";
 
 const Routes = () => (
   <BrowserRouter>
@@ -21,6 +22,7 @@ const Routes = () => (
         <Route path='tasks' element={<Outlet/>}>
           <Route index element={<Tasks/>}/>
           <Route path='create' element={<CreateTask/>}/>
+          <Route path='update/:id' element={<UpdateTask/>}/>
           <Route path=':id' element={<Task/>}/>
         </Route>
         <Route path='projects' element={<Outlet/>}>
