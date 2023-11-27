@@ -1,0 +1,76 @@
+{% extends 'bot/base.html' %}
+{% load static %}
+
+{% block title %}
+Поддержка
+{% endblock %}
+{% block body %}
+
+<!-- hero -->
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1>FAQ</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="bg-light">
+      <div class="container">
+        <div class="row gutter-2 gutter-md-4">
+          <div class="col-md-8 col-lg-9">
+            <div class="accordion accordion-minimal" id="accordion-1">
+            {% if sup %}
+    {% for s in sup %}
+        <div class="card">
+            <div class="card-header" id="heading-1-{{ forloop.counter }}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse-1-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse-1-{{ forloop.counter }}">
+                        {{ s.question }}
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapse-1-{{ forloop.counter }}" class="collapse" aria-labelledby="heading-1-{{ forloop.counter }}" data-parent="#accordion-1" style="">
+                <div class="card-body">
+                    <p>{{ s.answer }}</p><br>
+                    {% if s.file %}
+                    <a href="/media/{{ s.file }}" download>{{ s.file }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+                <div class="card">
+                    <div class="card-header" id="heading-other">
+                        <h2 class="mb-0">
+                            <button
+                                    class="btn btn-link collapsed"
+                                    type="button"
+                                    data-toggle="collapse"
+                                    data-target="#otherQuestion"
+                                    aria-expanded="false"
+                                    aria-controls="otherQuestion"
+                            >
+                                Если нет вопроса в списке
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="otherQuestion" class="collapse" data-parent="#accordion-1">
+                        <div class="card-body">
+                            <p>Напиши нам на почту, и оператор в скором времени ответит</p><br>
+                            <a href="https://localhost/bot/contact">Кликай сюда</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

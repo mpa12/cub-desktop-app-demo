@@ -1,3 +1,16 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import BotFAQ
+
+
+def support(request):
+    sup = BotFAQ.objects.all()
+
+    context = {
+        'sup': sup,
+    }
+
+    return render(request, 'bot/support.html', context)
+
+def contact(request):
+    return render(request, 'bot/contact.html')

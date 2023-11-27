@@ -48,24 +48,22 @@ services:
       context: .
       dockerfile: ./cub/nginx/Dockerfile.nginx
     restart: always
-    ports:
-      - "80:80"
     volumes:
       - static_volume:/app/cub/cub/static/
       - media_volume:/app/cub/cub/media/
     depends_on:
       - backend
 
-#  nginx_proxy_pass:
-#    image: 'jc21/nginx-proxy-manager:latest'
-#    restart: unless-stopped
-#    ports:
-#      - '80:80'
-#      - '81:81'
-#      - '443:443'
-#    volumes:
-#      - ./data:/data
-#      - ./letsencrypt:/etc/letsencrypt
+  nginx_proxy_pass:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
 
 volumes:
   pg_data:
