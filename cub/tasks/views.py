@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import permissions, generics
 from rest_framework import status
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django.db.models import Q
 
 from .models import Task, TaskComment
 from .serializer import TaskSerializer, TaskCommentSerializer, TaskCreateSerializer
@@ -89,7 +90,7 @@ class UserTasksView(APIView):
             return Task.objects.filter(executor=user)
         elif user.role == UserRole.ADMIN:
             return Task.objects.all()
-        return Task.objects.filter(executor=user) | Task.objects.filter(project_manager=user)
+        return Task.objects.filter(Q(executor=user) | Q(project_manager=user))
 
 
     def get(self, request):
