@@ -48,8 +48,6 @@ services:
       context: .
       dockerfile: ./cub/nginx/Dockerfile.nginx
     restart: always
-    ports:
-      - "80:80"
     volumes:
       - static_volume:/app/cub/cub/static/
       - media_volume:/app/cub/cub/media/
