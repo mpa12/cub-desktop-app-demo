@@ -67,17 +67,31 @@ class TaskDeleteView(generics.DestroyAPIView):
 
 
 class TaskUpdateView(generics.UpdateAPIView):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
-        partial = kwargs.pop('partial', False)
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        self.perform_update(serializer)
-        return Response(serializer.data)
+    def put(self, request, task_id):
+        # Получаем данные из запроса
+        data = request.data
+
+        # Находим задачу по task_id
+        try:
+            task_instance = Task.objects.get(id=task_id)
+        except Task.DoesNotExist:
+            return Response({'error': 'Task not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        # Сериализуем данные, передавая экземпляр задачи для обновления
+        serializer = TaskCreateSerializer(task_instance, data=data)
+
+        # Проверяем валидность данных
+        if serializer.is_valid():
+            # Сохраняем обновленные данные
+            serializer.save()
+
+            # Возвращаем успешный ответ
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        # Возвращаем ошибку, если данные не валидны
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class UserTasksView(APIView):
