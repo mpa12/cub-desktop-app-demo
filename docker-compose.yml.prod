@@ -1,0 +1,73 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./../Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - TZ=Asia/Vladivostok
+    env_file:
+      - ./cub/.env
+    volumes:
+      - ./cub:/app
+
+  postgres:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=cub
+      - POSTGRES_USER=cub
+      - POSTGRES_PASSWORD=cub
+    ports:
+      - "15432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+  redis:
+    image: redis:7.2.3
+    ports:
+      - "16379:6379"
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./cub/nginx/Dockerfile.nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/app/cub/cub/static/
+      - media_volume:/app/cub/cub/media/
+    depends_on:
+      - backend
+
+  nginx_proxy_pass:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+volumes:
+  pg_data:
+  static_volume:
+  media_volume:
