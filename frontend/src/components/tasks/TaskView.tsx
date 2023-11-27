@@ -4,6 +4,10 @@ import TaskModel from "@models/TaskModel";
 import Icon from "../ui/Icon";
 import cn from "classnames";
 import User from "../user/User";
+import IProfileData from "@cub-types/IProfileData";
+import AuthService from "@services/AuthService";
+import ProfileModel from "@models/ProfileModel";
+import {Link} from "react-router-dom";
 
 interface TaskViewProps {
   data: ITask;
@@ -14,9 +18,9 @@ interface TaskViewProps {
 
 const wrapperClassName = 'w-full h-full self-stretch';
 const titleClassName = 'font-bold text-[25px] mb-[10px]';
-const contentClassName = 'flex items-stretch gap-[14px]';
+const contentClassName = 'flex items-stretch gap-[14px] lg:flex-row flex-col-reverse';
 const leftContentWrapperClassName = 'bg-light rounded-[10px] grow flex flex-col';
-const rightContentWrapperClassName ='bg-light rounded-[10px] w-[300px]';
+const rightContentWrapperClassName ='bg-light rounded-[10px] lg:w-[300px] w-full';
 const taskDetailHeader = 'py-[20px] px-[10px] border-b-gray-hover border-b-[1px]';
 const taskDetailContent = 'py-[20px] px-[10px] grow';
 const taskDetailButtons = 'py-[20px] px-[10px] border-t-gray-hover border-t-[1px] flex flex-wrap gap-[10px]';
@@ -38,12 +42,21 @@ const taskDetailSidebarTr = cn(
 );
 const userRoleClassName = 'w-full border-b-[1px] border-b-gray-hover [&>span]:text-[12px] my-[10px]';
 
+const taskDetailToolbar = 'w-full p-[10px] flex gap-[5px] items-center';
+const taskDetailToolbarButton = cn(
+  'group w-[30px] h-[30px] rounded-[3px] border-[1px] border-gray hover:bg-gray-hover cursor-pointer',
+  'flex items-center justify-center active:bg-gray select-none'
+);
+const taskDetailToolbarButtonIcon = 'h-[20px] text-gray group-active:text-gray-hover';
+
 const TaskView = ({
   data,
   startHandler,
   pauseHandler,
   completeHandler,
 }: TaskViewProps) => {
+  const [profileData, setProfileData] = useState<IProfileData>();
+
   const taskDto = new TaskModel(data);
 
   const [timeDelta, setTimeDelta] = useState(0);
@@ -59,6 +72,21 @@ const TaskView = ({
     }
     return () => clearInterval(interval);
   }, [taskDto, timeDelta]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await AuthService.profileData();
+        setProfileData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData().then();
+  }, []);
+
+  const userModel = new ProfileModel(profileData);
 
   return (
     <div className={wrapperClassName}>
@@ -101,6 +129,18 @@ const TaskView = ({
           <div className={taskDetailSidebarHeader}>
             <span className={'text-[13px] text-light'}>Крайний срок - {taskDto.getDeadline()}</span>
           </div>
+          {(
+            userModel.data?.id &&
+            userModel.data.id === taskDto.data?.project_manager_info?.id
+          ) && (
+            <div className={taskDetailToolbar}>
+              <Link to={`/tasks/update/${taskDto.data.id}`}>
+                <div className={taskDetailToolbarButton} title={'Редактировать'}>
+                  <Icon iconName={'pencil'} className={taskDetailToolbarButtonIcon} />
+                </div>
+              </Link>
+            </div>
+          )}
           <div className={taskDetailContent}>
             <table className={'w-full'}>
               <tbody className={'w-full'}>

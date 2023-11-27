@@ -81,9 +81,14 @@ const CreateTask = () => {
     .map(project => ({
       value: project.id.toString(),
       label: project.title
-    }));
+    }))
 
   const allUsersOptions: { label: string; value: string }[] = allUsersState.data
+    .filter(user => {
+      const userModel = new ProfileModel(user);
+
+      return userModel.isProgrammer() || userModel.isManager();
+    })
     .map(user => {
       const userModel = new ProfileModel(user);
 
@@ -115,12 +120,14 @@ const CreateTask = () => {
       executor: number;
       project: number;
       project_manager: number;
+      due_date?: string;
     } = {
       title: taskData.title,
       description: taskData.description,
       executor: parseInt(taskData.executor_id),
       project: parseInt(taskData.project_id),
-      project_manager
+      project_manager,
+      due_date: taskData.deadline,
     };
 
     TaskService.create(createTaskData).then(() => {
@@ -129,7 +136,7 @@ const CreateTask = () => {
         description: '',
         executor_id: undefined,
         project_id: undefined,
-        deadline: undefined,
+        deadline: '',
       });
     });
 

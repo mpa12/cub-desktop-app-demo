@@ -28,6 +28,7 @@ class TaskService {
     executor: number;
     project: number;
     project_manager: number;
+    due_date?: string;
   }) {
     instance.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
     return instance.post(`/tasks/api/v1/tasks/create/`, data);

@@ -61,8 +61,7 @@ const Profile = () => {
       }
     };
 
-    fetchData().then(() => {
-    });
+    fetchData().then();
   }, []);
 
   useEffect(() => {
