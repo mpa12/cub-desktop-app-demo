@@ -27,19 +27,8 @@ const Tasks = () => {
         const profileData = await AuthService.profileData();
         setProfile(profileData.data);
 
-        const userModel = new ProfileModel(profileData.data);
-
-        // TODO: Сделать разделение на запросы
-        if (userModel.isAdmin()) {
-          const response = await TasksService.index();
-          setTasks(response.data);
-        } else if (userModel.isManager()) {
-          const response = await TasksService.index();
-          setTasks(response.data);
-        } else {
-          const response = await TasksService.index();
-          setTasks(response.data);
-        }
+        const response = await TasksService.index();
+        setTasks(response.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -47,7 +36,7 @@ const Tasks = () => {
       }
     };
 
-    fetchData().then(() => {});
+    fetchData().then();
   }, []);
 
   const profileModel = new ProfileModel(profile);

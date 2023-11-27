@@ -93,6 +93,8 @@ class TaskModel {
   }
 
   getDeadline(): string {
+    if (!this.data.due_date) return 'Не указан';
+
     return convertTimeFormat(this.data.due_date);
   }
 
