@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Task, TaskComment
 from .serializer import TaskSerializer, TaskCommentSerializer, TaskCreateSerializer
-from users.models import User
+from users.user_enums import UserRole
 
 
 class TaskCreateView(APIView):
@@ -32,6 +32,7 @@ class TaskCreateView(APIView):
 
         # Возвращаем ошибку, если данные не валидны
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class TaskCommentCreateView(APIView):
@@ -84,7 +85,12 @@ class UserTasksView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self, user):
-        return Task.objects.filter(executor=user)
+        if user.role == UserRole.PROGRAMMER:
+            return Task.objects.filter(executor=user)
+        elif user.role == UserRole.ADMIN:
+            return Task.objects.all()
+        return Task.objects.filter(executor=user) | Task.objects.filter(project_manager=user)
+
 
     def get(self, request):
         tasks = self.get_queryset(request.user)
