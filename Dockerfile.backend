@@ -16,6 +16,7 @@ COPY /cub/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 8000
 
 CMD sh -c "python /app/manage.py migrate && \
+          python /app/manage.py collectstatic --noinput && \
           gunicorn cub.wsgi:application --bind 0.0.0.0:8000 & \
           python /app/manage.py bot & \
           celery -A cub worker -l info & \

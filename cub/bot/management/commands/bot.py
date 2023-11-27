@@ -14,10 +14,12 @@ dp = Dispatcher(bot)
 async def start(message: types.Message):
     markup = types.ReplyKeyboardMarkup()
     markup.add(
-        types.KeyboardButton('Открыть вы старницу', web_app=WebAppInfo(url='https://itproger.com/')),
-        types.InlineKeyboardButton('Открыть вы старницу 2', web_app=WebAppInfo(url='https://itproger.com/')),
+        types.KeyboardButton('Система логирования', web_app=WebAppInfo(url='https://itproger.com/')),
+        types.InlineKeyboardButton('Вопрос ответ', web_app=WebAppInfo(url='https://itproger.com/')),
+        types.InlineKeyboardButton('Поддержка', web_app=WebAppInfo(url='https://itproger.com/')),
+        types.InlineKeyboardButton('Инструкция пользователя', web_app=WebAppInfo(url='https://itproger.com/')),
     )
-    await message.answer('some text', reply_markup=markup)
+    await message.answer('Выбери раздел', reply_markup=markup)
 
 
 class Command(BaseCommand):
