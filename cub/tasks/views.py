@@ -103,8 +103,8 @@ class UserDetailTasksView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
-    def get_queryset(self, user, task_id):
-        return Task.objects.filter(executor_id=user, id=task_id)
+    def get_queryset(self, task_id):
+        return Task.objects.filter(id=task_id)
 
     def get_comments(self, task):
         # Получаем комментарии для задачи, если атрибут существует
@@ -112,7 +112,7 @@ class UserDetailTasksView(APIView):
         return TaskCommentSerializer(comments, many=True).data if comments else []
 
     def get(self, request, task_id):
-        task = self.get_queryset(request.user, task_id).first()
+        task = self.get_queryset(task_id).first()
         if task:
             task_data = TaskSerializer(task).data
             task_data['comments'] = self.get_comments(task)
