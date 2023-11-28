@@ -29,3 +29,9 @@ class UserSerializer(serializers.ModelSerializer):
             'photo',
             'role',
         )
+
+
+class UserPassportUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserPassport
+        fields = ('serial', 'number', 'date_of_given', 'departament', 'departament_code')
