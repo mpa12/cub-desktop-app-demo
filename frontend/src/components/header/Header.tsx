@@ -20,7 +20,7 @@ const menuClassName = cn(
 );
 const childrenWrapperClassName = cn(
   'grow bg-light-gray p-[60px] rounded-tl-0 lg:h-[calc(100vh-80px)] overflow-y-auto',
-  'lg:rounded-tl-[60px] pb-[140px] lg:pb-[60px] h-[calc(100vh-160px)]'
+  'lg:rounded-tl-[60px] pb-[60px] h-[calc(100vh-160px)]'
 );
 const logoBlockClassName = 'h-[50px] shrink-0';
 const logoClassName = 'h-full';

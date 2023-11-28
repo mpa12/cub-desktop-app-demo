@@ -9,8 +9,17 @@ interface CalendarRowProps {
   isLastWeek: boolean;
   events: ICalendarData[];
   openCreateEventModal: () => void;
+  openUpdateEventModal: () => void;
   setSelectedDate: (newDate: Date) => void;
   updateEventList: () => Promise<void>;
+  setUpdateModalData: (data: {
+    id: number;
+    date: Date;
+    title?: string;
+    description?: string;
+    bgColor: string;
+    textColor: string;
+  }) => void;
 }
 
 const CalendarRow = ({
@@ -19,8 +28,10 @@ const CalendarRow = ({
   isLastWeek,
   events,
   openCreateEventModal,
+  openUpdateEventModal,
   setSelectedDate,
   updateEventList,
+  setUpdateModalData,
 }: CalendarRowProps) => {
   return (
     <div className={'flex'} key={`week-${weekDataIndex}`}>
@@ -32,8 +43,11 @@ const CalendarRow = ({
           isLastWeek={isLastWeek}
           events={events}
           openCreateEventModal={openCreateEventModal}
+          openUpdateEventModal={openUpdateEventModal}
           setSelectedDate={setSelectedDate}
           updateEventList={updateEventList}
+          setUpdateModalData={setUpdateModalData}
+          key={`CalendarDate-${dayIndex}`}
         />;
       })}
     </div>
