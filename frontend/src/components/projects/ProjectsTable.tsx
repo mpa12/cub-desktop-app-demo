@@ -24,11 +24,22 @@ const ProjectsTable = ({data}: ProjectsTableProps) => {
     },
     {
       label: 'Руководитель',
-      getValue: (data: IProject) => data.leader_info.last_name + ' ' + data.leader_info.first_name + ' ' + data.leader_info.midl_name + ' (' + data.leader_info.username + ')'
+      getValue: (data: IProject) => {
+        const {
+          last_name,
+          first_name,
+        } = data.leader_info;
+
+        return `${last_name} ${first_name}`;
+      }
     },
     {
       label: 'Заказчик',
-      getValue: (data: IProject) => data.customer_info.title + ' (' + data.customer_info.header_name + ')'
+      getValue: (data: IProject) => {
+        if (!data.customer_info) return;
+
+        return `${data.customer_info?.title} (${data.customer_info?.header_name})`;
+      }
     },
     {
       label: 'Дата начала',
@@ -42,38 +53,6 @@ const ProjectsTable = ({data}: ProjectsTableProps) => {
         return convertTimeFormat(data.stop_date)
       }
     },
-    // {
-    //   label: 'Крайний срок',
-    //   getValue: (data: IProject) => {
-    //     const projectDto = new ProjectModel(data);
-    //     return projectDto.getDeadline();
-    //   }
-    // },
-    // // {
-    // //   label: 'Проект',
-    // //   getValue: (data: IProject) => data.project_info.title
-    // // },
-    // {
-    //   label: 'Статус',
-    //   getValue: (data: IProject) => {
-    //     const projectDto = new ProjectModel(data);
-    //
-    //     const text = projectDto.getStatusText();
-    //     const color = projectDto.getStatusColor();
-    //
-    //     return <span
-    //       style={{background: color}}
-    //       className={'px-[5px] py-[2px] rounded-[11px] text-white'}
-    //     >{text}</span>;
-    //   }
-    // },
-    // {
-    //   label: 'Время выполнения',
-    //   getValue: (data: IProject) => {
-    //     const projectDto = new ProjectModel(data);
-    //     return projectDto.getLeadTime();
-    //   }
-    // },
   ];
 
   return (
