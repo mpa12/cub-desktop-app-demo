@@ -12,8 +12,17 @@ interface CalendarDateProps {
   weekDataIndex: number;
   isLastWeek: boolean;
   openCreateEventModal: () => void;
+  openUpdateEventModal: () => void;
   setSelectedDate: (newDate: Date) => void;
   updateEventList: () => Promise<void>;
+  setUpdateModalData: (data: {
+    id: number;
+    date: Date;
+    title?: string;
+    description?: string;
+    bgColor: string;
+    textColor: string;
+  }) => void;
 }
 
 const calendarDayClassName = cn(
@@ -34,8 +43,10 @@ const CalendarDate = ({
   weekDataIndex,
   isLastWeek,
   openCreateEventModal,
+  openUpdateEventModal,
   setSelectedDate,
   updateEventList,
+  setUpdateModalData,
 }: CalendarDateProps) => {
   const currentEvents = events
     .filter(event => {
@@ -47,7 +58,7 @@ const CalendarDate = ({
   const onAdd = () => {
     setSelectedDate(new Date(day.isoDate));
     openCreateEventModal();
-  }
+  };
 
   return (
     <div
@@ -80,6 +91,9 @@ const CalendarDate = ({
                 event={event}
                 modalPosition={dayIndex > 4 ? 'left' : 'right'}
                 updateEventList={updateEventList}
+                openUpdateEventModal={openUpdateEventModal}
+                setUpdateModalData={setUpdateModalData}
+                key={`CalendarEvent-${event.id}`}
               />;
             })}
           </div>
