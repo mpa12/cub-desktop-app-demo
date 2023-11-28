@@ -8,6 +8,7 @@ import IProfileData from "@cub-types/IProfileData";
 import AuthService from "@services/AuthService";
 import ProfileModel from "@models/ProfileModel";
 import {Link} from "react-router-dom";
+import convertTimeFormat from "@utils/convertTimeFormat";
 
 interface TaskViewProps {
   data: ITask;
@@ -20,7 +21,7 @@ const wrapperClassName = 'w-full h-full self-stretch';
 const titleClassName = 'font-bold text-[25px] mb-[10px]';
 const contentClassName = 'flex items-stretch gap-[14px] lg:flex-row flex-col-reverse';
 const leftContentWrapperClassName = 'bg-light rounded-[10px] grow flex flex-col';
-const rightContentWrapperClassName ='bg-light rounded-[10px] lg:w-[300px] w-full';
+const rightContentWrapperClassName ='bg-light rounded-[10px] lg:w-[300px] w-full h-fit';
 const taskDetailHeader = 'py-[20px] px-[10px] border-b-gray-hover border-b-[1px]';
 const taskDetailContent = 'py-[20px] px-[10px] grow';
 const taskDetailButtons = 'py-[20px] px-[10px] border-t-gray-hover border-t-[1px] flex flex-wrap gap-[10px]';
@@ -57,21 +58,21 @@ const TaskView = ({
 }: TaskViewProps) => {
   const [profileData, setProfileData] = useState<IProfileData>();
 
-  const taskDto = new TaskModel(data);
+  const taskModel = new TaskModel(data);
 
   const [timeDelta, setTimeDelta] = useState(0);
 
   useEffect(() => {
     let interval = null;
-    if (taskDto.canPause()) {
+    if (taskModel.canPause()) {
       interval = setInterval(() => {
-        setTimeDelta(taskDto.getStartDelta());
+        setTimeDelta(taskModel.getStartDelta());
       }, 1000);
     } else {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [taskDto, timeDelta]);
+  }, [taskModel, timeDelta]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,51 +91,69 @@ const TaskView = ({
 
   return (
     <div className={wrapperClassName}>
-      <h1 className={titleClassName}>{taskDto.data.title}</h1>
+      <h1 className={titleClassName}>{taskModel.data.title}</h1>
       <div className={contentClassName}>
-        <div className={leftContentWrapperClassName}>
-          <div className={taskDetailHeader}>
-            <span className={'text-[13px] text-gray'}>Задача № {taskDto.data.id} - {taskDto.getStatusText()}</span>
-          </div>
-          <div className={taskDetailContent}>
-            <div dangerouslySetInnerHTML={{ __html: taskDto.data.description }}/>
-          </div>
-          <div className={taskDetailButtons}>
+        <div className={'grow flex flex-col gap-[14px]'}>
+          <div className={leftContentWrapperClassName}>
+            <div className={taskDetailHeader}>
+              <span className={'text-[13px] text-gray'}>Задача № {taskModel.data.id} - {taskModel.getStatusText()}</span>
+            </div>
+            <div className={taskDetailContent}>
+              <div dangerouslySetInnerHTML={{ __html: taskModel.data.description }}/>
+            </div>
+            <div className={taskDetailButtons}>
             <span className={'text-[12px] flex gap-[5px] items-center'}>
               <Icon iconName={'clock'} className={'text-[10px] h-[13px]'} />
-              {taskDto.getLeadTimeWithDelta(taskDto.canPause() ? timeDelta: 0)}
+              {taskModel.getLeadTimeWithDelta(taskModel.canPause() ? timeDelta: 0)}
             </span>
-            {taskDto.canStart() && (
-              <button
-                className={taskViewButtonGreenClassName}
-                onClick={startHandler}
-              >Начать учет времени</button>
-            )}
-            {taskDto.canPause() && (
-              <button
-                className={taskViewButtonGreenClassName}
-                onClick={pauseHandler}
-              >Поставить на паузу</button>
-            )}
-            {taskDto.canComplete() && (
-              <button
-                className={taskViewButtonGreenClassName}
-                onClick={completeHandler}
-              >Завершить задачу</button>
-            )}
+              {taskModel.canStart() && (
+                <button
+                  className={taskViewButtonGreenClassName}
+                  onClick={startHandler}
+                >Начать учет времени</button>
+              )}
+              {taskModel.canPause() && (
+                <button
+                  className={taskViewButtonGreenClassName}
+                  onClick={pauseHandler}
+                >Поставить на паузу</button>
+              )}
+              {taskModel.canComplete() && (
+                <button
+                  className={taskViewButtonGreenClassName}
+                  onClick={completeHandler}
+                >Завершить задачу</button>
+              )}
+            </div>
+          </div>
+
+          <div className={'flex flex-col'}>
+            <div>
+              <div className={'text-[14px] bg-light rounded-t-[10px] py-[12px] px-[8px] w-fit'}>Комментарии</div>
+            </div>
+            <div className={'bg-light rounded-b-[10px] py-[20px] px-[10px] flex flex-col gap-[10px]'}>
+              {taskModel.data.comments.map(comment => {
+                return (
+                  <div key={`comment-${comment.date}`} className={'bg-light-gray p-[10px] rounded-[10px] border-[1px] border-gray-hover'}>
+                    <time className={'text-[11px]'}>{convertTimeFormat(comment.date)}</time>
+                    <p className={'text-[14px] mt-[5px]'}>{comment.comment}</p>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
 
         <div className={rightContentWrapperClassName}>
           <div className={taskDetailSidebarHeader}>
-            <span className={'text-[13px] text-light'}>Крайний срок - {taskDto.getDeadline()}</span>
+            <span className={'text-[13px] text-light'}>Крайний срок - {taskModel.getDeadline()}</span>
           </div>
           {(
             userModel.data?.id &&
-            userModel.data.id === taskDto.data?.project_manager_info?.id
+            userModel.data.id === taskModel.data?.project_manager_info?.id
           ) && (
             <div className={taskDetailToolbar}>
-              <Link to={`/tasks/update/${taskDto.data.id}`}>
+              <Link to={`/tasks/update/${taskModel.data.id}`}>
                 <div className={taskDetailToolbarButton} title={'Редактировать'}>
                   <Icon iconName={'pencil'} className={taskDetailToolbarButtonIcon} />
                 </div>
@@ -146,7 +165,7 @@ const TaskView = ({
               <tbody className={'w-full'}>
               <tr className={taskDetailSidebarTr}>
                 <th>Затрачено:</th>
-                <td>{taskDto.getLeadTimeWithDelta(taskDto.canPause() ? timeDelta: 0)}</td>
+                <td>{taskModel.getLeadTimeWithDelta(taskModel.canPause() ? timeDelta: 0)}</td>
               </tr>
               </tbody>
             </table>
@@ -156,8 +175,8 @@ const TaskView = ({
                   <span>Постановщик</span>
                 </div>
                 <User
-                  imageUrl={taskDto.getProjectManagerPhotoSrc()}
-                  username={taskDto.getProjectManagerName()}
+                  imageUrl={taskModel.getProjectManagerPhotoSrc()}
+                  username={taskModel.getProjectManagerName()}
                 />
               </div>
               <div key={'Ответственный'}>
@@ -165,8 +184,8 @@ const TaskView = ({
                   <span>Ответственный</span>
                 </div>
                 <User
-                  imageUrl={taskDto.getExecutorPhotoSrc()}
-                  username={taskDto.getExecutorName()}
+                  imageUrl={taskModel.getExecutorPhotoSrc()}
+                  username={taskModel.getExecutorName()}
                 />
               </div>
             </div>

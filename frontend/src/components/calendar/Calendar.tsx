@@ -10,6 +10,7 @@ import CalendarRow from "@components/calendar/CalendarRow";
 import CreateEventModal from "@components/calendar/CreateEventModal";
 import CalendarService from "@services/CalendarService";
 import LoaderSpinner from "@ui/LoaderSpinner";
+import UpdateEventModal from "@components/calendar/UpdateEventModal";
 
 const calendarHeader = cn(
   'p-[10px] rounded-t-[10px] border-[1px] border-gray-hover flex items-center justify-between'
@@ -30,6 +31,7 @@ const Calendar = () => {
     year: new Date().getFullYear(),
   });
   const [createModalIsOpen, setCreateModalIsOpen] = useState(false);
+  const [updateModalIsOpen, setUpdateModalIsOpen] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [events, setEvents] = useState<ICalendarData[]>([]);
   const [modalData, setModalData] = useState<{
@@ -39,6 +41,21 @@ const Calendar = () => {
     bgColor: string;
     textColor: string;
   }>({
+    date: new Date(),
+    title: '',
+    description: '',
+    bgColor: '#86e7af',
+    textColor: '#0d592c',
+  });
+  const [updateModalData, setUpdateModalData] = useState<{
+    id: number;
+    date: Date;
+    title?: string;
+    description?: string;
+    bgColor: string;
+    textColor: string;
+  }>({
+    id: 0,
     date: new Date(),
     title: '',
     description: '',
@@ -109,7 +126,7 @@ const Calendar = () => {
       <div className={'w-full h-full flex items-center justify-center'}>
         <LoaderSpinner loading={isLoading} />
       </div>
-    )
+    );
   }
 
   return (
@@ -119,6 +136,13 @@ const Calendar = () => {
         setIsOpen={setCreateModalIsOpen}
         data={modalData}
         setData={setModalData}
+        updateEventList={updateEventList}
+      />
+      <UpdateEventModal
+        isOpen={updateModalIsOpen}
+        setIsOpen={setUpdateModalIsOpen}
+        data={updateModalData}
+        setData={setUpdateModalData}
         updateEventList={updateEventList}
       />
       <div className={calendarHeader}>
@@ -151,8 +175,11 @@ const Calendar = () => {
           isLastWeek={weekDataIndex === (chunkedMonthData.length - 1)}
           events={events}
           openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
+          openUpdateEventModal={setUpdateModalIsOpen.bind(null, true)}
           setSelectedDate={setSelectedDate}
           updateEventList={updateEventList}
+          setUpdateModalData={setUpdateModalData}
+          key={`CalendarRow-${weekDataIndex}`}
         />
       })}
     </>
