@@ -17,14 +17,6 @@ DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://nevada.213-171-10-35.nip.io/',
-    'https://nevada-frontend.213-171-10-35.nip.io/',
-    'http://213.171.10.35:3000',
-    'http://localhost:3000',
-]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -60,6 +52,17 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://nevada.213-171-10-35.nip.io',
+    'https://nevada-frontend.213-171-10-35.nip.io',
+    'http://213.171.10.35:3000',
+    'http://localhost:3000',
+]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'cub.urls'
 
