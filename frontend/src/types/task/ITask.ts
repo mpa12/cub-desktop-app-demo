@@ -1,3 +1,5 @@
+import IComment from "@cub-types/task/IComment";
+
 interface ITask {
   id: number;
   title: string;
@@ -33,7 +35,7 @@ interface ITask {
   is_paused: boolean;
   is_stopped: boolean;
   time: string;
-  comment?: string;
+  comments: IComment[];
   start_timestamp?: string;
   start_time?: string;
 }
