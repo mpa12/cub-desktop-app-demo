@@ -14,9 +14,9 @@ dp = Dispatcher(bot)
 async def start(message: types.Message):
     markup = types.ReplyKeyboardMarkup()
     markup.add(
-        types.KeyboardButton('Система логирования', web_app=WebAppInfo(url='https://itproger.com/')),
-        types.InlineKeyboardButton('Вопрос ответ', web_app=WebAppInfo(url='https://itproger.com/')),
-        types.InlineKeyboardButton('Поддержка', web_app=WebAppInfo(url='https://itproger.com/')),
+  types.KeyboardButton('Система логирования', web_app=WebAppInfo(url='https://nevada-frontend.213-171-10-35.nip.io/login')),
+        types.InlineKeyboardButton('Вопрос ответ', web_app=WebAppInfo(url='https://nevada.213-171-10-35.nip.io/bot/support/')),
+        types.InlineKeyboardButton('Поддержка', web_app=WebAppInfo(url='https://nevada.213-171-10-35.nip.io/bot/contact/')),
         types.InlineKeyboardButton('Инструкция пользователя', web_app=WebAppInfo(url='https://itproger.com/')),
     )
     await message.answer('Выбери раздел', reply_markup=markup)
