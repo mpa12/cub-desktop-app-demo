@@ -23,6 +23,14 @@ const ProjectsTable = ({data}: ProjectsTableProps) => {
       }
     },
     {
+      label: 'Руководитель',
+      getValue: (data: IProject) => data.leader_info.last_name + ' ' + data.leader_info.first_name + ' ' + data.leader_info.midl_name + ' (' + data.leader_info.username + ')'
+    },
+    {
+      label: 'Заказчик',
+      getValue: (data: IProject) => data.customer_info.title + ' (' + data.customer_info.header_name + ')'
+    },
+    {
       label: 'Дата начала',
       getValue: (data: IProject) => {
         return convertTimeFormat(data.start_date)
