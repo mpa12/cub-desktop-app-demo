@@ -12,12 +12,15 @@ from .user_enums import UserRole, UserGender
 
 class User(AbstractUser):
     """Модель для пользователей"""
-    midl_name = models.CharField(max_length=255, verbose_name="Отчество")
+    email = models.EmailField(unique=True)
+    midl_name = models.CharField(max_length=255, verbose_name="Отчество", null=True, blank=True)
     passport_data = models.ForeignKey(
         'UserPassport',
         on_delete=models.CASCADE,
         verbose_name="Паспортные данные",
-        null=True, blank=True,
+        null=True,
+        blank=True,
+        # unique=True,
     )
     snils = models.CharField(max_length=255, verbose_name="СНИЛС", null=True, blank=True)
     inn = models.CharField(max_length=255, verbose_name="ИНН", null=True, blank=True)
@@ -25,6 +28,7 @@ class User(AbstractUser):
     birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
     photo = models.FileField(upload_to='user_files/', verbose_name="Фотография профиля", null=True, blank=True)
     role = models.CharField('Роль', max_length=50, choices=UserRole.choices)
+    telegram_id = models.CharField('Телеграм', max_length=255, null=True, blank=True)
 
     def is_manager(self):
         return self.role == UserRole.MANAGER

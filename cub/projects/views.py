@@ -4,7 +4,7 @@ from rest_framework import permissions, status
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Project, Folder
-from .serializer import ProjectSerializer, FolderSerializer
+from .serializer import ProjectSerializer, FolderSerializer, ProjectFileSerializer
 
 
 class ProjectView(APIView):
@@ -65,3 +65,23 @@ class FolderView(APIView):
         folders = self.get_queryset(project_id)
         serializer = FolderSerializer(folders, many=True)
         return Response(serializer.data)
+
+
+class FilesView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self, folder_id, project_id):
+        try:
+            folder = Folder.objects.get(id=folder_id, project__id=project_id)
+            return folder.files.all()
+        except Folder.DoesNotExist:
+            return None
+
+    def get(self, request, project_id, folder_id):
+        files = self.get_queryset(folder_id, project_id)
+        if files is not None:
+            serializer = ProjectFileSerializer(files, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'Папка не найдена'}, status=status.HTTP_404_NOT_FOUND)
