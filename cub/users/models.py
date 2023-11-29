@@ -20,7 +20,7 @@ class User(AbstractUser):
         verbose_name="Паспортные данные",
         null=True,
         blank=True,
-        unique=True,
+        # unique=True,
     )
     snils = models.CharField(max_length=255, verbose_name="СНИЛС", null=True, blank=True)
     inn = models.CharField(max_length=255, verbose_name="ИНН", null=True, blank=True)
