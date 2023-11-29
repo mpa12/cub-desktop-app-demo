@@ -13,8 +13,8 @@ def send_passport_task(full_name, username, password, email):
     user_message = (
         f'{full_name}, здравствуй! \n'
         f'Вам предоставлены доступы в сервисы нашей компании.\n\n'
-        f'Телеграм бот:\n'
-        f'Система логирования и учета времени: https://213.171.10.35:3000l/login\n\n'
+        f'Телеграм бот: https://t.me/mark_tusovchikBot\n'
+        f'Система логирования и учета времени: https://nevada-frontend.213-171-10-35.nip.io/login\n\n'
         f'Логин для входа в систему логирования: {username}\n'
         f'Пароль: {password}'
     )
