@@ -8,13 +8,14 @@ import IProfileData from "@cub-types/IProfileData";
 import AuthService from "@services/AuthService";
 import ProfileModel from "@models/ProfileModel";
 import {Link} from "react-router-dom";
-import convertTimeFormat from "@utils/convertTimeFormat";
+import TaskComments from "@components/tasks/TaskComments";
 
 interface TaskViewProps {
   data: ITask;
   startHandler: () => void;
   pauseHandler: () => void;
   completeHandler: () => void;
+  getTaskData: () => Promise<void>;
 }
 
 const wrapperClassName = 'w-full h-full self-stretch';
@@ -31,11 +32,6 @@ const taskViewButtonClassName = 'px-[15px] py-[7px] rounded-[7px]';
 const taskViewButtonGreenClassName = cn(
   taskViewButtonClassName,
   'bg-green hover:bg-green-hover text-light'
-);
-// Серая кнопка
-const taskViewButtonGrayClassName = cn(
-  taskViewButtonClassName,
-  'bg-light-gray hover:bg-light-gray-hover text-dark-gray border-gray border-[1px]'
 );
 const taskDetailSidebarHeader = cn(taskDetailHeader, 'bg-green-hover rounded-t-[10px] border-b-[0]');
 const taskDetailSidebarTr = cn(
@@ -55,6 +51,7 @@ const TaskView = ({
   startHandler,
   pauseHandler,
   completeHandler,
+  getTaskData,
 }: TaskViewProps) => {
   const [profileData, setProfileData] = useState<IProfileData>();
 
@@ -74,17 +71,17 @@ const TaskView = ({
     return () => clearInterval(interval);
   }, [taskModel, timeDelta]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await AuthService.profileData();
-        setProfileData(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const getProfileData = async () => {
+    try {
+      const response = await AuthService.profileData();
+      setProfileData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    fetchData().then();
+  useEffect(() => {
+    getProfileData().then();
   }, []);
 
   const userModel = new ProfileModel(profileData);
@@ -127,21 +124,7 @@ const TaskView = ({
             </div>
           </div>
 
-          <div className={'flex flex-col'}>
-            <div>
-              <div className={'text-[14px] bg-light rounded-t-[10px] py-[12px] px-[8px] w-fit'}>Комментарии</div>
-            </div>
-            <div className={'bg-light rounded-b-[10px] py-[20px] px-[10px] flex flex-col gap-[10px]'}>
-              {taskModel.data.comments.map(comment => {
-                return (
-                  <div key={`comment-${comment.date}`} className={'bg-light-gray p-[10px] rounded-[10px] border-[1px] border-gray-hover'}>
-                    <time className={'text-[11px]'}>{convertTimeFormat(comment.date)}</time>
-                    <p className={'text-[14px] mt-[5px]'}>{comment.comment}</p>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <TaskComments taskModel={taskModel} getTaskData={getTaskData} />
         </div>
 
         <div className={rightContentWrapperClassName}>

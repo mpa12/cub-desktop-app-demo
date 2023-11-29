@@ -19,8 +19,8 @@ const menuClassName = cn(
   'lg:flex-col flex-row justify-around sticky bottom-0 lg:static bg-white lg:h-full h-[80px] z-[999]'
 );
 const childrenWrapperClassName = cn(
-  'grow bg-light-gray p-[60px] rounded-tl-0 lg:h-[calc(100vh-80px)] overflow-y-auto',
-  'lg:rounded-tl-[60px] pb-[60px] h-[calc(100vh-160px)]'
+  'grow bg-light-gray rounded-tl-0 lg:h-[calc(100vh-80px)] overflow-y-auto',
+  'lg:rounded-tl-[60px] h-[calc(100vh-160px)] lg:px-[60px] py-[60px] px-[20px]'
 );
 const logoBlockClassName = 'h-[50px] shrink-0';
 const logoClassName = 'h-full';

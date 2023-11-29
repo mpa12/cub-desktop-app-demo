@@ -7,6 +7,7 @@ import CalendarEvent from "@components/calendar/CalendarEvent";
 import ColorPicker from "@components/color-picker/ColorPicker";
 import CalendarService from "@services/CalendarService";
 import LoaderSpinner from "@ui/LoaderSpinner";
+import toast from "react-hot-toast";
 
 interface ModalData {
   date: Date;
@@ -102,6 +103,12 @@ const CreateEventModal = ({
     });
 
     setIsLoading(false);
+
+    toast('Событие добавлено', {
+      position: 'bottom-right',
+      duration: 2000,
+      className: 'mr-[20px] !bg-green !text-white'
+    });
   }
 
   return (

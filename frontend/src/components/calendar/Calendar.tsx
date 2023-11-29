@@ -130,59 +130,61 @@ const Calendar = () => {
   }
 
   return (
-    <>
-      <CreateEventModal
-        isOpen={createModalIsOpen}
-        setIsOpen={setCreateModalIsOpen}
-        data={modalData}
-        setData={setModalData}
-        updateEventList={updateEventList}
-      />
-      <UpdateEventModal
-        isOpen={updateModalIsOpen}
-        setIsOpen={setUpdateModalIsOpen}
-        data={updateModalData}
-        setData={setUpdateModalData}
-        updateEventList={updateEventList}
-      />
-      <div className={calendarHeader}>
-        <div>
-          <h3 className={'font-bold'}>Календарь событий</h3>
-          <span className={'text-[14px] text-gray'}>{getMonthName(calendarData.month)} {calendarData.year}</span>
-        </div>
-        <div className={calendarHeaderButtons}>
-          <div className={calendarHeaderButton} onClick={prevMonth}>
-            <Icon iconName={'chevronLeft'} />
+    <div className={'overflow-hidden overflow-x-auto'}>
+      <div className={'min-w-[700px]'}>
+        <CreateEventModal
+          isOpen={createModalIsOpen}
+          setIsOpen={setCreateModalIsOpen}
+          data={modalData}
+          setData={setModalData}
+          updateEventList={updateEventList}
+        />
+        <UpdateEventModal
+          isOpen={updateModalIsOpen}
+          setIsOpen={setUpdateModalIsOpen}
+          data={updateModalData}
+          setData={setUpdateModalData}
+          updateEventList={updateEventList}
+        />
+        <div className={calendarHeader}>
+          <div>
+            <h3 className={'font-bold'}>Календарь событий</h3>
+            <span className={'text-[14px] text-gray'}>{getMonthName(calendarData.month)} {calendarData.year}</span>
           </div>
-          <div className={calendarHeaderButton} onClick={nextMonth}>
-            <Icon iconName={'chevronRight'} />
-          </div>
-        </div>
-      </div>
-      <div className={'flex'}>
-        {weekTitles.map(weekTitle => {
-          return (
-            <div className={weekTitleWrapper} key={`weekTitle-${weekTitle}`}>
-              <span>{weekTitle}</span>
+          <div className={calendarHeaderButtons}>
+            <div className={calendarHeaderButton} onClick={prevMonth}>
+              <Icon iconName={'chevronLeft'} />
             </div>
-          )
+            <div className={calendarHeaderButton} onClick={nextMonth}>
+              <Icon iconName={'chevronRight'} />
+            </div>
+          </div>
+        </div>
+        <div className={'flex'}>
+          {weekTitles.map(weekTitle => {
+            return (
+              <div className={weekTitleWrapper} key={`weekTitle-${weekTitle}`}>
+                <span>{weekTitle}</span>
+              </div>
+            )
+          })}
+        </div>
+        {chunkedMonthData.map((weekData, weekDataIndex) => {
+          return <CalendarRow
+            weekData={weekData}
+            weekDataIndex={weekDataIndex}
+            isLastWeek={weekDataIndex === (chunkedMonthData.length - 1)}
+            events={events}
+            openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
+            openUpdateEventModal={setUpdateModalIsOpen.bind(null, true)}
+            setSelectedDate={setSelectedDate}
+            updateEventList={updateEventList}
+            setUpdateModalData={setUpdateModalData}
+            key={`CalendarRow-${weekDataIndex}`}
+          />
         })}
       </div>
-      {chunkedMonthData.map((weekData, weekDataIndex) => {
-        return <CalendarRow
-          weekData={weekData}
-          weekDataIndex={weekDataIndex}
-          isLastWeek={weekDataIndex === (chunkedMonthData.length - 1)}
-          events={events}
-          openCreateEventModal={setCreateModalIsOpen.bind(null, true)}
-          openUpdateEventModal={setUpdateModalIsOpen.bind(null, true)}
-          setSelectedDate={setSelectedDate}
-          updateEventList={updateEventList}
-          setUpdateModalData={setUpdateModalData}
-          key={`CalendarRow-${weekDataIndex}`}
-        />
-      })}
-    </>
+    </div>
   );
 };
 

@@ -7,6 +7,7 @@ import CalendarEvent from "@components/calendar/CalendarEvent";
 import Button from "@ui/Button";
 import LoaderSpinner from "@ui/LoaderSpinner";
 import CalendarService from "@services/CalendarService";
+import toast from "react-hot-toast";
 
 interface ModalData {
   id: number;
@@ -103,6 +104,12 @@ const UpdateEventModal = ({
     });
 
     setIsLoading(false);
+
+    toast('Событие изменено', {
+      position: 'bottom-right',
+      duration: 2000,
+      className: 'mr-[20px] !bg-green !text-white'
+    });
   };
 
   return (
@@ -183,7 +190,7 @@ const UpdateEventModal = ({
             }} />
           </div>
           <div className={modalFooterClassName}>
-            <Button title={'Добавить'} colorType={'green'} onClick={updateCallback} />
+            <Button title={'Редактировать'} colorType={'green'} onClick={updateCallback} />
             <Button title={'Отмена'} colorType={'light-gray'} onClick={setIsOpen.bind(null, false)} />
           </div>
         </div>

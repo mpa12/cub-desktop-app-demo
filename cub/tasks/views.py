@@ -35,7 +35,6 @@ class TaskCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class TaskCommentCreateView(APIView):
     def get_queryset(self):
         return Task.objects.none()
@@ -44,7 +43,7 @@ class TaskCommentCreateView(APIView):
         serializer = TaskCommentSerializer(data=request.data)
         if serializer.is_valid():
             comment = serializer.save(task=task)
-            task.comments.add(comment)
+#             task.comments.add(comment)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

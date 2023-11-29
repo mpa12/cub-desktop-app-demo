@@ -45,6 +45,14 @@ class TaskService {
     instance.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
     return instance.put(`/tasks/api/v1/tasks/${id}/update/`, data);
   }
+
+  createComment({ taskId, comment }: { taskId: number; comment: string; }) {
+    instance.defaults.headers.common['X-CSRFToken'] = getCookie('csrftoken');
+    return instance.post(`/tasks/api/v1/tasks/${taskId}/comment/create/`, {
+      comment,
+      task: taskId,
+    });
+  }
 }
 
 export default new TaskService();
