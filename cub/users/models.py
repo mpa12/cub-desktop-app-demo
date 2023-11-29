@@ -28,6 +28,7 @@ class User(AbstractUser):
     birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
     photo = models.FileField(upload_to='user_files/', verbose_name="Фотография профиля", null=True, blank=True)
     role = models.CharField('Роль', max_length=50, choices=UserRole.choices)
+    telegram_id = models.CharField('Телеграм', max_length=255, null=True, blank=True)
 
     def is_manager(self):
         return self.role == UserRole.MANAGER

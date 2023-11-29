@@ -21,7 +21,8 @@ class UserAdmin(admin.ModelAdmin):
             'inn',
             'gender',
             'birth_date',
-            'role'
+            'role',
+            'telegram_id',
         )}),
         (_('Permissions'), {'fields': ('is_active',), }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
