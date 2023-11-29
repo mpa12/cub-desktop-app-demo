@@ -16,7 +16,7 @@ const Task = () => {
   const [task, setTask] = useState<ITask>();
   const [isLoading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const getTaskData = async () => {
     try {
       const response = await TasksService.view(taskId);
       setTask(response.data);
@@ -28,13 +28,13 @@ const Task = () => {
   };
 
   useEffect(() => {
-    fetchData().then(() => {});
+    getTaskData().then(() => {});
   }, []);
 
   const startHandler = async () => {
     try {
       await TasksService.start(taskId);
-      fetchData().then(() => {})
+      getTaskData().then(() => {})
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +43,7 @@ const Task = () => {
   const pauseHandler = async () => {
     try {
       await TasksService.pause(taskId);
-      fetchData().then(() => {})
+      getTaskData().then(() => {})
     } catch (error) {
       console.error(error);
     }
@@ -52,7 +52,7 @@ const Task = () => {
   const completeHandler = async () => {
     try {
       await TasksService.complete(taskId);
-      fetchData().then(() => {})
+      getTaskData().then(() => {})
     } catch (error) {
       console.error(error);
     }
@@ -69,6 +69,7 @@ const Task = () => {
             startHandler={startHandler}
             pauseHandler={pauseHandler}
             completeHandler={completeHandler}
+            getTaskData={getTaskData}
         />}
       </div>
     </div>
