@@ -111,7 +111,7 @@ const Profile = () => {
               </Link>
             )}
             {profileModel.isAdmin() && (
-              <Link to={`${process.env.REACT_APP_API_BASE_URL}/admin`}>
+              <Link to={`${process.env.REACT_APP_API_BASE_URL}admin`}>
                 <Button
                   onClick={() => {}}
                   title={'Админ панель'}
