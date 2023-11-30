@@ -61,8 +61,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
 ]
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# SESSION_COOKIE_SECURE = True
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'cub.urls'
 

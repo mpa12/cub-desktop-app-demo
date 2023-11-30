@@ -14,38 +14,28 @@ class TaskCreateView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        # Получаем данные из запроса
         data = request.data
-
-        # Устанавливаем текущего пользователя как менеджера проекта, если не передан project_manager_id
         data.setdefault('project_manager', self.request.user.id)
-
-        # Сериализуем данные
         serializer = TaskCreateSerializer(data=data)
 
-        # Проверяем валидность данных
         if serializer.is_valid():
-            # Сохраняем задачу
             serializer.save()
-
-            # Возвращаем успешный ответ
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        # Возвращаем ошибку, если данные не валидны
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class TaskCommentCreateView(APIView):
-    def get_queryset(self):
-        return Task.objects.none()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request, task_id):
-        task = Task.objects.get(id=task_id)
-        serializer = TaskCommentSerializer(data=request.data)
+        data = request.data
+        data['task'] = task_id
+        serializer = TaskCommentSerializer(data=data)
         if serializer.is_valid():
-            comment = serializer.save(task=task)
-#             task.comments.add(comment)
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class TaskDeleteView(generics.DestroyAPIView):

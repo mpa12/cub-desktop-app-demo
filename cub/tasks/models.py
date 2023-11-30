@@ -99,10 +99,9 @@ class TaskComment(models.Model):
         ordering = ['date']
 
     def save(self, *args, **kwargs):
-        if self.date:
-            super(TaskComment, self).save(*args, **kwargs)
-
-        self.date = timezone.now()
+        if not self.date:
+            self.date = timezone.now()
+        super(TaskComment, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.comment

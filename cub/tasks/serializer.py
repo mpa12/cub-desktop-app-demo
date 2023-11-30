@@ -5,12 +5,6 @@ from projects.serializer import ProjectSerializer
 from .models import Task, TaskFile, TaskComment
 
 
-class TaskCommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TaskComment
-        fields = ('comment', 'date','task')
-
-
 class TaskFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = TaskFile
@@ -41,6 +35,13 @@ class TaskSerializer(serializers.ModelSerializer):
             'start_timestamp',
             'start_time',
         )
+
+
+class TaskCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaskComment
+        fields = ('id', 'task', 'comment', 'date')
+
 
 class TaskCreateSerializer(serializers.ModelSerializer):
     class Meta:
