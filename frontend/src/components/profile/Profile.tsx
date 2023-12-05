@@ -81,6 +81,9 @@ const Profile = () => {
   const onDropdownClick = () => {
     setIsOpened(!isOpened);
   };
+  const closeDropdown = () => {
+    setIsOpened(false);
+  };
 
   const profileModel = new ProfileModel(profileData);
 
@@ -102,7 +105,7 @@ const Profile = () => {
           </div>
           <div className={profileButtonsWrapperClassName}>
             {profileModel.canCreateTask() && (
-              <Link to={`/tasks/create`}>
+              <Link to={`/tasks/create`} onClick={closeDropdown}>
                 <Button
                   title={'Создать задачу'}
                   colorType={'green'}
@@ -111,7 +114,7 @@ const Profile = () => {
               </Link>
             )}
             {profileModel.isAdmin() && (
-              <Link to={`${process.env.REACT_APP_API_BASE_URL}admin`}>
+              <Link to={`${process.env.REACT_APP_API_BASE_URL}admin`} onClick={closeDropdown}>
                 <Button
                   onClick={() => {}}
                   title={'Админ панель'}

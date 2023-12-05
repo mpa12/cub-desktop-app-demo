@@ -1,4 +1,5 @@
 import IProfileData from "@cub-types/IProfileData";
+import convertDateFormat from "@utils/convertDateFormat";
 
 class ProfileModel {
   SUPERUSER = '';
@@ -51,6 +52,20 @@ class ProfileModel {
     const url = this.data.photo.substring(1);
 
     return `${process.env.REACT_APP_API_BASE_URL}${url}`;
+  }
+
+  getFields() {
+    if (!this.data) return [];
+
+    return [
+      {key: 'first_name', value: this.data.first_name, label: 'Имя'},
+      {key: 'last_name', value: this.data.last_name, label: 'Фамилия'},
+      {key: 'midl_name', value: this.data.midl_name, label: 'Отчество'},
+      {key: 'email', value: this.data.email, label: 'E-mail'},
+      {key: 'gender', value: this.getSex(), label: 'Пол'},
+      {key: 'birth_date', value: convertDateFormat(this.data.birth_date), label: 'День рождения'},
+      {key: 'role', value: this.getRoleName(), label: 'Должность'},
+    ];
   }
 }
 

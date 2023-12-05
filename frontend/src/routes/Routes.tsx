@@ -12,6 +12,7 @@ import Project from "@components/projects/Project";
 import PageNotFound from "@components/page-not-found/PageNotFound";
 import CreateTask from "@components/tasks/CreateTask";
 import UpdateTask from "@components/tasks/UpdateTask";
+import ProfilePage from "@components/profile/ProfilePage";
 
 const Routes = () => (
   <BrowserRouter>
@@ -31,6 +32,7 @@ const Routes = () => (
         </Route>
         <Route path='employees' element={<Employees/>}/>
         <Route path='calendar' element={<Calendar/>}/>
+        <Route path='profile' element={<ProfilePage/>}/>
         <Route path='*' element={<PageNotFound />}/>
       </Route>
     </ReactRoutes>
