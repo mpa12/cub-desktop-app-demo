@@ -16,6 +16,7 @@ import { ReactComponent as file } from './file.svg';
 import { ReactComponent as download } from './download.svg';
 import { ReactComponent as threeDotsVertical } from './three-dots-vertical.svg';
 import { ReactComponent as pencil } from './pencil.svg';
+import { ReactComponent as person } from './person.svg';
 
 export const ICONS = {
   search,
@@ -35,6 +36,7 @@ export const ICONS = {
   download,
   threeDotsVertical,
   pencil,
+  person,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {
