@@ -22,9 +22,9 @@ const menuItems: HeaderLinkProps[] = [
     iconName: 'calendar',
   },
   {
-    title: 'Профиль',
-    path: '/profile',
-    iconName: 'person',
+    title: 'Сервисы',
+    path: '/services',
+    iconName: 'circleThreeDots',
   },
 ];
 
