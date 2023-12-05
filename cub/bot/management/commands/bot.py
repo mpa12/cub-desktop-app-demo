@@ -13,10 +13,10 @@ bot = TeleBot(token=settings.TELEGRAM_BOT_TOKEN)
 def menu(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
     markup.add(
-        types.KeyboardButton('Система логирования'),
-        types.KeyboardButton('Вопрос ответ'),
-        types.KeyboardButton('Поддержка'),
-        types.KeyboardButton('Инструкция'),
+        types.KeyboardButton('Система логирования', web_app=types.WebAppInfo(url='https://nevada-frontend.213-171-10-35.nip.io/login')),
+        types.KeyboardButton('Вопрос ответ',  web_app=types.WebAppInfo(url='https://nevada.213-171-10-35.nip.io/bot/support/')),
+        types.KeyboardButton('Поддержка',  web_app=types.WebAppInfo(url='https://nevada.213-171-10-35.nip.io/bot/contact/')),
+        types.KeyboardButton('Инструкция',  web_app=types.WebAppInfo(url='https://nevada-frontend.213-171-10-35.nip.io/login')),
     )
     bot.send_message(message.chat.id, 'Выбери раздел:', reply_markup=markup)
 
