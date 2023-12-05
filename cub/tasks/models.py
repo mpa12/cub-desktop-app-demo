@@ -1,12 +1,12 @@
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from users.models import User
 from users.user_enums import UserRole
 from .tasks_enums import TaskStatuses
-from bot.tasks import send_task_notice
+from bot.tasks import send_task_notice, send_task_logging_notice, send_task_end_notice, send_task_warn_notice
 
 
 class Task(models.Model):
@@ -88,6 +88,23 @@ class Task(models.Model):
 
         if self.status == TaskStatuses.NEW:
             send_task_notice.delay(self.executor.id, self.title, self.description, self.due_date, self.pk)
+
+            if self.due_date:
+                send_task_logging_notice.apply_async(
+                    args=(self.executor.id, self.title, self.pk),
+                    eta=self.due_date - timedelta(minutes=15),
+                )
+
+                send_task_end_notice.apply_async(
+                    args=(self.executor.id, self.title, self.pk),
+                    eta=self.due_date + timedelta(hours=2),
+                )
+            else:
+                send_task_warn_notice.apply_async(
+                    args=(self.executor.id, self.title, self.pk),
+                    eta=self.due_date + timedelta(days=3),
+                )
+
 
         super(Task, self).save(*args, **kwargs)
 
