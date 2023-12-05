@@ -130,7 +130,7 @@ const Calendar = () => {
   }
 
   return (
-    <div className={'overflow-hidden overflow-x-auto'}>
+    <div className={'overflow-hidden overflow-x-auto pb-[40px]'}>
       <div className={'min-w-[700px]'}>
         <CreateEventModal
           isOpen={createModalIsOpen}

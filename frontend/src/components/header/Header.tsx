@@ -23,7 +23,7 @@ const childrenWrapperClassName = cn(
   'lg:rounded-tl-[60px] h-[calc(100vh-160px)] lg:px-[60px] py-[60px] px-[20px]'
 );
 const logoBlockClassName = 'h-[50px] shrink-0';
-const logoClassName = 'h-full';
+const logoClassName = 'h-full select-none';
 const inputBlockClassName = 'h-[35px] relative grow lg:block hidden';
 const inputClassName = cn(
   'pl-[35px] pr-[5px] border h-full w-[300px]',

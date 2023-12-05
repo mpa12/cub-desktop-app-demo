@@ -4,7 +4,6 @@ import ProjectModel from "@models/ProjectModel";
 import cn from "classnames";
 import Folder from "@components/projects/Folder";
 import File from "@components/projects/File";
-import FromFolderBackToProjectButton from "@ui/FromFolderBackToProjectButton";
 import convertTimeFormat from "@utils/convertTimeFormat";
 import Breadcrumbs from "@components/projects/Breadcrumbs";
 
@@ -85,7 +84,7 @@ const ProjectView = (
                 <>
                   {projectDto.data.folders.map(folder => (
                     <div key={folder.id} onClick={() => selectFolder(folder.id)}>
-                      <Folder name={folder.name}/>
+                      <Folder data={folder}/>
                     </div>
                   ))}
                   {projectDto.data.files.filter(file => file.folder == null).map(file => (

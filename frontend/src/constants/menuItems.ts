@@ -21,6 +21,11 @@ const menuItems: HeaderLinkProps[] = [
     path: '/calendar',
     iconName: 'calendar',
   },
+  {
+    title: 'Сервисы',
+    path: '/services',
+    iconName: 'circleThreeDots',
+  },
 ];
 
 export default menuItems;
