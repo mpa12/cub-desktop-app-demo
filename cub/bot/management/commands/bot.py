@@ -3,30 +3,46 @@ import logging
 from django.core.management.base import BaseCommand
 from django.conf import settings
 
-from aiogram import Bot, Dispatcher, executor, types
-from aiogram.types.web_app_info import WebAppInfo
+from telebot import TeleBot, types
 
-bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
-dp = Dispatcher(bot)
+from users.models import User
+
+bot = TeleBot(token=settings.TELEGRAM_BOT_TOKEN)
 
 
-@dp.message_handler(commands=['start'])
-async def start(message: types.Message):
-    markup = types.ReplyKeyboardMarkup()
+def menu(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=3)
     markup.add(
-  types.KeyboardButton('Система логирования', web_app=WebAppInfo(url='https://nevada-frontend.213-171-10-35.nip.io/login')),
-        types.InlineKeyboardButton('Вопрос ответ', web_app=WebAppInfo(url='https://nevada.213-171-10-35.nip.io/bot/support/')),
-        types.InlineKeyboardButton('Поддержка', web_app=WebAppInfo(url='https://nevada.213-171-10-35.nip.io/bot/contact/')),
-        types.InlineKeyboardButton('Инструкция пользователя', web_app=WebAppInfo(url='https://itproger.com/')),
+        types.KeyboardButton('Система логирования'),
+        types.KeyboardButton('Вопрос ответ'),
+        types.KeyboardButton('Поддержка'),
+        types.KeyboardButton('Инструкция'),
     )
-    await message.answer('Выбери раздел', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Выбери раздел:', reply_markup=markup)
+
+@bot.message_handler(commands=['start'])
+def handle_start(message):
+    msg = bot.send_message(message.chat.id, "Введите ваш email для системы логирования Невада:")
+    bot.register_next_step_handler(msg, process_email_step)
+
+def process_email_step(message):
+    email = message.text
+    user = User.objects.get(email=email)
+    if user.telegram_id:
+        bot.send_message(message.chat.id, "Вы уже зарегистрированы.")
+        menu(message)
+    else:
+        user.telegram_id = message.chat.id
+        user.save()
+        bot.send_message(message.chat.id, "Теперь ваш Telegram ID привязан к аккаунту с email: {}".format(email))
+        menu(message)
 
 
 class Command(BaseCommand):
     help = 'Невада бот'
 
     def handle(self, *args, **options):
-        executor.start_polling(dp)
+        bot.polling(none_stop=True)
         # while True:
         #     try:
         #         bot.polling(none_stop=True)
