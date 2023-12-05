@@ -6,6 +6,7 @@ from datetime import datetime
 from users.models import User
 from users.user_enums import UserRole
 from .tasks_enums import TaskStatuses
+from bot.tasks import send_task_notice
 
 
 class Task(models.Model):
@@ -82,6 +83,13 @@ class Task(models.Model):
     class Meta:
         verbose_name_plural = 'Задачи'
         verbose_name = 'Задача'
+
+    def save(self, *args, **kwargs):
+
+        if self.status == TaskStatuses.NEW:
+            send_task_notice.delay(self.executor.id, self.title, self.description, self.due_date, self.pk)
+
+        super(Task, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
