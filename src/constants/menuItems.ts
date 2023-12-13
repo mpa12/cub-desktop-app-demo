@@ -6,6 +6,11 @@ const menuItems: HeaderLinkProps[] = [
     path: '/settings',
     iconName: 'gear',
   },
+  {
+    title: 'Главная страница',
+    path: '/',
+    iconName: 'house',
+  },
 ];
 
 export default menuItems;

@@ -2,19 +2,22 @@ import React, {useEffect} from "react";
 import logo from "@assets/logo.png";
 import cn from "classnames";
 import { BarLoader } from "react-spinners";
+import {useNavigate} from "react-router-dom";
 
 const baseClassName = 'w-screen h-screen bg-green flex flex-col items-center justify-center';
 const wrapperClassName = cn(
-  'max-w-[700px] lg:w-full w-[90%] px-[20px] py-[20px] bg-white rounded-[20px] mx-[20px]',
+  'max-w-[700px] lg:w-full w-[90%] p-[20px] bg-white rounded-[20px] mx-[20px]',
   'flex flex-col items-center',
 );
 const imgClassName = 'h-[100px]';
 
 const LoadingPage = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     localStorage.setItem('firstSignIn', '1');
     setTimeout(() => {
-      window.location.href = '/settings';
+      navigate('/settings');
     }, 5000)
   }, []);
 

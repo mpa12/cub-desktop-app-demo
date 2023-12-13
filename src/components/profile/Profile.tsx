@@ -22,7 +22,7 @@ const Profile = () => {
         <img className={imageClassName} src={profileImg} alt="profile_img"/>
         <div>
           <p className={profileNameClassName}>Иванов Иван Иванович</p>
-          <p className={positionClassName}>Руководитель проектов</p>
+          {/*<p className={positionClassName}>Руководитель проектов</p>*/}
         </div>
       </div>
     </div>
