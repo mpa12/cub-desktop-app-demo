@@ -27,7 +27,7 @@ const ActivityList = () => {
       getValue: (activity) => {
         return (
           <div className={'flex gap-[5px] items-center cursor-pointer select-none'}>
-            <div className={'p-[5px] bg-white rounded-[5px] w-fit h-[30px] w-[30px]'}>
+            <div className={'p-[5px] bg-white rounded-[5px] h-[30px] w-[30px]'}>
               <img
                 className={'h-[20px] w-[20px]'}
                 alt={activity.name}

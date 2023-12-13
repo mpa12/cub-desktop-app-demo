@@ -38,7 +38,7 @@ const Settings = () => {
             <div className={'flex gap-[10px] items-center border-b border-b-gray-100 py-[20px]'} key={activity.name}>
               <input type={'checkbox'} id={activity.name} checked={activity.isChecked}/>
               <label className={'flex gap-[5px] items-center cursor-pointer select-none'} htmlFor={'google'}>
-                <div className={'p-[5px] bg-white rounded-[5px] w-fit h-[30px] w-[30px]'}>
+                <div className={'p-[5px] bg-white rounded-[5px] h-[30px] w-[30px]'}>
                   <img
                     className={'h-[20px] w-[20px]'}
                     alt={activity.name}
