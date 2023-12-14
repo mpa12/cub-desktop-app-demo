@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cub-desktop-app-demo/static/css/main.573bd685.css",
-    "main.js": "/cub-desktop-app-demo/static/js/main.bf74c283.js",
+    "main.js": "/cub-desktop-app-demo/static/js/main.daf43d9d.js",
     "static/media/telemost.png": "/cub-desktop-app-demo/static/media/telemost.4a981588c616e99de9fe.png",
     "static/media/logo.png": "/cub-desktop-app-demo/static/media/logo.3dc9f0e40e6057149342.png",
     "static/media/default_profile.png": "/cub-desktop-app-demo/static/media/default_profile.d7c1383f1e333be13f05.png",
@@ -31,10 +31,10 @@
     "static/media/file.svg": "/cub-desktop-app-demo/static/media/file.ef80bca6ac5afa3182a43e73ea41c8ac.svg",
     "static/media/three-dots-vertical.svg": "/cub-desktop-app-demo/static/media/three-dots-vertical.2e461bc6e30d78a7647f40b16c1ea681.svg",
     "main.573bd685.css.map": "/cub-desktop-app-demo/static/css/main.573bd685.css.map",
-    "main.bf74c283.js.map": "/cub-desktop-app-demo/static/js/main.bf74c283.js.map"
+    "main.daf43d9d.js.map": "/cub-desktop-app-demo/static/js/main.daf43d9d.js.map"
   },
   "entrypoints": [
     "static/css/main.573bd685.css",
-    "static/js/main.bf74c283.js"
+    "static/js/main.daf43d9d.js"
   ]
 }
