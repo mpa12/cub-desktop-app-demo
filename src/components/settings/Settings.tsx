@@ -1,15 +1,32 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@ui/Button";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
 import ActivityStore from "@stores/ActivityStore";
+import {observer} from "mobx-react-lite";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 
-const Settings = () => {
+const Settings = observer(() => {
   const navigate = useNavigate();
+  const [apps, setApps] = useState(ActivityStore.list);
+
+  const setIsChecked = (name, isChecked = true) => {
+    const updatedApps = apps.map(activity => {
+      if (activity.name !== name) return activity;
+
+      return {
+        ...activity,
+        isChecked,
+      };
+    });
+
+    setApps(updatedApps);
+  };
 
   const save = () => {
+    ActivityStore.setList(apps);
+
     toast(
       'Настройки изменены',
       {
@@ -33,11 +50,21 @@ const Settings = () => {
       <div>
         <h3 className={'font-bold text-[16px]'}>Зарегистрированные сервисы</h3>
 
-        {ActivityStore.defaultValue.map(activity => {
+        {apps.map(activity => {
           return (
             <div className={'flex gap-[10px] items-center border-b border-b-gray-100 py-[20px]'} key={activity.name}>
-              <input type={'checkbox'} id={activity.name} checked={activity.isChecked}/>
-              <label className={'flex gap-[5px] items-center cursor-pointer select-none'} htmlFor={'google'}>
+              <input
+                type={'checkbox'}
+                id={activity.name}
+                checked={activity.isChecked}
+                onChange={evt => {
+                  setIsChecked(activity.name, evt.target.checked);
+                }}
+              />
+              <label
+                className={'flex gap-[5px] items-center cursor-pointer select-none'}
+                htmlFor={'google'}
+              >
                 <div className={'p-[5px] bg-white rounded-[5px] h-[30px] w-[30px]'}>
                   <img
                     className={'h-[20px] w-[20px]'}
@@ -60,6 +87,6 @@ const Settings = () => {
       </div>
     </>
   );
-};
+});
 
 export default Settings;

@@ -5,13 +5,15 @@ import ActivityStore from "@stores/ActivityStore";
 import Modal from "@ui/Modal";
 import Button from "@ui/Button";
 import toast from "react-hot-toast";
+import {observer} from "mobx-react-lite";
+import ActivityComment from "@components/activity-list/ActivityComment";
 
 const dataWrapperClassName = cn(
   'w-full min-h-[200px] rounded-[10px] bg-light flex items-center justify-center overflow-x-auto'
 );
 const wrapperClassName = 'w-full h-full grow self-stretch';
 
-const ActivityList = () => {
+const ActivityList = observer(() => {
   const [confirmModalOsOpen, setConfirmModalOsOpen] = useState(false);
 
   useEffect(() => {
@@ -20,13 +22,13 @@ const ActivityList = () => {
     }, 30000);
   }, [confirmModalOsOpen]);
 
-  const data = ActivityStore.defaultValue.filter(activity => activity.isChecked);
+  const data = ActivityStore.list.filter(activity => activity.isChecked);
   const fields = [
     {
       label: 'Сервис',
       getValue: (activity) => {
         return (
-          <div className={'flex gap-[5px] items-center cursor-pointer select-none'}>
+          <div className={'flex gap-[5px] items-center select-none w-[200px]'}>
             <div className={'p-[5px] bg-white rounded-[5px] h-[30px] w-[30px]'}>
               <img
                 className={'h-[20px] w-[20px]'}
@@ -46,9 +48,9 @@ const ActivityList = () => {
       }
     },
     {
-      label: 'Комментарий',
+      label: 'Описание',
       getValue: (activity) => {
-        return activity.comment;
+        return <ActivityComment activity={activity} />;
       }
     },
   ];
@@ -74,8 +76,13 @@ const ActivityList = () => {
         isOpen={confirmModalOsOpen}
         closeModal={setConfirmModalOsOpen.bind(null, false)}
       >
-        <div className={'max-w-[400px] lg:w-[100vw] w-[90vw] p-[20px] bg-white rounded-[20px]'}>
+        <div className={'max-w-[700px] lg:w-[100vw] w-[90vw] p-[20px] bg-white rounded-[20px]'}>
           <h4 className={'font-semibold text-[16px]'}>Подтвердите отправку активности</h4>
+          <div className={'w-full mt-[20px]'}>
+            <div className={cn(wrapperClassName, 'overflow-x-auto')}>
+              <Table data={data} fields={fields} />
+            </div>
+          </div>
           <div className={'w-full flex gap-[5px] justify-end items-end mt-[30px]'}>
             <Button
               onClick={setConfirmModalOsOpen.bind(null, false)}
@@ -98,6 +105,6 @@ const ActivityList = () => {
       </div>
     </>
   );
-};
+});
 
 export default ActivityList;

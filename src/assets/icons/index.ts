@@ -21,6 +21,7 @@ import { ReactComponent as circleThreeDots } from './circle-three-dots.svg';
 import { ReactComponent as fileEarmarkBarGraph } from './file-earmark-bar-graph.svg';
 import { ReactComponent as gear } from './gear.svg';
 import { ReactComponent as house } from './house.svg';
+import { ReactComponent as checkCircle } from './check-circle.svg';
 
 export const ICONS = {
   search,
@@ -45,6 +46,7 @@ export const ICONS = {
   fileEarmarkBarGraph,
   gear,
   house,
+  checkCircle,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {
