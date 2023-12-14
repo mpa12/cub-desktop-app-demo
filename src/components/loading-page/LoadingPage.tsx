@@ -17,7 +17,7 @@ const LoadingPage = () => {
   useEffect(() => {
     localStorage.setItem('firstSignIn', '1');
     setTimeout(() => {
-      navigate('/settings');
+      navigate('/cub-desktop-app-demo/settings');
     }, 5000)
   }, []);
 
