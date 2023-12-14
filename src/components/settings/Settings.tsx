@@ -19,7 +19,7 @@ const Settings = () => {
       }
     );
 
-    navigate('/');
+    navigate('/cub-desktop-app-demo');
   };
 
   return (

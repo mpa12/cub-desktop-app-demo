@@ -9,10 +9,10 @@ import ActivityList from "@components/activity-list/ActivityList";
 const Routes = () => (
   <BrowserRouter>
     <ReactRoutes>
-      <Route path='loading' element={<LoadingPage />}/>
+      <Route path='cub-desktop-app-demo/loading' element={<LoadingPage />}/>
       <Route path='*' element={<PrivateRoute />}>
-        <Route index element={<ActivityList />}/>
-        <Route path={'settings'} element={<Settings />}/>
+        <Route path={'cub-desktop-app-demo'} element={<ActivityList />}/>
+        <Route path={'cub-desktop-app-demo/settings'} element={<Settings />}/>
       </Route>
     </ReactRoutes>
   </BrowserRouter>

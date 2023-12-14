@@ -41,7 +41,7 @@ const Header = ({
     <div className={baseClassName}>
       <header className={headerClassName}>
         <div className={logoBlockClassName}>
-          <Link to={''}>
+          <Link to={'/cub-desktop-app-demo'}>
             <img src={logo} alt={'Логотип Эником Невада групп'} className={logoClassName} />
           </Link>
         </div>
