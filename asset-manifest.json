@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cub-desktop-app-demo/static/css/main.21ca1e78.css",
-    "main.js": "/cub-desktop-app-demo/static/js/main.9852fd6b.js",
+    "main.css": "/cub-desktop-app-demo/static/css/main.74ee4d44.css",
+    "main.js": "/cub-desktop-app-demo/static/js/main.b636c9f8.js",
     "static/media/telemost.png": "/cub-desktop-app-demo/static/media/telemost.4a981588c616e99de9fe.png",
     "static/media/logo.png": "/cub-desktop-app-demo/static/media/logo.3dc9f0e40e6057149342.png",
     "static/media/default_profile.png": "/cub-desktop-app-demo/static/media/default_profile.d7c1383f1e333be13f05.png",
@@ -23,6 +23,7 @@
     "static/media/check-circle.svg": "/cub-desktop-app-demo/static/media/check-circle.66bab07b10895973db953336e93c0b11.svg",
     "static/media/circle-three-dots.svg": "/cub-desktop-app-demo/static/media/circle-three-dots.ff0a3936a88d406593add08d6c189a9d.svg",
     "static/media/plus-circle.svg": "/cub-desktop-app-demo/static/media/plus-circle.ce922d45e375e039c2ae2fcc80ac4d9f.svg",
+    "static/media/exclamation-circle.svg": "/cub-desktop-app-demo/static/media/exclamation-circle.41ef27e1de6b02ae93b6f7a333d9f284.svg",
     "static/media/search.svg": "/cub-desktop-app-demo/static/media/search.e0367ac3d4f95b3dfab14d4f56cc5645.svg",
     "static/media/folder-img.svg": "/cub-desktop-app-demo/static/media/folder-img.9efbc52af623ece3a1216610b832c041.svg",
     "static/media/clock.svg": "/cub-desktop-app-demo/static/media/clock.a29e51627b2b3fc8aa16f188feb200b2.svg",
@@ -31,11 +32,11 @@
     "static/media/chevron-left.svg": "/cub-desktop-app-demo/static/media/chevron-left.6b236cfcf1326f40d39de915b85cfa9d.svg",
     "static/media/file.svg": "/cub-desktop-app-demo/static/media/file.ef80bca6ac5afa3182a43e73ea41c8ac.svg",
     "static/media/three-dots-vertical.svg": "/cub-desktop-app-demo/static/media/three-dots-vertical.2e461bc6e30d78a7647f40b16c1ea681.svg",
-    "main.21ca1e78.css.map": "/cub-desktop-app-demo/static/css/main.21ca1e78.css.map",
-    "main.9852fd6b.js.map": "/cub-desktop-app-demo/static/js/main.9852fd6b.js.map"
+    "main.74ee4d44.css.map": "/cub-desktop-app-demo/static/css/main.74ee4d44.css.map",
+    "main.b636c9f8.js.map": "/cub-desktop-app-demo/static/js/main.b636c9f8.js.map"
   },
   "entrypoints": [
-    "static/css/main.21ca1e78.css",
-    "static/js/main.9852fd6b.js"
+    "static/css/main.74ee4d44.css",
+    "static/js/main.b636c9f8.js"
   ]
 }
