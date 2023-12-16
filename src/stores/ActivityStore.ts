@@ -1,7 +1,7 @@
 import googleIcon from "@assets/apps/google.webp";
 import telegramIcon from "@assets/apps/telegram.webp";
 import telemostIcon from "@assets/apps/telemost.png";
-import {action, autorun, makeObservable, observable} from "mobx";
+import {action, makeObservable, observable} from "mobx";
 
 export interface Activity {
   name: string;
@@ -94,6 +94,10 @@ class ActivityStore {
 
   setList(list: Activity[]) {
     this.list = list;
+  }
+
+  addActivity(activity: Activity) {
+    this.list.push(activity);
   }
 }
 

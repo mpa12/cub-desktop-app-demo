@@ -9,18 +9,36 @@ import { observer } from "mobx-react-lite";
 import ActivityKebabMenu from "@components/activity-list/ActivityKebabMenu";
 import Input from "@ui/Input";
 import Icon from "@ui/Icon";
+import noIconIcon from "@assets/apps/no-icon.png";
 
 const dataWrapperClassName = cn(
   'w-full min-h-[200px] rounded-[10px] bg-light flex items-center justify-center overflow-x-auto'
 );
 const wrapperClassName = 'w-full h-full grow self-stretch';
 
+interface Data extends Activity {
+  isAddCommand: boolean;
+}
+
 const ActivityList = observer(() => {
   const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
+
   const [commentModalIsOpen, setCommentModalIsOpen] = useState(false);
   const [commentModalData, setCommentModalData] = useState<Activity>();
+
   const [timeModalIsOpen, setTimeModalIsOpen] = useState(false);
   const [timeModalData, setTimeModalData] = useState<Activity>();
+
+  const [addServiceModalIsOpen, setAddServiceModalIsOpen] = useState(false);
+  const defaultAddServiceModalData = {
+    name: '',
+    image: noIconIcon,
+    isChecked: true,
+    comment: '',
+    time: '00:00:00',
+    timeIsUpdatedManual: true,
+  };
+  const [addServiceModalData, setAddServiceModalData] = useState<Activity>(defaultAddServiceModalData);
 
   useEffect(() => {
     setTimeout(() => {
@@ -28,19 +46,46 @@ const ActivityList = observer(() => {
     }, 30000);
   }, [confirmModalIsOpen]);
 
-  const data = ActivityStore.list.filter(activity => activity.isChecked);
+  const data: Data[] = [
+    ...ActivityStore.list
+      .filter(activity => activity.isChecked)
+      .map(activity => ({ ...activity, isAddCommand: false })),
+    {
+      name: 'Добавить сервис',
+      image: '',
+      isChecked: true,
+      comment: '',
+      time: '',
+      timeIsUpdatedManual: false,
+      isAddCommand: true
+    }
+  ];
   const fields = [
     {
       label: 'Сервис',
-      getValue: (activity) => {
+      getValue: (activity: Data) => {
+        const clickHandler = () => {
+          if (!activity.isAddCommand) return;
+
+          setAddServiceModalIsOpen(true);
+        };
+
         return (
           <div className={'flex gap-[5px] items-center select-none w-[200px]'}>
-            <div className={'p-[5px] bg-white rounded-[5px] h-[30px] w-[30px]'}>
-              <img
+            <div
+              onClick={clickHandler}
+              className={cn('p-[5px] bg-white rounded-[5px] h-[30px] w-[30px] flex items-center justify-center', {
+                ['hover:brightness-75 cursor-pointer']: activity.isAddCommand
+              })}
+            >
+              {activity.isAddCommand && (
+                <span className={'text-[25px]'}>+</span>
+              )}
+              {!activity.isAddCommand && <img
                 className={'h-[20px] w-[20px]'}
                 alt={activity.name}
                 src={activity.image}
-              />
+              />}
             </div>
             <span>{activity.name}</span>
           </div>
@@ -49,7 +94,7 @@ const ActivityList = observer(() => {
     },
     {
       label: 'Время',
-      getValue: (activity: Activity) => {
+      getValue: (activity: Data) => {
         return (
           <div className={'flex gap-[5px] items-center justify-start'}>
             <span>{activity.time}</span>
@@ -66,7 +111,9 @@ const ActivityList = observer(() => {
     },
     {
       label: '',
-      getValue: (activity) => {
+      getValue: (activity: Data) => {
+        if (activity.isAddCommand) return null;
+
         return <ActivityKebabMenu
           data={activity}
           updateComment={() => {
@@ -199,6 +246,72 @@ const ActivityList = observer(() => {
             />
             <Button
               onClick={updateTime}
+              title={'Подтвердить'}
+              colorType={'green'}
+            />
+          </div>
+        </div>
+      </Modal>
+
+      <Modal isOpen={addServiceModalIsOpen} closeModal={setAddServiceModalIsOpen.bind(null, false)}>
+        <div className={'max-w-[600px] lg:w-[100vw] w-[80vw] p-[20px] bg-white rounded-[20px]'}>
+          <h4 className={'font-semibold text-[16px]'}>Добавление сервиса</h4>
+          <div className={'w-full mt-[20px]'}>
+            <div>
+              <label>Название сервиса</label>
+              <Input
+                value={addServiceModalData?.name}
+                onChange={evt => {
+                  setAddServiceModalData({
+                    ...addServiceModalData,
+                    name: evt.target.value,
+                  });
+                }}
+                className={'w-full px-[15px] py-[7px] focus:!border-gray focus:!border-[1px]'}
+              />
+            </div>
+            <div className={'mt-[10px]'}>
+              <label>Время</label>
+              <Input
+                value={addServiceModalData?.time}
+                type={'time'}
+                onChange={evt => {
+                  setAddServiceModalData({
+                    ...addServiceModalData,
+                    time: evt.target.value,
+                  });
+                }}
+                className={'w-full px-[15px] py-[7px] focus:!border-gray focus:!border-[1px]'}
+              />
+            </div>
+            <div className={'mt-[10px]'}>
+              <label>Описание</label>
+              <Input
+                value={addServiceModalData?.comment}
+                onChange={evt => {
+                  setAddServiceModalData({
+                    ...addServiceModalData,
+                    comment: evt.target.value,
+                  });
+                }}
+                className={'w-full px-[15px] py-[7px] focus:!border-gray focus:!border-[1px]'}
+              />
+            </div>
+          </div>
+          <div className={'w-full flex gap-[5px] justify-end items-end mt-[30px]'}>
+            <Button
+              onClick={() => {
+                setAddServiceModalData(defaultAddServiceModalData);
+                setAddServiceModalIsOpen(false);
+              }}
+              title={'Отмена'}
+              colorType={'light-gray'}
+            />
+            <Button
+              onClick={() => {
+                ActivityStore.addActivity(addServiceModalData);
+                setAddServiceModalIsOpen(false);
+              }}
               title={'Подтвердить'}
               colorType={'green'}
             />
