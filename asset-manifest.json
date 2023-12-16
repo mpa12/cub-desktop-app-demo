@@ -1,9 +1,10 @@
 {
   "files": {
-    "main.css": "/cub-desktop-app-demo/static/css/main.74ee4d44.css",
-    "main.js": "/cub-desktop-app-demo/static/js/main.b636c9f8.js",
+    "main.css": "/cub-desktop-app-demo/static/css/main.91508f48.css",
+    "main.js": "/cub-desktop-app-demo/static/js/main.eedfa065.js",
     "static/media/telemost.png": "/cub-desktop-app-demo/static/media/telemost.4a981588c616e99de9fe.png",
     "static/media/logo.png": "/cub-desktop-app-demo/static/media/logo.3dc9f0e40e6057149342.png",
+    "static/media/no-icon.png": "/cub-desktop-app-demo/static/media/no-icon.22db4679a2c5f15951b4.png",
     "static/media/default_profile.png": "/cub-desktop-app-demo/static/media/default_profile.d7c1383f1e333be13f05.png",
     "static/media/telegram.webp": "/cub-desktop-app-demo/static/media/telegram.e75836c4bc3d638f37ac.webp",
     "static/media/google.webp": "/cub-desktop-app-demo/static/media/google.072581154cf5d54ed6e3.webp",
@@ -32,11 +33,11 @@
     "static/media/chevron-left.svg": "/cub-desktop-app-demo/static/media/chevron-left.6b236cfcf1326f40d39de915b85cfa9d.svg",
     "static/media/file.svg": "/cub-desktop-app-demo/static/media/file.ef80bca6ac5afa3182a43e73ea41c8ac.svg",
     "static/media/three-dots-vertical.svg": "/cub-desktop-app-demo/static/media/three-dots-vertical.2e461bc6e30d78a7647f40b16c1ea681.svg",
-    "main.74ee4d44.css.map": "/cub-desktop-app-demo/static/css/main.74ee4d44.css.map",
-    "main.b636c9f8.js.map": "/cub-desktop-app-demo/static/js/main.b636c9f8.js.map"
+    "main.91508f48.css.map": "/cub-desktop-app-demo/static/css/main.91508f48.css.map",
+    "main.eedfa065.js.map": "/cub-desktop-app-demo/static/js/main.eedfa065.js.map"
   },
   "entrypoints": [
-    "static/css/main.74ee4d44.css",
-    "static/js/main.b636c9f8.js"
+    "static/css/main.91508f48.css",
+    "static/js/main.eedfa065.js"
   ]
 }
