@@ -22,6 +22,7 @@ import { ReactComponent as fileEarmarkBarGraph } from './file-earmark-bar-graph.
 import { ReactComponent as gear } from './gear.svg';
 import { ReactComponent as house } from './house.svg';
 import { ReactComponent as checkCircle } from './check-circle.svg';
+import { ReactComponent as exclamationCircle } from './exclamation-circle.svg';
 
 export const ICONS = {
   search,
@@ -47,6 +48,7 @@ export const ICONS = {
   gear,
   house,
   checkCircle,
+  exclamationCircle,
 };
 
 export function getIcon(key: keyof typeof ICONS, props: Record<string, any>) {

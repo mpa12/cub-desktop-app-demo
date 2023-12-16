@@ -9,6 +9,7 @@ export interface Activity {
   isChecked: boolean;
   comment: string;
   time: string;
+  timeIsUpdatedManual: boolean;
 }
 
 class ActivityStore {
@@ -27,6 +28,7 @@ class ActivityStore {
       isChecked: true,
       comment: 'Изучение Excel',
       time: '01:23:01',
+      timeIsUpdatedManual: false,
     },
     {
       name: 'Telegram',
@@ -34,6 +36,7 @@ class ActivityStore {
       isChecked: false,
       comment: '',
       time: '04:33:20',
+      timeIsUpdatedManual: false,
     },
     {
       name: 'Яндекс.Телемост',
@@ -41,6 +44,7 @@ class ActivityStore {
       isChecked: true,
       comment: 'Встреча с заказчиком',
       time: '02:32:10',
+      timeIsUpdatedManual: false,
     },
   ];
 
@@ -62,6 +66,28 @@ class ActivityStore {
       return {
         ...activity,
         comment,
+      };
+    });
+  }
+
+  setTime(name, time = '') {
+    this.list = this.list.map(activity => {
+      if (activity.name !== name) return activity;
+
+      return {
+        ...activity,
+        time,
+      };
+    });
+  }
+
+  setTimeIsUpdatedManual(name, timeIsUpdatedManual = true) {
+    this.list = this.list.map(activity => {
+      if (activity.name !== name) return activity;
+
+      return {
+        ...activity,
+        timeIsUpdatedManual,
       };
     });
   }
