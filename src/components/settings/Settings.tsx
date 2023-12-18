@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import Button from "@ui/Button";
 import {useNavigate} from "react-router-dom";
 import toast from "react-hot-toast";
-import ActivityStore from "@stores/ActivityStore";
 import {observer} from "mobx-react-lite";
+import ActivityAppsStorage, {ActivityApp} from "@stores/ActivityAppsStorage";
 
 const titleClassName = 'text-[25px] font-bold mb-[15px]';
 
 const Settings = observer(() => {
   const navigate = useNavigate();
-  const [apps, setApps] = useState(ActivityStore.list);
+  const [apps, setApps] = useState<ActivityApp[]>(ActivityAppsStorage.apps);
 
   const setIsChecked = (name, isChecked = true) => {
     const updatedApps = apps.map(activity => {
@@ -25,7 +25,7 @@ const Settings = observer(() => {
   };
 
   const save = () => {
-    ActivityStore.setList(apps);
+    ActivityAppsStorage.setApps(apps);
 
     toast(
       'Настройки изменены',

@@ -9,16 +9,13 @@ import { observer } from "mobx-react-lite";
 import ActivityKebabMenu from "@components/activity-list/ActivityKebabMenu";
 import Input from "@ui/Input";
 import Icon from "@ui/Icon";
-import noIconIcon from "@assets/apps/no-icon.png";
+import ActivityAppsStorage from "@stores/ActivityAppsStorage";
+import {toJS} from "mobx";
 
 const dataWrapperClassName = cn(
   'w-full min-h-[200px] rounded-[10px] bg-light flex items-center justify-center overflow-x-auto'
 );
 const wrapperClassName = 'w-full h-full grow self-stretch';
-
-interface Data extends Activity {
-  isAddCommand: boolean;
-}
 
 const ActivityList = observer(() => {
   const [confirmModalIsOpen, setConfirmModalIsOpen] = useState(false);
@@ -29,72 +26,42 @@ const ActivityList = observer(() => {
   const [timeModalIsOpen, setTimeModalIsOpen] = useState(false);
   const [timeModalData, setTimeModalData] = useState<Activity>();
 
-  const [addServiceModalIsOpen, setAddServiceModalIsOpen] = useState(false);
-  const defaultAddServiceModalData = {
-    name: '',
-    image: noIconIcon,
-    isChecked: true,
-    comment: '',
-    time: '00:00:00',
-    timeIsUpdatedManual: true,
-  };
-  const [addServiceModalData, setAddServiceModalData] = useState<Activity>(defaultAddServiceModalData);
-
   useEffect(() => {
     setTimeout(() => {
       setConfirmModalIsOpen(true);
     }, 30000);
   }, [confirmModalIsOpen]);
 
-  const data: Data[] = [
-    ...ActivityStore.list
-      .filter(activity => activity.isChecked)
-      .map(activity => ({ ...activity, isAddCommand: false })),
-    // {
-    //   name: 'Добавить сервис',
-    //   image: '',
-    //   isChecked: true,
-    //   comment: '',
-    //   time: '',
-    //   timeIsUpdatedManual: false,
-    //   isAddCommand: true
-    // }
-  ];
+  const settings = toJS(ActivityAppsStorage.apps);
+
+  const data: Activity[] = ActivityStore.list.filter(activity => {
+    return settings.find(app => app.name === activity.serviceName)?.isChecked;
+  });
+
   const fields = [
     {
       label: 'Сервис',
-      getValue: (activity: Data) => {
-        const clickHandler = () => {
-          if (!activity.isAddCommand) return;
-
-          setAddServiceModalIsOpen(true);
-        };
+      getValue: (activity: Activity) => {
 
         return (
           <div className={'flex gap-[5px] items-center select-none w-[200px]'}>
             <div
-              onClick={clickHandler}
-              className={cn('p-[5px] bg-white rounded-[5px] h-[30px] w-[30px] flex items-center justify-center', {
-                ['hover:brightness-75 cursor-pointer']: activity.isAddCommand
-              })}
+              className={'p-[5px] bg-white rounded-[5px] h-[30px] w-[30px] flex items-center justify-center'}
             >
-              {activity.isAddCommand && (
-                <span className={'text-[25px]'}>+</span>
-              )}
-              {!activity.isAddCommand && <img
+              <img
                 className={'h-[20px] w-[20px]'}
-                alt={activity.name}
-                src={activity.image}
-              />}
+                alt={settings.find(app => app.name === activity.serviceName).name}
+                src={settings.find(app => app.name === activity.serviceName).image}
+              />
             </div>
-            <span>{activity.name}</span>
+            <span>{settings.find(app => app.name === activity.serviceName).name}</span>
           </div>
         );
       }
     },
     {
       label: 'Время',
-      getValue: (activity: Data) => {
+      getValue: (activity: Activity) => {
         return (
           <div className={'flex gap-[5px] items-center justify-start'}>
             <span>{activity.time}</span>
@@ -104,16 +71,20 @@ const ActivityList = observer(() => {
       }
     },
     {
+      label: 'Проект',
+      getValue: (activity: Activity) => {
+        return activity.projectName;
+      }
+    },
+    {
       label: 'Описание',
       getValue: (activity) => {
-        return activity.comment;
+        return <div className={'max-w-[300px]'}>{activity.comment}</div>;
       }
     },
     {
       label: '',
-      getValue: (activity: Data) => {
-        if (activity.isAddCommand) return null;
-
+      getValue: (activity: Activity) => {
         return <ActivityKebabMenu
           data={activity}
           updateComment={() => {
@@ -143,15 +114,15 @@ const ActivityList = observer(() => {
   };
 
   const updateComment = () => {
-    ActivityStore.setComment(commentModalData?.name, commentModalData?.comment);
+    ActivityStore.setComment(commentModalData?.id, commentModalData?.comment);
     setCommentModalData(null);
     setCommentModalIsOpen(false);
   };
 
   const updateTime = () => {
     console.log(timeModalData);
-    ActivityStore.setTime(timeModalData?.name, timeModalData?.time);
-    ActivityStore.setTimeIsUpdatedManual(timeModalData?.name);
+    ActivityStore.setTime(timeModalData?.id, timeModalData?.time);
+    ActivityStore.setTimeIsUpdatedManual(timeModalData?.id);
     setTimeModalData(null);
     setTimeModalIsOpen(false);
   };
@@ -246,72 +217,6 @@ const ActivityList = observer(() => {
             />
             <Button
               onClick={updateTime}
-              title={'Подтвердить'}
-              colorType={'green'}
-            />
-          </div>
-        </div>
-      </Modal>
-
-      <Modal isOpen={addServiceModalIsOpen} closeModal={setAddServiceModalIsOpen.bind(null, false)}>
-        <div className={'max-w-[600px] lg:w-[100vw] w-[80vw] p-[20px] bg-white rounded-[20px]'}>
-          <h4 className={'font-semibold text-[16px]'}>Добавление сервиса</h4>
-          <div className={'w-full mt-[20px]'}>
-            <div>
-              <label>Название сервиса</label>
-              <Input
-                value={addServiceModalData?.name}
-                onChange={evt => {
-                  setAddServiceModalData({
-                    ...addServiceModalData,
-                    name: evt.target.value,
-                  });
-                }}
-                className={'w-full px-[15px] py-[7px] focus:!border-gray focus:!border-[1px]'}
-              />
-            </div>
-            <div className={'mt-[10px]'}>
-              <label>Время</label>
-              <Input
-                value={addServiceModalData?.time}
-                type={'time'}
-                onChange={evt => {
-                  setAddServiceModalData({
-                    ...addServiceModalData,
-                    time: evt.target.value,
-                  });
-                }}
-                className={'w-full px-[15px] py-[7px] focus:!border-gray focus:!border-[1px]'}
-              />
-            </div>
-            <div className={'mt-[10px]'}>
-              <label>Описание</label>
-              <Input
-                value={addServiceModalData?.comment}
-                onChange={evt => {
-                  setAddServiceModalData({
-                    ...addServiceModalData,
-                    comment: evt.target.value,
-                  });
-                }}
-                className={'w-full px-[15px] py-[7px] focus:!border-gray focus:!border-[1px]'}
-              />
-            </div>
-          </div>
-          <div className={'w-full flex gap-[5px] justify-end items-end mt-[30px]'}>
-            <Button
-              onClick={() => {
-                setAddServiceModalData(defaultAddServiceModalData);
-                setAddServiceModalIsOpen(false);
-              }}
-              title={'Отмена'}
-              colorType={'light-gray'}
-            />
-            <Button
-              onClick={() => {
-                ActivityStore.addActivity(addServiceModalData);
-                setAddServiceModalIsOpen(false);
-              }}
               title={'Подтвердить'}
               colorType={'green'}
             />
