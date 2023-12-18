@@ -138,7 +138,7 @@ const ActivityList = observer(() => {
         <div className={'max-w-[700px] lg:w-[100vw] w-[90vw] p-[20px] bg-white rounded-[20px]'}>
           <h4 className={'font-semibold text-[16px]'}>Подтвердите отправку активности</h4>
           <div className={'w-full mt-[20px]'}>
-            <div className={cn(wrapperClassName, 'overflow-x-auto')}>
+            <div className={cn(wrapperClassName, 'overflow-x-auto max-h-[400px] lg:max-h-none')}>
               <Table data={data} fields={fields} />
             </div>
           </div>
