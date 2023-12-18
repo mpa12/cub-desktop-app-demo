@@ -50,15 +50,15 @@ const ActivityList = observer(() => {
     ...ActivityStore.list
       .filter(activity => activity.isChecked)
       .map(activity => ({ ...activity, isAddCommand: false })),
-    {
-      name: 'Добавить сервис',
-      image: '',
-      isChecked: true,
-      comment: '',
-      time: '',
-      timeIsUpdatedManual: false,
-      isAddCommand: true
-    }
+    // {
+    //   name: 'Добавить сервис',
+    //   image: '',
+    //   isChecked: true,
+    //   comment: '',
+    //   time: '',
+    //   timeIsUpdatedManual: false,
+    //   isAddCommand: true
+    // }
   ];
   const fields = [
     {
@@ -188,7 +188,7 @@ const ActivityList = observer(() => {
 
       <Modal isOpen={commentModalIsOpen} closeModal={setCommentModalIsOpen.bind(null, false)}>
         <div className={'max-w-[600px] lg:w-[100vw] w-[80vw] p-[20px] bg-white rounded-[20px]'}>
-          <h4 className={'font-semibold text-[16px]'}>Редактирвоание комментария</h4>
+          <h4 className={'font-semibold text-[16px]'}>Редактирование комментария</h4>
           <div className={'w-full mt-[20px]'}>
             <Input
               value={commentModalData?.comment}
@@ -221,7 +221,7 @@ const ActivityList = observer(() => {
 
       <Modal isOpen={timeModalIsOpen} closeModal={setTimeModalIsOpen.bind(null, false)}>
         <div className={'max-w-[600px] lg:w-[100vw] w-[80vw] p-[20px] bg-white rounded-[20px]'}>
-          <h4 className={'font-semibold text-[16px]'}>Редактирвоание времени</h4>
+          <h4 className={'font-semibold text-[16px]'}>Редактирование времени</h4>
           <div className={'w-full mt-[20px]'}>
             <Input
               value={timeModalData?.time}
